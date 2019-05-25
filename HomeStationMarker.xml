@@ -1,0 +1,19 @@
+<!-- indent:2
+ Because XML as a layout language required deep nesting.
+-->
+
+<GuiXml>
+  <Controls>
+    <TopLevelControl
+      name  = "HomeStationMarker_TopLevel"
+      clampedToScreen = "true"
+      mouseEnabled = "false"
+      movable = "false"
+      hidden = "false"
+    >
+        <Controls>
+            <Texture name="$(parent)Marker" />
+        </Controls>
+    </TopLevelControl>
+  </Controls>
+</GuiXml>

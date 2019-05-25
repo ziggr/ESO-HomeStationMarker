@@ -1,0 +1,25 @@
+## Title: HomeStationMarker
+## Author: ziggr
+## AddOnVersion: 501
+## Last Updated: 2019-05-25
+## APIVersion: 100027
+## DependsOn: Lib3D
+## OptionalDependsOn: LibSlashCommander
+## SavedVariables: HomeStationMarkerVars
+
+            # Lib3D-v3
+            # by Shinni
+            # Has local/global coord converters
+            # Global distance measurement
+            # Camera render space
+            # Updates when coords reset after moving 1km
+            # https://www.esoui.com/downloads/info1664-Lib3D-v3.html
+
+            # LibSlashCommander
+            # by Sirinsidiator
+            # Adds slash-command help strings
+            # Can be omitted if you dislike how it affects slash commands.
+
+HomeStationMarker.lua
+HomeStationMarker.xml
+
