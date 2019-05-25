@@ -24,8 +24,8 @@ function HomeStationMarker.RegisterSlashCommands()
 
         local t = { {"forget"    , "Forget all station locations for current house, also deletes all markers for current house." }
                   , {"forget all", "Forget all station locations for all houses, also deletes all markers for all houses." }
-                  , {"clear"     , "Delete all markers for all houses." }
-                  , {"test"      , "do the thing." }
+                  , {"clear"     , "Delete all markers for current house." }
+                  , {"clear all" , "Delete all markers for all houses." }
                   }
         for _, v in pairs(t) do
             local sub = cmd:RegisterSubCommand()
@@ -39,39 +39,66 @@ function HomeStationMarker.RegisterSlashCommands()
 end
 
 function HomeStationMarker.SlashCommand(cmd, args)
+    d("cmd:"..tostring(cmd).." args:"..tostring(args))
     if not cmd then
-        Info("Hiya!")
         return
     end
+    local self = HomeStationMarker
 
     if cmd:lower() == "forget" then
         if args and args:lower() == "all" then
-            HomeStationMarker.ForgetStations({all=true})
+            Info("forgetting all station locations...")
+            self.ForgetStations({all=true})
         else
-            HomeStationMarker.ForgetStations()
+            Info("forgetting current house's station locations...")
+            self.ForgetStations()
         end
         return
     end
 
     if cmd:lower() == "clear" then
         if args and args:lower() == "all" then
-            HomeStationMarker.DeleteMarks({all=true})
+            Info("deleting all markers...")
+            self.DeleteMarks({all=true})
         else
-            HomeStationMarker.DeleteMarks()
+            Info("deleting current house's markers...")
+            self.DeleteMarks()
         end
         return
     end
 
-    if cmd:lower() == "port" then
-        JumpToHouse("@ziggr")                    -- NA, alphabetical
-        -- JumpToHouse("@ireniicus")                -- EU, alphabetical
-        -- JumpToSpecificHouse("@marcopolo184", 46) -- EU, chrono/traits
+                        -- Figure out which station to toggle
+    local r = self.TextToStation(cmd)
+    if r.set_id or r.station_id then
+        Info( "toggling mark for set_id:%s station_id:%s"
+            , tostring(r.set_id)
+            , tostring(r.station_id))
+        self.ToggleStation(r)
     end
+                        -- Zig-only debugging stuff
 
-    if cmd:lower() == "test" then
-        Info("testing..."..tostring(args))
-        HomeStationMarker.Test()
+    if GetDisplayName() == "@ziggr" then
+        if cmd:lower() == "port" then
+            JumpToHouse("@ziggr")                    -- NA, alphabetical
+            -- JumpToHouse("@ireniicus")                -- EU, alphabetical
+            -- JumpToSpecificHouse("@marcopolo184", 46) -- EU, chrono/traits
+        end
+
+        if cmd:lower() == "test" then
+            Info("testing..."..tostring(args))
+            self.Test()
+        end
     end
+end
+
+-- Text processor to turn "alessia bs" into
+--  { set_id     = 82
+--  , set_name   = "Alessia's Bulwark"
+--  , station_id = 1    # CRAFTING_TYPE_BLACKSMITHING
+--  }
+function HomeStationMarker.TextToStation(cmd)
+    local r = {}
+    return r
 end
 
 -- Forget Stations -----------------------------------------------------------
@@ -110,6 +137,9 @@ end
 
 function HomeStationMarker.Test()
     d("Testing!")
+end
+
+function HomeStationMarker.Togglestation(args)
 end
 
 -- Init ----------------------------------------------------------------------
