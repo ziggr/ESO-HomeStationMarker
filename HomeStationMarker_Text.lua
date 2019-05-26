@@ -17,7 +17,7 @@ end
                         -- environment outside of ESO.
 HomeStationMarker.STATION_ALL = {
     [CRAFTING_TYPE_ALCHEMY         or 4] = { "al", "alchemy"        }
-,   [CRAFTING_TYPE_BLACKSMITHING   or 1] = { "bs", "blacksmith"     }
+,   [CRAFTING_TYPE_BLACKSMITHING   or 1] = { "bs", "blacksmithing"  }
 ,   [CRAFTING_TYPE_CLOTHIER        or 2] = { "cl", "clothier"       }
 ,   [CRAFTING_TYPE_ENCHANTING      or 3] = { "en", "enchanting"     }
 ,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = { "jw", "jewelrycrafting"}
@@ -99,12 +99,14 @@ HomeStationMarker.SET_ABBREV = {
 function HomeStationMarker.SetNameTable()
     local self = HomeStationMarker
     if self.set_name_table then return self.set_name_table end
+    local libsets = self.LibSets()
+    if not libsets then return nil end
 
     local set_names = {}
     local lookup = {}
 
-    for set_id, _ in pairs(LibSets.craftedSets) do
-        local sn  = LibSets.GetSetName(set_id)
+    for set_id, _ in pairs(libsets.craftedSets) do
+        local sn  = libsets.GetSetName(set_id)
         local snl = self.SimplifyString(sn)
         lookup[snl] = set_id
         table.insert(set_names, snl)
@@ -140,6 +142,7 @@ end
 
 -- Return the least element of t whose value for `key` is >= want_val.
 function HomeStationMarker.FindGE(t, want_val, key)
+    if not (t and want_val and key) then return nil end
 
                         -- Ideally this would be an O(log n) binary search
                         -- not an O(n) scan. But lua lacks such basic tools,
@@ -182,7 +185,7 @@ function HomeStationMarker.ToSet(s)
     local self = HomeStationMarker
                         -- Specifed by number? "225" for Clever Alchemist?
     local n    = tonumber(s)
-    if n and LibSets.craftedSets[n] then
+    if n then
         return n
     end
 
@@ -204,4 +207,26 @@ function HomeStationMarker.ToSet(s)
     end
 
     return nil
+end
+
+function HomeStationMarker.LibSets()
+    local self = HomeStationMarker
+    if not self.lib_sets then
+        if not LibSets then
+            self.Error("LibSets required for set name searches.")
+            return nil
+        end
+
+        if LibSets.IsSetsScanning() then
+            self.Error("LibSets still scanning. Wait.")
+            return nil
+        end
+
+        if not LibSets.AreSetsLoaded() then
+            self.Error("LibSets sets not loaded.")
+            return nil
+        end
+        self.lib_sets = LibSets
+    end
+    return self.lib_sets
 end

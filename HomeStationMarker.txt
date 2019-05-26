@@ -4,7 +4,7 @@
 ## Last Updated: 2019-05-25
 ## APIVersion: 100027
 ## DependsOn: Lib3D
-## OptionalDependsOn: LibSlashCommander
+## OptionalDependsOn: LibSlashCommander LibSets
 ## SavedVariables: HomeStationMarkerVars
 
             # Lib3D-v3
@@ -19,6 +19,14 @@
             # by Sirinsidiator
             # Adds slash-command help strings
             # Can be omitted if you dislike how it affects slash commands.
+            # https://www.esoui.com/downloads/info1508-LibSlashCommander.html
+
+            # LibSets
+            # by Baertram
+            # Allows station identification by set name for
+            # slash command `/hsm <set name> <crafting type>`
+            # https://www.esoui.com/downloads/info2241-LibSets.html
+            # Can be omitted, used only for above slash command.
 
 HomeStationMarker.lua
 HomeStationMarker.xml

@@ -6,12 +6,14 @@ HomeStationMarker.version           = "5.0.1"
 HomeStationMarker.saved_var_version = 1
 HomeStationMarker.saved_var_name    = HomeStationMarker.name .. "Vars"
 
-local function Info(msg, ...)
+function HomeStationMarker.Info(msg, ...)
     d("|c999999"..HomeStationMarker.name..": "..string.format(msg,...).."|r")
 end
-local function Error(msg, ...)
+function HomeStationMarker.Error(msg, ...)
     d("|cFF6666"..HomeStationMarker.name..": "..string.format(msg,...).."|r")
 end
+local Info  = HomeStationMarker.Info
+local Error = HomeStationMarker.Error
 
 -- Slash Commands ------------------------------------------------------------
 

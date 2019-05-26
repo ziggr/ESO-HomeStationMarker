@@ -4,6 +4,10 @@ hsm     = require("HomeStationMarker_Text")
 
 TestText = {}
 
+HomeStationMarker = HomeStationMarker or {}
+function HomeStationMarker.Info(...) print(string.format(...)) end
+function HomeStationMarker.Error(...) print(string.format(...)) end
+
 -- Scaffolding to replace LibSets in this test environment
 -- Copied right out of LibSets
 LibSets = {}
@@ -59,6 +63,8 @@ LibSets.craftedSets = {
 function LibSets.GetSetName(setId, lang)
     return LibSets.craftedSets[setId]
 end
+function LibSets.IsSetsScanning() return false end
+function LibSets.AreSetsLoaded() return true end
 
 local FODDER = {
     { "gibberish"           , nil }
@@ -87,6 +93,7 @@ local FODDER = {
 ,   {     "alchemy"         , nil, 4 }
 ,   {     "alch"            , nil, 4 }
 ,   {     "al bundy"        , nil    }
+,   {     "blacksmithing"   , nil, 1 }
 ,   {     "blacksmith"      , nil, 1 }
 ,   {     "black"           , nil, 1 }
 ,   {     "clothier"        , nil, 2 }
@@ -159,7 +166,8 @@ local FODDER = {
 ,   { "clever alch"               , 225 , nil }
 ,   { "clever alch jw"            , 225 , 7 }
 ,   { "tbs ww"                    , 161 , 6 }
-
+,   { "alessia's blacksmithing"   , 82  , 1 }
+,   { "hist"                      , 78  , nil }
 }
 
 

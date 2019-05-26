@@ -19,6 +19,10 @@ Toggle a marker above the given station. Can omit either argument.
 - `/hsm alessia's blacksmithing` toggles a marker over the Alessia's Bulwark blacksmithing station
 - `/hsm hist` toggles a marker over a random Hist Bark station
 
+This is mostly for testing/debugging this add-on. The simplistic string matching here only works for EN English clients.
+
+Requires [Baertram's LibSets](https://www.esoui.com/downloads/info2241-LibSets.html)
+
 #### Crafting station abbreviations
 
 Nobody wants to type "Jewelry Crafting Station".
