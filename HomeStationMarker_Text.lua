@@ -39,20 +39,35 @@ function HomeStationMarker.TextToStationSetIDs(text)
     for _,wi in pairs(wilist) do
         local ww = w[wi]
 
-        local n = tonumber(ww)
 
                         -- Specified by number?
                         --
                         -- We depend on no crafting type (1..7) matching
                         -- any craftable set_id (37+ .. 410 ...)
-        if n and self.STATION_SET[n] then
-            r.station_id   = n
-            r.station_text = ww
+        local n = tonumber(ww)
+        if n then
+            if self.STATION_SET[n] then
+                r.station_id   = n
+                r.station_text = ww
+            elseif LibSets.craftedSets[n] then
+                r.set_id   = n
+                r.set_text = ww
+            end
         end
 
-        if n and LibSets.craftedSets[n] then
-            r.set_id   = n
-            r.set_text = ww
+                        -- Crafting Station abbreviation?
+        local wwl = self.SimplifyString(ww)
+        if 2 <= #wwl then
+            for station_id, abbr_list in pairs(self.STATION_SET) do
+                if r.station_id then break end
+                for _,abbr in pairs(abbr_list) do
+                    if self.StartsWith(abbr, wwl) then
+                        r.station_id = station_id
+                        r.station_text = ww
+                        break
+                    end
+                end
+            end
         end
     end
 
@@ -63,4 +78,14 @@ function HomeStationMarker.TextToStationSetIDs(text)
 
                         -- If we found nothing, return that.
     return nil
+end
+
+function HomeStationMarker.SimplifyString(s)
+    local lower    = string.lower(s)
+    local no_punct = string.gsub(lower,"[^%l]","")
+    return no_punct
+end
+
+function HomeStationMarker.StartsWith(longer, prefix)
+   return longer:sub(1, #prefix) == prefix
 end

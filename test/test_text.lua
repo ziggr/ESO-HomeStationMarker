@@ -67,8 +67,24 @@ local FODDER = {
 ,   {     "5"               , nil, 5 }
 ,   {     "6"               , nil, 6 }
 ,   {     "7"               , nil, 7 }
+,   {     "al"              , nil, 4 }
+,   {     "bs"              , nil, 1 }
+,   {     "cl"              , nil, 2 }
+,   {     "en"              , nil, 3 }
+,   {     "jw"              , nil, 7 }
+,   {     "pr"              , nil, 5 }
+,   {     "ww"              , nil, 6 }
+,   {     "AL"              , nil, 4 }
+,   {     "BS"              , nil, 1 }
+,   {     "CL"              , nil, 2 }
+,   {     "EN"              , nil, 3 }
+,   {     "JW"              , nil, 7 }
+,   {     "PR"              , nil, 5 }
+,   {     "WW"              , nil, 6 }
 ,   { "82"                  , 82, nil }
 ,   { "82 1"                , 82, 1 }
+,   { "82 bs"               , 82, 1 }
+,   { "82 ww"               , 82, 6 }
 }
 
 
