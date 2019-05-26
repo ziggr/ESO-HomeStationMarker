@@ -70,14 +70,66 @@ function HomeStationMarker.TextToStationSetIDs(text)
             end
         end
     end
-
-
+                        -- Set Name?
+    local want_t = w
+                        -- If we used last word for station name,
+                        -- don't include it in set name.
+    if r.station_id then table.remove(want_t, #want_t) end
+    local want   = table.concat(want_t, " ")
+    local want_l = self.SimplifyString(want)
+    local row = self.FindGE(self.SetNameTable(), want_l, "set_name")
+    if row and self.StartsWith(row.set_name, want_l) then
+        r.set_id   = row.set_id
+        r.set_text = ww
+        r.set_name = row.set_name
+    end
 
                         -- If we found anything, return that
     if r.station_id or r.set_id then return r end
 
                         -- If we found nothing, return that.
     return nil
+end
+
+HomeStationMarker.SET_ABBREV = {
+    ["tbs"      ] = 161 -- Twice-Born Star
+,   ["nmg"      ] =  51 -- Night Mother's Gaze
+,   ["julianos" ] = 207 -- Law of Julianos
+,   ["kags"     ] =  92 -- Kagrenac's Hope
+,   ["seducer"  ] =  43 -- Armor of the Seducer
+}
+
+-- Return a sorted table of set names, including any aliases.
+-- All names are returned simplified: lowercase, no punctuation or spaces.
+function HomeStationMarker.SetNameTable()
+    local self = HomeStationMarker
+    if self.set_name_table then return self.set_name_table end
+
+    local set_names = {}
+    local lookup = {}
+
+    for set_id, _ in pairs(LibSets.craftedSets) do
+        local sn  = LibSets.GetSetName(set_id)
+        local snl = self.SimplifyString(sn)
+        lookup[snl] = set_id
+        table.insert(set_names, snl)
+    end
+    for abbrev, set_id in pairs(self.SET_ABBREV) do
+        local snl = self.SimplifyString(abbrev)
+        lookup[snl] = set_id
+        table.insert(set_names, snl)
+    end
+
+    table.sort(set_names)
+
+    local r = {}
+    for _, set_name in ipairs(set_names) do
+        local row = { set_name = set_name, set_id = lookup[set_name] }
+        table.insert(r, row)
+    end
+
+    self.set_name_table = r
+    return self.set_name_table
 end
 
 function HomeStationMarker.SimplifyString(s)
@@ -88,4 +140,19 @@ end
 
 function HomeStationMarker.StartsWith(longer, prefix)
    return longer:sub(1, #prefix) == prefix
+end
+
+-- Return the least element of t whose value for `key` is >= want_val.
+function HomeStationMarker.FindGE(t, want_val, key)
+
+                        -- Ideally this would be an O(log n) binary search
+                        -- not an O(n) scan. But lua lacks such basic tools,
+                        -- and I've got better things to do with my day than
+                        -- reinvent the wheel.
+    for _, row in ipairs(t) do
+        if row[key] >= want_val then
+            return row
+        end
+    end
+    return nil
 end

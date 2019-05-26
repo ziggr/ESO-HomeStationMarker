@@ -5,61 +5,64 @@ hsm     = require("HomeStationMarker_Text")
 TestText = {}
 
 -- Scaffolding to replace LibSets in this test environment
--- Copied right out of LibSets.
+-- Copied right out of LibSets
 LibSets = {}
 LibSets.craftedSets = {
-    [176]   = true,     --Adelssieg / Noble's Conquest
-    [82]    = true,     --Alessias Bollwerk / Alessia's Bulwark
-    [54]    = true,     --Aschengriff / Ashen Grip
-    [323]   = true,     --Assassinenlist / Assassin's Guile
-    [87]    = true,     --Augen von Mara / Eyes of Mara
-    [51]    = true,     --Blick der Mutter der Nacht / Night Mother's Gaze
-    [324]   = true,     --Daedrische Gaunerei / Daedric Trickery
-    [161]   = true,     --Doppelstern / Twice-Born Star
-    [73]    = true,     --Erinnerung / Oblivion's Foe
-    [226]   = true,     --Ewige Jagd / Eternal Hunt
-    [208]   = true,     --Feuertaufe / Trial by Fire
-    [207]   = true,     --Gesetz von Julianos / LAw of Julianos
-    [240]   = true,     --Gladiator von Kvatch / Kvatch Gladiator
-    [408]   = true,     --Grabpflocksammler / Grave-Stake Collector
-    [78]    = true,     --Histrinde / Hist Bark
-    [80]    = true,     --Hundings Zorn / Hunding's Rage
-    [92]    = true,     --Kagrenacs Hoffnung / Kagrenac's Hope
-    [351]   = true,     --Kernaxiom / Innate Axiom
-    [325]   = true,     --Kettensprenger / Shacklebreaker
-    [386]   = true,     --Kreckenantlitz / Sload's Semblance
-    [44]    = true,     --Kuss des Vampirs / Vampire's Kiss
-    [81]    = true,     --Lied der Lamien / Song of Lamae
-    [410]   = true,     --Macht der verlorenen Legion / Might of the Lost Legion
-    [48]    = true,     --Magnus' Gabe / Magnu's Gift
-    [353]   = true,     --Mechanikblick / Mechanical Acuity
-    [352]   = true,     --Messingpanzer / Fortified Brass
-    [219]   = true,     --Morkuldin / Morkuldin
-    [409]   = true,     --Nagaschamane / Naga Shaman
-    [387]   = true,     --Nocturnals Gunst / Nocturnal's Favor
-    [84]    = true,     --Orgnums Schuppen / Orgnum's Scales
-    [242]   = true,     --Pelinals Talent / Pelinal's Aptitude
-    [43]    = true,     --Rüstung der Verführung / Armor of the Seducer
-    [178]   = true,     --Rüstungsmeister / Armor Master
-    [74]    = true,     --Schemenauge / Spectre's Eye
-    [225]   = true,     --Schlauer Alchemist / Clever Alchemist
-    [95]    = true,     --Shalidors Fluch / Shalidor's Curse
-    [40]    = true,     --Stille der Nacht / Night's Silence
-    [224]   = true,     --Tavas Gunst / Tava's Favor
-    [37]    = true,     --Todeswind / Death's Wind
-    [75]    = true,     --Torugs Pakt / Torug's Pact
-    [177]   = true,     --Umverteilung / Redistributor
-    [241]   = true,     --Varens Erbe / Varen's Legacy
-    [385]   = true,     --Versierter Reiter / Adept Rider
-    [148]   = true,     --Weg der Arnea / Way of the Arena
-    [79]    = true,     --Weidenpfad / Willow's Path
-    [41]    = true,     --Weißplankes Vergeltung / Whitestrake's Retribution
-    [38]    = true,     --Zwielichtkuss / Twilight's Embrace
+    [176]   = "Noble's Conquest"
+,   [82]    = "Alessia's Bulwark"
+,   [54]    = "Ashen Grip"
+,   [323]   = "Assassin's Guile"
+,   [87]    = "Eyes of Mara"
+,   [51]    = "Night Mother's Gaze"
+,   [324]   = "Daedric Trickery"
+,   [161]   = "Twice-Born Star"
+,   [73]    = "Oblivion's Foe"
+,   [226]   = "Eternal Hunt"
+,   [208]   = "Trial by Fire"
+,   [207]   = "Law of Julianos"
+,   [240]   = "Kvatch Gladiator"
+,   [408]   = "Grave-Stake Collector"
+,   [78]    = "Hist Bark"
+,   [80]    = "Hunding's Rage"
+,   [92]    = "Kagrenac's Hope"
+,   [351]   = "Innate Axiom"
+,   [325]   = "Shacklebreaker"
+,   [386]   = "Sload's Semblance"
+,   [44]    = "Vampire's Kiss"
+,   [81]    = "Song of Lamae"
+,   [410]   = "Might of the Lost Legion"
+,   [48]    = "Magnus' Gift"
+,   [353]   = "Mechanical Acuity"
+,   [352]   = "Fortified Brass"
+,   [219]   = "Morkuldin"
+,   [409]   = "Naga Shaman"
+,   [387]   = "Nocturnal's Favor"
+,   [84]    = "Orgnum's Scales"
+,   [242]   = "Pelinal's Aptitude"
+,   [43]    = "Armor of the Seducer"
+,   [178]   = "Armor Master"
+,   [74]    = "Spectre's Eye"
+,   [225]   = "Clever Alchemist"
+,   [95]    = "Shalidor's Curse"
+,   [40]    = "Night's Silence"
+,   [224]   = "Tava's Favor"
+,   [37]    = "Death's Wind"
+,   [75]    = "Torug's Pact"
+,   [177]   = "Redistributor"
+,   [241]   = "Varen's Legacy"
+,   [385]   = "Adept Rider"
+,   [148]   = "Way of the Arena"
+,   [79]    = "Willow's Path"
+,   [41]    = "Whitestrake's Retribution"
+,   [38]    = "Twilight's Embrace"
 }
-
+function LibSets.GetSetName(setId, lang)
+    return LibSets.craftedSets[setId]
+end
 
 local FODDER = {
     { "gibberish"           , nil }
+--[[
 ,   {     "1"               , nil, 1 }
 ,   {     "2"               , nil, 2 }
 ,   {     "3"               , nil, 3 }
@@ -102,6 +105,56 @@ local FODDER = {
 ,   { "82 1"                , 82, 1 }
 ,   { "82 bs"               , 82, 1 }
 ,   { "82 ww"               , 82, 6 }
+--]]
+,   { "Adept Rider"               , 385 , nil }
+,   { "Alessia's Bulwark"         , 82  , nil }
+,   { "Armor Master"              , 178 , nil }
+,   { "Armor of the Seducer"      , 43  , nil }
+,   { "Ashen Grip"                , 54  , nil }
+,   { "Assassin's Guile"          , 323 , nil }
+,   { "Clever Alchemist"          , 225 , nil }
+,   { "Daedric Trickery"          , 324 , nil }
+,   { "Death's Wind"              , 37  , nil }
+,   { "Eternal Hunt"              , 226 , nil }
+,   { "Eyes of Mara"              , 87  , nil }
+,   { "Fortified Brass"           , 352 , nil }
+,   { "Grave-Stake Collector"     , 408 , nil }
+,   { "Hist Bark"                 , 78  , nil }
+,   { "Hunding's Rage"            , 80  , nil }
+,   { "Innate Axiom"              , 351 , nil }
+,   { "Kagrenac's Hope"           , 92  , nil }
+,   { "Kvatch Gladiator"          , 240 , nil }
+,   { "Law of Julianos"           , 207 , nil }
+,   { "Magnus' Gift"              , 48  , nil }
+,   { "Mechanical Acuity"         , 353 , nil }
+,   { "Might of the Lost Legion"  , 410 , nil }
+,   { "Morkuldin"                 , 219 , nil }
+,   { "Naga Shaman"               , 409 , nil }
+,   { "Night Mother's Gaze"       , 51  , nil }
+,   { "Night's Silence"           , 40  , nil }
+,   { "Noble's Conquest"          , 176 , nil }
+,   { "Nocturnal's Favor"         , 387 , nil }
+,   { "Oblivion's Foe"            , 73  , nil }
+,   { "Orgnum's Scales"           , 84  , nil }
+,   { "Pelinal's Aptitude"        , 242 , nil }
+,   { "Redistributor"             , 177 , nil }
+,   { "Shacklebreaker"            , 325 , nil }
+,   { "Shalidor's Curse"          , 95  , nil }
+,   { "Sload's Semblance"         , 386 , nil }
+,   { "Song of Lamae"             , 81  , nil }
+,   { "Spectre's Eye"             , 74  , nil }
+,   { "Tava's Favor"              , 224 , nil }
+,   { "Torug's Pact"              , 75  , nil }
+,   { "Trial by Fire"             , 208 , nil }
+,   { "Twice-Born Star"           , 161 , nil }
+,   { "Twilight's Embrace"        , 38  , nil }
+,   { "Vampire's Kiss"            , 44  , nil }
+,   { "Varen's Legacy"            , 241 , nil }
+,   { "Way of the Arena"          , 148 , nil }
+,   { "Whitestrake's Retribution" , 41  , nil }
+,   { "Willow's Path"             , 79  , nil }
+
+
 }
 
 
