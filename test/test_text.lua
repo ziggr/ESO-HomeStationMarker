@@ -62,7 +62,7 @@ end
 
 local FODDER = {
     { "gibberish"           , nil }
---[[
+--
 ,   {     "1"               , nil, 1 }
 ,   {     "2"               , nil, 2 }
 ,   {     "3"               , nil, 3 }
@@ -86,7 +86,7 @@ local FODDER = {
 ,   {     "WW"              , nil, 6 }
 ,   {     "alchemy"         , nil, 4 }
 ,   {     "alch"            , nil, 4 }
-,   {     "al bundy"        , nil, 4 }
+,   {     "al bundy"        , nil    }
 ,   {     "blacksmith"      , nil, 1 }
 ,   {     "black"           , nil, 1 }
 ,   {     "clothier"        , nil, 2 }
@@ -105,7 +105,7 @@ local FODDER = {
 ,   { "82 1"                , 82, 1 }
 ,   { "82 bs"               , 82, 1 }
 ,   { "82 ww"               , 82, 6 }
---]]
+--
 ,   { "Adept Rider"               , 385 , nil }
 ,   { "Alessia's Bulwark"         , 82  , nil }
 ,   { "Armor Master"              , 178 , nil }
@@ -153,7 +153,12 @@ local FODDER = {
 ,   { "Way of the Arena"          , 148 , nil }
 ,   { "Whitestrake's Retribution" , 41  , nil }
 ,   { "Willow's Path"             , 79  , nil }
-
+--]]
+,   { "Adept Rider bs"            , 385 , 1 }
+,   { "Alessia cloth"             , 82  , 2 }
+,   { "clever alch"               , 225 , nil }
+,   { "clever alch jw"            , 225 , 7 }
+,   { "tbs ww"                    , 161 , 6 }
 
 }
 

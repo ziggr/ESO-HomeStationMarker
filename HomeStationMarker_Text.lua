@@ -15,7 +15,7 @@ end
 
                         -- Why "or 1"? So that this code can run in a test
                         -- environment outside of ESO.
-HomeStationMarker.STATION_SET = {
+HomeStationMarker.STATION_ALL = {
     [CRAFTING_TYPE_ALCHEMY         or 4] = { "al", "alchemy"        }
 ,   [CRAFTING_TYPE_BLACKSMITHING   or 1] = { "bs", "blacksmith"     }
 ,   [CRAFTING_TYPE_CLOTHIER        or 2] = { "cl", "clothier"       }
@@ -25,6 +25,18 @@ HomeStationMarker.STATION_SET = {
 ,   [CRAFTING_TYPE_WOODWORKING     or 6] = { "ww", "woodworking"    }
 }
 
+                        -- Which crafting stations can be crafted
+                        -- at a set bonus table (bs cl ww jw)?
+                        --
+                        -- Helps avoid "Clever Alch" erroneously matching
+                        -- "Alchemy"
+HomeStationMarker.STATION_EQUIPMENT = {
+    [CRAFTING_TYPE_BLACKSMITHING   or 1] = HomeStationMarker.STATION_ALL[1]
+,   [CRAFTING_TYPE_CLOTHIER        or 2] = HomeStationMarker.STATION_ALL[2]
+,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = HomeStationMarker.STATION_ALL[7]
+,   [CRAFTING_TYPE_WOODWORKING     or 6] = HomeStationMarker.STATION_ALL[6]
+}
+
 
 function HomeStationMarker.TextToStationSetIDs(text)
     local self = HomeStationMarker
@@ -32,62 +44,45 @@ function HomeStationMarker.TextToStationSetIDs(text)
 
     local r = {}
 
-                        -- Scan for station first.
-                        -- Station identifier, if any, must be in first or
-                        -- last word.
-    local wilist = { #w, 1 }
-    for _,wi in pairs(wilist) do
-        local ww = w[wi]
-
-
-                        -- Specified by number?
+                        -- Is last word of a multi-word request
+                        -- a crafting station? "clever alch bs"
                         --
-                        -- We depend on no crafting type (1..7) matching
-                        -- any craftable set_id (37+ .. 410 ...)
-        local n = tonumber(ww)
+                        -- If so, use it and remove it from the match string
+                        -- to get it out of the way of set name match later.
+    if 2 <= #w then
+        local n = self.ToStation(w[#w], self.STATION_EQUIPMENT)
         if n then
-            if self.STATION_SET[n] then
-                r.station_id   = n
-                r.station_text = ww
-            elseif LibSets.craftedSets[n] then
-                r.set_id   = n
-                r.set_text = ww
-            end
-        end
-
-                        -- Crafting Station abbreviation?
-        local wwl = self.SimplifyString(ww)
-        if 2 <= #wwl then
-            for station_id, abbr_list in pairs(self.STATION_SET) do
-                if r.station_id then break end
-                for _,abbr in pairs(abbr_list) do
-                    if self.StartsWith(abbr, wwl) then
-                        r.station_id = station_id
-                        r.station_text = ww
-                        break
-                    end
-                end
-            end
+            r.station_id = n
+            r.station_text = w[#w]
+            w[#w] = nil
         end
     end
-                        -- Set Name?
-    local want_t = w
-                        -- If we used last word for station name,
-                        -- don't include it in set name.
-    if r.station_id then table.remove(want_t, #want_t) end
-    local want   = table.concat(want_t, " ")
-    local want_l = self.SimplifyString(want)
-    local row = self.FindGE(self.SetNameTable(), want_l, "set_name")
-    if row and self.StartsWith(row.set_name, want_l) then
-        r.set_id   = row.set_id
-        r.set_text = ww
-        r.set_name = row.set_name
+                        -- Remainder is either a set name "clever alch" or
+                        -- just a crafting station "alch" without a set name.
+
+                        -- Just a crafting station? Only if its the first
+                        -- and only word "al" not part of a longer string of
+                        -- gibberish "al bundy"
+    local rem  = table.concat(w, " ")
+    if 1 == #w then
+        local n = self.ToStation(rem, self.STATION_ALL)
+        if n then
+            r.station_id = n
+            r.station_text = rem
+            return r
+        end
+    end
+                        -- Set name?
+    n = self.ToSet(rem)
+    if n then
+        r.set_id   = n
+        r.set_text = rem
     end
 
-                        -- If we found anything, return that
+                        -- If we found anything, return that.
     if r.station_id or r.set_id then return r end
 
-                        -- If we found nothing, return that.
+                        -- If we found nothing, return nothing.
     return nil
 end
 
@@ -133,6 +128,7 @@ function HomeStationMarker.SetNameTable()
 end
 
 function HomeStationMarker.SimplifyString(s)
+    if not s then return s end
     local lower    = string.lower(s)
     local no_punct = string.gsub(lower,"[^%l]","")
     return no_punct
@@ -154,5 +150,58 @@ function HomeStationMarker.FindGE(t, want_val, key)
             return row
         end
     end
+    return nil
+end
+
+function HomeStationMarker.ToStation(s, station_list)
+    local self = HomeStationMarker
+    if not s then return nil end
+                        -- Specified by number? "1" for bs?
+    local n    = tonumber(s)
+    if n and station_list[n] then
+        return n
+    end
+
+                        -- Specified by station name? "bs" for bs?
+    local wwl = self.SimplifyString(s)
+    if 2 <= #wwl then
+        for i,abbr_list in pairs(station_list) do
+            for _,abbr in ipairs(abbr_list) do
+                if self.StartsWith(abbr, wwl) then
+                    return i
+                end
+            end
+        end
+    end
+
+    return nil
+end
+
+function HomeStationMarker.ToSet(s)
+    if not s then return nil end
+    local self = HomeStationMarker
+                        -- Specifed by number? "225" for Clever Alchemist?
+    local n    = tonumber(s)
+    if n and LibSets.craftedSets[n] then
+        return n
+    end
+
+                        -- Prefix (or entire) of s set name?
+    local wwl = self.SimplifyString(s)
+    local set_name_table = self.SetNameTable()
+    local row = self.FindGE(set_name_table, wwl, "set_name")
+    if row then
+        if self.StartsWith(self.SimplifyString(row.set_name), wwl) then
+            return row.set_id
+        end
+    end
+
+                        -- Abbreviation of a set name?
+    for abbrev, set_id in pairs(self.SET_ABBREV) do
+        if self.StartsWith(abbrev, wwl) then
+            return set_id
+        end
+    end
+
     return nil
 end
