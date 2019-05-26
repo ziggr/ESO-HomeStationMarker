@@ -16,13 +16,13 @@ end
                         -- Why "or 1"? So that this code can run in a test
                         -- environment outside of ESO.
 HomeStationMarker.STATION_SET = {
-    [CRAFTING_TYPE_ALCHEMY         or 4] = { "al" }
-,   [CRAFTING_TYPE_BLACKSMITHING   or 1] = { "bs" }
-,   [CRAFTING_TYPE_CLOTHIER        or 2] = { "cl" }
-,   [CRAFTING_TYPE_ENCHANTING      or 3] = { "en" }
-,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = { "jw" }
-,   [CRAFTING_TYPE_PROVISIONING    or 5] = { "pr" }
-,   [CRAFTING_TYPE_WOODWORKING     or 6] = { "ww" }
+    [CRAFTING_TYPE_ALCHEMY         or 4] = { "al", "alchemy"        }
+,   [CRAFTING_TYPE_BLACKSMITHING   or 1] = { "bs", "blacksmith"     }
+,   [CRAFTING_TYPE_CLOTHIER        or 2] = { "cl", "clothier"       }
+,   [CRAFTING_TYPE_ENCHANTING      or 3] = { "en", "enchanting"     }
+,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = { "jw", "jewelrycrafting"}
+,   [CRAFTING_TYPE_PROVISIONING    or 5] = { "pr", "provisioning"   }
+,   [CRAFTING_TYPE_WOODWORKING     or 6] = { "ww", "woodworking"    }
 }
 
 

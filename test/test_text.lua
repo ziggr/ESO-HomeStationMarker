@@ -81,6 +81,23 @@ local FODDER = {
 ,   {     "JW"              , nil, 7 }
 ,   {     "PR"              , nil, 5 }
 ,   {     "WW"              , nil, 6 }
+,   {     "alchemy"         , nil, 4 }
+,   {     "alch"            , nil, 4 }
+,   {     "al bundy"        , nil, 4 }
+,   {     "blacksmith"      , nil, 1 }
+,   {     "black"           , nil, 1 }
+,   {     "clothier"        , nil, 2 }
+,   {     "cloth"           , nil, 2 }
+,   {     "enchanting"      , nil, 3 }
+,   {     "ench"            , nil, 3 }
+,   {     "jewelrycrafting" , nil, 7 }
+,   {     "jewelry"         , nil, 7 }
+,   {     "jewel"           , nil, 7 }
+,   {     "provisioning"    , nil, 5 }
+,   {     "prov"            , nil, 5 }
+,   {     "woodworking"     , nil, 6 }
+,   {     "wood"            , nil, 6 }
+
 ,   { "82"                  , 82, nil }
 ,   { "82 1"                , 82, 1 }
 ,   { "82 bs"               , 82, 1 }
