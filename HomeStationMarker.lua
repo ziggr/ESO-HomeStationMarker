@@ -108,11 +108,20 @@ end
 
 -- Recording Locations -------------------------------------------------------
 
-function HomeStationMarker.OnCraftingStationInteract()
+function HomeStationMarker.OnPlayerActivated(event, initial)
+    local self = HomeStationMarker
+    local house_key = self.CurrentHomeKey()
+    self.Debug("EVENT_PLAYER_ACTIVATED house_key:%s", tostring(house_key))
+    if house_key then
+        self.RegisterCraftListener()
+    else
+        self.UnregisterCraftListener()
+    end
 end
 
 function HomeStationMarker.RegisterCraftListener()
     local self = HomeStationMarker
+    Debug("RegisterCraftListener")
     EVENT_MANAGER:RegisterForEvent(self.name
         , EVENT_CRAFTING_STATION_INTERACT
         , HomeStationMarker.OnCraftingStationInteract
@@ -120,10 +129,28 @@ function HomeStationMarker.RegisterCraftListener()
 end
 
 function HomeStationMarker.UnregisterCraftListener()
+    Debug("UnregisterCraftListener")
     local self = HomeStationMarker
     EVENT_MANAGER:UnregisterForEvent(self.name
         , EVENT_CRAFTING_STATION_INTERACT)
 end
+
+function HomeStationMarker.OnCraftingStationInteract(event, crafting_type, same_station)
+    Debug("OnCraftingStationInteract ct:%s same:%s"
+         , tostring(crafting_type), tostring(same_station))
+end
+
+function HomeStationMarker.CurrentHomeKey()
+    local house_owner  = GetCurrentHouseOwner()
+    local house_id     = GetCurrentZoneHouseId()
+
+    if house_owner and (house_owner ~= "")
+        and house_id and (0 < house_id) then
+        return string.format("%d\t%s", house_id, house_owner)
+    end
+    return nil
+end
+
 
 -- Marking Stations ----------------------------------------------------------
 
@@ -154,6 +181,11 @@ end
 EVENT_MANAGER:RegisterForEvent( HomeStationMarker.name
                               , EVENT_ADD_ON_LOADED
                               , HomeStationMarker.OnAddOnLoaded
+                              )
+
+EVENT_MANAGER:RegisterForEvent( HomeStationMarker.name
+                              , EVENT_PLAYER_ACTIVATED
+                              , HomeStationMarker.OnPlayerActivated
                               )
 
 HomeStationMarker.RegisterSlashCommands()
