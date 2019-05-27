@@ -47,6 +47,7 @@ Forget all station locations for current house, or all houses if `/hsm forget al
 # Not Supported
 
 I might add these later:
+- Transmute station
 - Mundus stones
 - Assistants: Banker, Merchant, Fence
 
@@ -57,9 +58,9 @@ Custom markers? No thank you. That's an additional API and complexity that I don
 
 Each marker slows down your frames per second.
 
-`zo_callLater` : a periodic task updates each marker rotation 4 times per second. Only registered within player houseing, and only if you have one or more shown markers.
+`zo_callLater` : a periodic task updates each marker rotation 4 times per second. Only registered within player housing, and only if you have one or more shown markers.
 
-`EVENT_END_CRAFTING_STATION_INTERACT` : An event listener records station location each time you exit a crafting station interaction. This listener is only registered within player housing.
+`EVENT_CRAFTING_STATION_INTERACT` : An event listener records station location each time you interact with a crafting station. This listener is only registered within player housing.
 
 `EVENT_PLAYER_ACTIVATED` : An event listener hides all of a house's markers when you exit player housing, shows that house's previously hidden markers when you enter player housing.
 
