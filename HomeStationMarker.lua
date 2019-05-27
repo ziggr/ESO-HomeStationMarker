@@ -5,6 +5,11 @@ local Debug = HomeStationMarker.Debug
 local Info  = HomeStationMarker.Info
 local Error = HomeStationMarker.Error
 
+HomeStationMarker.SET_ID_NONE       = "no_set"
+HomeStationMarker.SET_ID_TRANSMUTE  = "transmute"
+HomeStationMarker.SET_ID_ASSISTANTS = "assistants"
+HomeStationMarker.SET_ID_MUNDUS     = "mundus"
+
 -- Slash Commands ------------------------------------------------------------
 
 function HomeStationMarker.RegisterSlashCommands()
@@ -108,9 +113,38 @@ end
 
 -- Recording Locations -------------------------------------------------------
 
+function HomeStationMarker.RecordStation(house_key, crafting_type, set_info, station_pos)
+    local self = HomeStationMarker
+    assert(house_key)
+    assert(crafting_type)
+    assert(station_pos)
+    assert(station_pos.world_x and station_pos.world_y and station_pos.world_z )
+
+    local set_id = (set_info and set_info.set_id) or self.SET_ID_NONE
+    local xyz    = { station_pos.world_x
+                   , station_pos.world_y
+                   , station_pos.world_z }
+    local xyz_string = table.concat(xyz, "\t")
+
+    local sv = self.saved_vars
+    sv["loc"]                    = sv["loc"]            or {}
+    sv["loc"][house_key]         = sv["loc"][house_key] or {}
+    sv["loc"][house_key][set_id] = sv["loc"][house_key][set_id] or {}
+    sv["loc"][house_key][set_id]["name"] = (set_info and set_info.set_name)
+    sv["loc"][house_key][set_id][crafting_type] = xyz_string
+
+    Debug("RecordStation: h:%s set_id:%-3.3s ct:%s xyz:%-20.20s %s"
+         , tostring(house_key)
+         , tostring(set_id)
+         , tostring(crafting_type)
+         , xyz_string
+         , set_info.set_name or ""
+         )
+end
+
 function HomeStationMarker.OnPlayerActivated(event, initial)
     local self = HomeStationMarker
-    local house_key = self.CurrentHomeKey()
+    local house_key = self.CurrentHouseKey()
     self.Debug("EVENT_PLAYER_ACTIVATED house_key:%s", tostring(house_key))
     if house_key then
         self.RegisterCraftListener()
@@ -136,12 +170,16 @@ function HomeStationMarker.UnregisterCraftListener()
 end
 
 function HomeStationMarker.OnCraftingStationInteract(event, crafting_type, same_station)
+    local self = HomeStationMarker
     Debug("OnCraftingStationInteract ct:%s same:%s"
          , tostring(crafting_type), tostring(same_station))
-    local set_info     = HomeStationMarker.CurrentStationSetInfo(crafting_type)
+    local house_key     = self.CurrentHouseKey()
+    local set_info      = self.CurrentStationSetInfo(crafting_type)
+    local station_pos   = self.CurrentStationLocation()
+    self.RecordStation(house_key, crafting_type, set_info, station_pos)
 end
 
-function HomeStationMarker.CurrentHomeKey()
+function HomeStationMarker.CurrentHouseKey()
     local house_owner  = GetCurrentHouseOwner()
     local house_id     = GetCurrentZoneHouseId()
 
@@ -191,6 +229,24 @@ function HomeStationMarker.CurrentStationSetInfo(crafting_type)
            , set_name      = set_info[2]
            , crafting_type = ctype
            }
+end
+
+-- Geometry/Location ---------------------------------------------------------
+
+function HomeStationMarker.CurrentPlayerLocation()
+    local p = { GetUnitWorldPosition("player") }
+    return { zone_id = p[1]
+           , world_x = p[2]
+           , world_y = p[3]
+           , world_z = p[4]
+           }
+end
+
+function HomeStationMarker.CurrentStationLocation()
+                        -- In the future, we might want to offset by a meter or
+                        -- two in the player's current orientation. For now,
+                        -- just use the player's location. Close enough.
+    return HomeStationMarker.CurrentPlayerLocation()
 end
 
 -- Marking Stations ----------------------------------------------------------
