@@ -4,7 +4,7 @@
 ## Last Updated: 2019-05-25
 ## APIVersion: 100027
 ## DependsOn: Lib3D
-## OptionalDependsOn: LibSlashCommander LibSets
+## OptionalDependsOn: LibSlashCommander LibSets LibDebugLogger
 ## SavedVariables: HomeStationMarkerVars
 
             # Lib3D-v3
@@ -28,6 +28,15 @@
             # https://www.esoui.com/downloads/info2241-LibSets.html
             # Can be omitted, used only for above slash command.
 
-HomeStationMarker.lua
+            # LibDebugLogger
+            # by Sirinsidiator
+            # Allows error/warn/info/debug logging to saved variables.
+            # https://www.esoui.com/downloads/info2275-LibDebugLogger.html
+            # Can be omitted. Only useful for Zig while developing.
+
+HomeStationMarker_Define.lua
+HomeStationMarker_Log.lua
+HomeStationMarker_Text.lua
 HomeStationMarker.xml
+HomeStationMarker.lua
 

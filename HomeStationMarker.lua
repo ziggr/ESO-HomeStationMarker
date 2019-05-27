@@ -1,17 +1,7 @@
-HomeStationMarker = {}
-
-local HomeStationMarker             = _G['HomeStationMarker']
-HomeStationMarker.name              = "HomeStationMarker"
-HomeStationMarker.version           = "5.0.1"
 HomeStationMarker.saved_var_version = 1
 HomeStationMarker.saved_var_name    = HomeStationMarker.name .. "Vars"
 
-function HomeStationMarker.Info(msg, ...)
-    d("|c999999"..HomeStationMarker.name..": "..string.format(msg,...).."|r")
-end
-function HomeStationMarker.Error(msg, ...)
-    d("|cFF6666"..HomeStationMarker.name..": "..string.format(msg,...).."|r")
-end
+local Debug = HomeStationMarker.Debug
 local Info  = HomeStationMarker.Info
 local Error = HomeStationMarker.Error
 
