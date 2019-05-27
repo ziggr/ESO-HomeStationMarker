@@ -138,6 +138,7 @@ end
 function HomeStationMarker.OnCraftingStationInteract(event, crafting_type, same_station)
     Debug("OnCraftingStationInteract ct:%s same:%s"
          , tostring(crafting_type), tostring(same_station))
+    local set_info     = HomeStationMarker.CurrentStationSetInfo(crafting_type)
 end
 
 function HomeStationMarker.CurrentHomeKey()
@@ -151,6 +152,46 @@ function HomeStationMarker.CurrentHomeKey()
     return nil
 end
 
+-- Return the station's set bonus info, if currently interacting with a
+-- crafting station that has a craftable set bonus. Return nil if not.
+function HomeStationMarker.CurrentStationSetInfo(crafting_type)
+    local ctype = crafting_type or GetCraftingInteractionType()
+    if not (ctype and ctype ~= 0) then
+        Error("CurrentStationSetInfo: no crafting type")
+        return nil
+    end
+
+    local ARGS  = {
+      [CRAFTING_TYPE_BLACKSMITHING  ] = { 15,1,3,1,1,0 }
+    , [CRAFTING_TYPE_CLOTHIER       ] = { 16,1,7,1,1,0 }
+    , [CRAFTING_TYPE_WOODWORKING    ] = {  7,1,3,1,1,0 }
+    , [CRAFTING_TYPE_JEWELRYCRAFTING] = {  3,1,2,1,1,0 }
+    }
+    local args = ARGS[ctype]
+    if not args then
+        Debug( "CurrentStationSetInfo: not an equipment station. ct:%d"
+             , ctype)
+        return nil
+    end
+
+    local link = GetSmithingPatternResultLink(unpack(args))
+    local set_info = {GetItemLinkSetInfo(link)}
+    if not (set_info and set_info[1]) then
+        Debug( "CurrentStationSetInfo: no set bonus. ct:%d"
+             , ctype)
+        return nil
+    end
+
+    Debug( "CurrentStationSetInfo: set_id:%d set_name:%s ct:%d"
+         , set_info[6]
+         , set_info[2]
+         , ctype )
+
+    return { set_id        = set_info[6]
+           , set_name      = set_info[2]
+           , crafting_type = ctype
+           }
+end
 
 -- Marking Stations ----------------------------------------------------------
 
