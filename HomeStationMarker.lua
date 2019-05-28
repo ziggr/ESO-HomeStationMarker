@@ -138,7 +138,7 @@ function HomeStationMarker.RecordStation(house_key, crafting_type, set_info, sta
          , tostring(set_id)
          , tostring(crafting_type)
          , xyz_string
-         , set_info.set_name or ""
+         , (set_info and set_info.set_name) or ""
          )
 end
 
