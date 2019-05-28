@@ -18,7 +18,12 @@ sub dirls($)
 
 @files = ( 'Makefile' );
 # push @files, dirls('src');
+push @files, 'HomeStationMarker.txt';
+push @files, 'HomeStationMarker.xml';
 push @files, 'HomeStationMarker.lua';
+push @files, 'HomeStationMarker_Define.lua';
+push @files, 'HomeStationMarker_Log.lua';
+push @files, 'HomeStationMarker_Text.lua';
 print join("\n", @files) . "\n";
 
 @prev_mtime = ();

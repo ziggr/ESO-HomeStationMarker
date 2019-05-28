@@ -36,7 +36,7 @@ function HomeStationMarker.RegisterSlashCommands()
 end
 
 function HomeStationMarker.SlashCommand(cmd, args)
-    d("cmd:"..tostring(cmd).." args:"..tostring(args))
+    -- d("cmd:"..tostring(cmd).." args:"..tostring(args))
     if not cmd then
         return
     end
@@ -44,10 +44,10 @@ function HomeStationMarker.SlashCommand(cmd, args)
 
     if cmd:lower() == "forget" then
         if args and args:lower() == "all" then
-            Info("forgetting all station locations...")
+            Info("Forgetting all station locations...")
             self.ForgetStations({all=true})
         else
-            Info("forgetting current house's station locations...")
+            Info("Forgetting current house's station locations...")
             self.ForgetStations()
         end
         return
@@ -55,10 +55,10 @@ function HomeStationMarker.SlashCommand(cmd, args)
 
     if cmd:lower() == "clear" then
         if args and args:lower() == "all" then
-            Info("deleting all markers...")
+            Info("Deleting all markers...")
             self.DeleteMarks({all=true})
         else
-            Info("deleting current house's markers...")
+            Info("Deleting current house's markers...")
             self.DeleteMarks()
         end
         return
@@ -66,14 +66,13 @@ function HomeStationMarker.SlashCommand(cmd, args)
 
                         -- Figure out which station to toggle
     local r = self.TextToStation(cmd)
-    if r.set_id or r.station_id then
-        Info( "toggling mark for set_id:%s station_id:%s"
-            , tostring(r.set_id)
-            , tostring(r.station_id))
+    if r and (r.set_id or r.station_id) then
+        Info( "Toggling mark for %s"
+             , self.ArgToSetStationText(r)
+            )
         self.ToggleStation(r)
     end
                         -- Zig-only debugging stuff
-
     if GetDisplayName() == "@ziggr" then
         if cmd:lower() == "port" then
             JumpToHouse("@ziggr")                    -- NA, alphabetical
@@ -88,13 +87,28 @@ function HomeStationMarker.SlashCommand(cmd, args)
     end
 end
 
+-- For more consistent and useful arg dumps to chat.
+function HomeStationMarker.ArgToSetStationText(args)
+    return string.format( "set_id:%s %s station_id:%s %s"
+         , tostring(args and args.set_id)
+         , (args and args.set_name) or ""
+         , tostring(args and args.station_id)
+         , (args and args.station_name) or ""
+         )
+end
+
 -- Text processor to turn "alessia bs" into
 --  { set_id     = 82
 --  , set_name   = "Alessia's Bulwark"
 --  , station_id = 1    # CRAFTING_TYPE_BLACKSMITHING
 --  }
 function HomeStationMarker.TextToStation(cmd)
-    local r = {}
+    local self = HomeStationMarker
+    local r = self.TextToStationSetIDs(cmd)
+    Debug( "TextToStation: '%s' %s"
+         , tostring(cmd)
+         , self.ArgToSetStationText(r)
+         )
     return r
 end
 
@@ -102,21 +116,29 @@ end
 
 function HomeStationMarker.ForgetStations(args)
     local all_houses = args and args.all
+    Error("ForgetStations: unimplemented")
 end
 
 -- Delete Marks --------------------------------------------------------------
 
 function HomeStationMarker.DeleteMarks(args)
     local all_houses = args and args.all
+    Error("DeleteMarks: unimplemented")
 end
 
 
 -- Recording Locations -------------------------------------------------------
 
-function HomeStationMarker.RecordStation(house_key, crafting_type, set_info, station_pos)
+function HomeStationMarker.FindStation(house_key, set_id, station_id)
+    assert(house_key)
+    assert(set_id or station_id)
+
+end
+
+function HomeStationMarker.RecordStation(house_key, station_id, set_info, station_pos)
     local self = HomeStationMarker
     assert(house_key)
-    assert(crafting_type)
+    assert(station_id)
     assert(station_pos)
     assert(station_pos.world_x and station_pos.world_y and station_pos.world_z )
 
@@ -131,12 +153,12 @@ function HomeStationMarker.RecordStation(house_key, crafting_type, set_info, sta
     sv["loc"][house_key]         = sv["loc"][house_key] or {}
     sv["loc"][house_key][set_id] = sv["loc"][house_key][set_id] or {}
     sv["loc"][house_key][set_id]["name"] = (set_info and set_info.set_name)
-    sv["loc"][house_key][set_id][crafting_type] = xyz_string
+    sv["loc"][house_key][set_id][station_id] = xyz_string
 
-    Debug("RecordStation: h:%s set_id:%-3.3s ct:%s xyz:%-20.20s %s"
+    Debug("RecordStation: h:%s set_id:%-3.3s station_id:%s xyz:%-20.20s %s"
          , tostring(house_key)
          , tostring(set_id)
-         , tostring(crafting_type)
+         , tostring(station_id)
          , xyz_string
          , (set_info and set_info.set_name) or ""
          )
@@ -169,14 +191,14 @@ function HomeStationMarker.UnregisterCraftListener()
         , EVENT_CRAFTING_STATION_INTERACT)
 end
 
-function HomeStationMarker.OnCraftingStationInteract(event, crafting_type, same_station)
+function HomeStationMarker.OnCraftingStationInteract(event, station_id, same_station)
     local self = HomeStationMarker
-    Debug("OnCraftingStationInteract ct:%s same:%s"
-         , tostring(crafting_type), tostring(same_station))
+    Debug("OnCraftingStationInteract station_id:%s same:%s"
+         , tostring(station_id), tostring(same_station))
     local house_key     = self.CurrentHouseKey()
-    local set_info      = self.CurrentStationSetInfo(crafting_type)
+    local set_info      = self.CurrentStationSetInfo(station_id)
     local station_pos   = self.CurrentStationLocation()
-    self.RecordStation(house_key, crafting_type, set_info, station_pos)
+    self.RecordStation(house_key, station_id, set_info, station_pos)
 end
 
 function HomeStationMarker.CurrentHouseKey()
@@ -192,8 +214,8 @@ end
 
 -- Return the station's set bonus info, if currently interacting with a
 -- crafting station that has a craftable set bonus. Return nil if not.
-function HomeStationMarker.CurrentStationSetInfo(crafting_type)
-    local ctype = crafting_type or GetCraftingInteractionType()
+function HomeStationMarker.CurrentStationSetInfo(station_id)
+    local ctype = station_id or GetCraftingInteractionType()
     if not (ctype and ctype ~= 0) then
         Error("CurrentStationSetInfo: no crafting type")
         return nil
@@ -207,7 +229,7 @@ function HomeStationMarker.CurrentStationSetInfo(crafting_type)
     }
     local args = ARGS[ctype]
     if not args then
-        Debug( "CurrentStationSetInfo: not an equipment station. ct:%d"
+        Debug( "CurrentStationSetInfo: not an equipment station. station_id:%d"
              , ctype)
         return nil
     end
@@ -215,20 +237,22 @@ function HomeStationMarker.CurrentStationSetInfo(crafting_type)
     local link = GetSmithingPatternResultLink(unpack(args))
     local set_info = {GetItemLinkSetInfo(link)}
     if not (set_info and set_info[1]) then
-        Debug( "CurrentStationSetInfo: no set bonus. ct:%d"
+        Debug( "CurrentStationSetInfo: no set bonus. station_id:%d"
              , ctype)
         return nil
     end
 
-    Debug( "CurrentStationSetInfo: set_id:%d set_name:%s ct:%d"
+    Debug( "CurrentStationSetInfo: set_id:%d set_name:%s station_id:%d"
          , set_info[6]
          , set_info[2]
          , ctype )
 
-    return { set_id        = set_info[6]
-           , set_name      = set_info[2]
-           , crafting_type = ctype
-           }
+    local r = { set_id     = set_info[6]
+              , set_name   = set_info[2]
+              , station_id = ctype
+              }
+    HomeStationMarker.AddNames(r)
+    return r
 end
 
 -- Geometry/Location ---------------------------------------------------------
@@ -255,7 +279,108 @@ function HomeStationMarker.Test()
     d("Testing!")
 end
 
-function HomeStationMarker.Togglestation(args)
+function HomeStationMarker.ToggleStation(args)
+    local self = HomeStationMarker
+    local station_key = self.StationKey(args)
+    local sv   = self.saved_vars
+    sv.marks = sv.marks or {}
+
+    local found_i = self.FindMarkIndex(args)
+    if found_i then
+        self.DeleteMark(args)
+    else
+        self.AddMark(args)
+    end
+end
+
+function HomeStationMarker.StationKey(args)
+    local function tostr(x)
+        if not x then return "" else return tostring(x) end
+    end
+    return string.format("%s\t%s"
+            , tostr(args.set_id)
+            , tostr(args.station_id)
+            )
+end
+
+function HomeStationMarker.FromStationKey(station_key)
+    local w = HomeStationMarker.split(station_key)
+    local function fromstr(s)
+        if s == "" then return nil end
+        return tonumber(s) or s
+    end
+    local r = {
+        set_id     = fromstr(w[1])
+    ,   station_id = fromstr(w[2])
+    }
+    return r
+end
+
+function HomeStationMarker.FindMarkIndex(args)
+    local self = HomeStationMarker
+    local station_key     = HomeStationMarker.StationKey(args)
+    self.saved_vars.marks = self.saved_vars.marks or {}
+    for i,sk in ipairs(self.saved_vars.marks) do
+        if sk == station_key then
+            return i
+        end
+    end
+    return nil
+end
+
+function HomeStationMarker.DeleteMark(args)
+    local self    = HomeStationMarker
+    local found_i = self.FindMarkIndex(args)
+    if not found_i then
+        Error( "DeleteMark: no marker found for set_id:%s station_id:%s"
+             , tostring(args.set_id)
+             , tostring(args.station_id)
+             )
+        return nil
+    end
+    Debug("DeleteMark: set:%s station:%s found_i:%s"
+            , tostring(args.set_id)
+            , tostring(args.station_id)
+            , tostring(found_i)
+            )
+    table.remove(self.saved_vars.marks, found_i)
+
+    self.HideMarkControl(args.set_id, args.station_id)
+end
+
+-- Add this station to the list of stations that get a 3D marker control
+-- whenever we enter a house that has this station.
+--
+-- If already in a house with this station, immediately create a 3D
+-- marker control.
+--
+function HomeStationMarker.AddMark(args)
+    local self    = HomeStationMarker
+    local found_i = self.FindMarkIndex(args)
+    if found_i then
+        Error( "AddMark: marker already exists for set_id:%s station_id:%s found_i:%d"
+             , tostring(args.set_id)
+             , tostring(args.station_id)
+             , found_i)
+        return nil
+    end
+    Debug("AddMark: set:%s station:%s"
+            , tostring(args.set_id)
+            , tostring(args.station_id)
+            )
+    local station_key = self.StationKey(args)
+    table.insert(self.saved_vars.marks, station_key)
+
+    self.ShowMarkControl(args.set_id, args.station_id)
+end
+
+-- 3D Marker Controls --------------------------------------------------------
+function HomeStationMarker.ShowMarkControl(set_id, station_id)
+    Error("ShowMarkControl: unimplemented")
+end
+
+function HomeStationMarker.HideMarkControl(set_id, station_id)
+    Error("HideMarkControl: unimplemented")
 end
 
 -- Init ----------------------------------------------------------------------

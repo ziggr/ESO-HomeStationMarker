@@ -1,7 +1,7 @@
 HomeStationMarker = HomeStationMarker or {}
 
 -- From http://lua-users.org/wiki/SplitJoin
-local function split(str,sep)
+function HomeStationMarker.split(str,sep)
     local ret={}
     local n=1
     for w in str:gmatch("([^"..sep.."]*)") do
@@ -38,9 +38,33 @@ HomeStationMarker.STATION_EQUIPMENT = {
 }
 
 
+function HomeStationMarker.AddNames(r)
+    local self = HomeStationMarker
+    local libsets = self.LibSets()
+    if r and r.set_id and libsets then
+        r.set_name = r.set_name or libsets.GetSetName(r.set_id)
+    end
+    if r and r.station_id then
+        if not self.STATION_NAMES then
+            local GetString = GetString or function () return nil end
+            self.STATION_NAMES = {
+                [CRAFTING_TYPE_ALCHEMY         or 4] = GetString(SI_ITEMFILTERTYPE16)
+            ,   [CRAFTING_TYPE_BLACKSMITHING   or 1] = GetString(SI_ITEMFILTERTYPE13)
+            ,   [CRAFTING_TYPE_CLOTHIER        or 2] = GetString(SI_ITEMFILTERTYPE14)
+            ,   [CRAFTING_TYPE_ENCHANTING      or 3] = GetString(SI_ITEMFILTERTYPE17)
+            ,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = GetString(SI_ITEMFILTERTYPE24)
+            ,   [CRAFTING_TYPE_PROVISIONING    or 5] = GetString(SI_ITEMFILTERTYPE18)
+            ,   [CRAFTING_TYPE_WOODWORKING     or 6] = GetString(SI_ITEMFILTERTYPE15)
+            }
+        end
+        r.station_name = r.station_name or self.STATION_NAMES[r.station_id]
+    end
+    return r
+end
+
 function HomeStationMarker.TextToStationSetIDs(text)
     local self = HomeStationMarker
-    local w = split(text, " ")
+    local w = self.split(text, " ")
 
     local r = {}
 
@@ -55,6 +79,7 @@ function HomeStationMarker.TextToStationSetIDs(text)
             r.station_id = n
             r.station_text = w[#w]
             w[#w] = nil
+            self.AddNames(r)
         end
     end
                         -- Remainder is either a set name "clever alch" or
@@ -69,6 +94,7 @@ function HomeStationMarker.TextToStationSetIDs(text)
         if n then
             r.station_id = n
             r.station_text = rem
+            self.AddNames(r)
             return r
         end
     end
@@ -80,7 +106,10 @@ function HomeStationMarker.TextToStationSetIDs(text)
     end
 
                         -- If we found anything, return that.
-    if r.station_id or r.set_id then return r end
+    if r.station_id or r.set_id then
+        self.AddNames(r)
+        return r
+    end
 
                         -- If we found nothing, return nothing.
     return nil
