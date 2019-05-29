@@ -1,9 +1,18 @@
 dofile("data/LibDebugLogger.lua")
 
 HSM = "HomeStationMarker"
+LDB = "LibDebugLogger"
+INT = "Initializing..."
+
+function StartsWith(longer, prefix)
+   return longer:sub(1, #prefix) == prefix
+end
 
 for i,row in ipairs(LibDebugLoggerLog) do
     if row[5] == HSM then
         print(row[4].." "..row[6])
+    elseif row[5] == LDB and StartsWith(row[6], INT) then
+        print("")
+        print(row[2])
     end
 end
