@@ -1,16 +1,48 @@
-HomeStationMarker.saved_var_version = 1
+-- HomeStationMarker
+--
+-- Draw 3D beacons above crafting stations in player housing.
+--
+-- * Station Location
+--   Record station locations as the player walks around an interacts with
+--   stations. Ideally, we could just iterate over the placed furnishings in
+--   the house, but that requires "deccorator" permission which is rarely
+--   granted except in houses that the player owns.
+--   RecordStationLocation() / FindStationLocation() / saved_vars.station_location
+--
+-- * Requested Mark
+--   Stations that we should draw beacons over, when possible.
+--   Just a list of set_id+station_id tuples.
+--   AddRequestedMark() / DeleteRequestedMark() / saved_vars.requested_mark
+--
+-- * MarkControl
+--   3D Controls that are the beacons that appear in 3D space.
+--   Ideally, one of these for each station listed in "Marks", but often
+--   fewer MarkControls if we don't know the station locations for each
+--   set_id + station_id
+--   ShowMarkControl() / HideMarkControl() / never saved_vars
+
+
+HomeStationMarker.saved_var_version = 2
 HomeStationMarker.saved_var_name    = HomeStationMarker.name .. "Vars"
 
 local Debug = HomeStationMarker.Debug
 local Info  = HomeStationMarker.Info
 local Error = HomeStationMarker.Error
 
+-- "set_id" is usually the integer setId assigned by ESO, such as
+-- 82 for "Alessia's Bulwark". For such set_id, their "station_id" values
+-- will be integer CRAFTING_TYPE_X values [1..7].
+--
+-- We also reserve a few non-integer set_ids here for special categories
+-- because we might one day support beacons over Tythis the Banker and other
+-- important interactable items in player housing.
+--
 HomeStationMarker.SET_ID_NONE       = "no_set"
 HomeStationMarker.SET_ID_TRANSMUTE  = "transmute"
 HomeStationMarker.SET_ID_ASSISTANTS = "assistants"
 HomeStationMarker.SET_ID_MUNDUS     = "mundus"
 
--- Slash Commands ------------------------------------------------------------
+-- Slash Commands and Command-Line Interface UI ------------------------------
 
 function HomeStationMarker.RegisterSlashCommands()
     local lsc = LibStub:GetLibrary("LibSlashCommander", true)
@@ -19,10 +51,10 @@ function HomeStationMarker.RegisterSlashCommands()
                                 , function(args) HomeStationMarker.SlashCommand(args) end
                                 , "HomeStationMarker <set> <station>")
 
-        local t = { {"forget"    , "Forget all station locations for current house, also deletes all markers for current house." }
-                  , {"forget all", "Forget all station locations for all houses, also deletes all markers for all houses." }
-                  , {"clear"     , "Delete all markers for current house." }
-                  , {"clear all" , "Delete all markers for all houses." }
+        local t = { {"forgetlocs"    , "Forget all station locations for current house, also deletes all markers for current house." }
+                  , {"forgetlocs all", "Forget all station locations for all houses, also deletes all markers for all houses." }
+                  , {"clear"         , "Delete all markers for current house." }
+                  , {"clear all"     , "Delete all markers for all houses." }
                   }
         for _, v in pairs(t) do
             local sub = cmd:RegisterSubCommand()
@@ -42,13 +74,13 @@ function HomeStationMarker.SlashCommand(cmd, args)
     end
     local self = HomeStationMarker
 
-    if cmd:lower() == "forget" then
+    if cmd:lower() == "forgetlocs" then
         if args and args:lower() == "all" then
             Info("Forgetting all station locations...")
-            self.ForgetStations({all=true})
+            self.ForgetStationLocations({all=true})
         else
             Info("Forgetting current house's station locations...")
-            self.ForgetStations()
+            self.ForgetStationLocations()
         end
         return
     end
@@ -56,10 +88,10 @@ function HomeStationMarker.SlashCommand(cmd, args)
     if cmd:lower() == "clear" then
         if args and args:lower() == "all" then
             Info("Deleting all markers...")
-            self.DeleteMarks({all=true})
+            self.UnrequestMarks({all=true})
         else
             Info("Deleting current house's markers...")
-            self.DeleteMarks()
+            self.UnrequestMarks()
         end
         return
     end
@@ -98,9 +130,10 @@ function HomeStationMarker.ArgToSetStationText(args)
 end
 
 -- Text processor to turn "alessia bs" into
---  { set_id     = 82
---  , set_name   = "Alessia's Bulwark"
---  , station_id = 1    # CRAFTING_TYPE_BLACKSMITHING
+--  { set_id       = 82
+--  , set_name     = "Alessia's Bulwark"
+--  , station_id   = 1    # CRAFTING_TYPE_BLACKSMITHING
+--  , station_name = "Blacksmithing"
 --  }
 function HomeStationMarker.TextToStation(cmd)
     local self = HomeStationMarker
@@ -112,30 +145,66 @@ function HomeStationMarker.TextToStation(cmd)
     return r
 end
 
--- Forget Stations -----------------------------------------------------------
-
-function HomeStationMarker.ForgetStations(args)
-    local all_houses = args and args.all
-    Error("ForgetStations: unimplemented")
+function HomeStationMarker.ToggleStation(args)
+    local self = HomeStationMarker
+    local found_i = self.FindMarkIndex(args)
+    if found_i then
+        local removed = self.UnrequestMark(args)
+        if removed then
+            self.HideMarkControl(args.set_id, args.station_id)
+        end
+    else
+        local added = self.RequestMark(args)
+        if added then
+            self.ShowMarkControl(args.set_id, args.station_id)
+        end
+    end
 end
 
--- Delete Marks --------------------------------------------------------------
-
-function HomeStationMarker.DeleteMarks(args)
+function HomeStationMarker.ForgetStationLocations(args)
     local all_houses = args and args.all
-    Error("DeleteMarks: unimplemented")
+    Error("ForgetStationLocations: unimplemented")
 end
 
+function HomeStationMarker.UnrequestMarks(args)
+    local all_houses = args and args.all
+    Error("UnrequestMarks: unimplemented")
+end
 
--- Recording Locations -------------------------------------------------------
+function HomeStationMarker.Test()
+    d("Testing!")
+end
 
-function HomeStationMarker.FindStation(house_key, set_id, station_id)
+-- Util ----------------------------------------------------------------------
+
+-- HouseKey is a unique identifier for "a specific house, owned by a specific
+-- player." This lets us one player's "Grand Psijic Villa" station locations
+-- separately from _another_ player's Grand Psijic Villa's station locations.
+--
+-- House is a single integer, such as 62 for Grand Psijic Villa
+-- Owner is the player's account @-name, such as "@ziggr"
+
+function HomeStationMarker.CurrentHouseKey()
+    local house_owner  = GetCurrentHouseOwner()
+    local house_id     = GetCurrentZoneHouseId()
+
+    if house_owner and (house_owner ~= "")
+        and house_id and (0 < house_id) then
+        return string.format("%d\t%s", house_id, house_owner)
+    end
+    return nil
+end
+
+-- Station Locations ---------------------------------------------------------
+
+function HomeStationMarker.FindStationLocation(house_key, set_id, station_id)
     assert(house_key)
     assert(set_id or station_id)
 
 end
 
-function HomeStationMarker.RecordStation(house_key, station_id, set_info, station_pos)
+function HomeStationMarker.RecordStationLocation( house_key, station_id
+                                                , set_info, station_pos )
     local self = HomeStationMarker
     assert(house_key)
     assert(station_id)
@@ -148,14 +217,14 @@ function HomeStationMarker.RecordStation(house_key, station_id, set_info, statio
                    , station_pos.world_z }
     local xyz_string = table.concat(xyz, "\t")
 
-    local sv = self.saved_vars
-    sv["loc"]                    = sv["loc"]            or {}
-    sv["loc"][house_key]         = sv["loc"][house_key] or {}
-    sv["loc"][house_key][set_id] = sv["loc"][house_key][set_id] or {}
-    sv["loc"][house_key][set_id]["name"] = (set_info and set_info.set_name)
-    sv["loc"][house_key][set_id][station_id] = xyz_string
+    self.saved_vars["station_location"] = self.saved_vars["station_location"] or {}
+    local sv_loc = self.saved_vars["station_location"]
+    sv_loc[house_key]                     = sv_loc[house_key] or {}
+    sv_loc[house_key][set_id]             = sv_loc[house_key][set_id] or {}
+    sv_loc[house_key][set_id]["name"]     = (set_info and set_info.set_name)
+    sv_loc[house_key][set_id][station_id] = xyz_string
 
-    Debug("RecordStation: h:%s set_id:%-3.3s station_id:%s xyz:%-20.20s %s"
+    Debug("RecordStationLocation: h:%s set_id:%-3.3s station_id:%s xyz:%-20.20s %s"
          , tostring(house_key)
          , tostring(set_id)
          , tostring(station_id)
@@ -164,6 +233,8 @@ function HomeStationMarker.RecordStation(house_key, station_id, set_info, statio
          )
 end
 
+-- Register/unregister event listener to detect station locations while
+-- in player housing.
 function HomeStationMarker.OnPlayerActivated(event, initial)
     local self = HomeStationMarker
     local house_key = self.CurrentHouseKey()
@@ -198,18 +269,7 @@ function HomeStationMarker.OnCraftingStationInteract(event, station_id, same_sta
     local house_key     = self.CurrentHouseKey()
     local set_info      = self.CurrentStationSetInfo(station_id)
     local station_pos   = self.CurrentStationLocation()
-    self.RecordStation(house_key, station_id, set_info, station_pos)
-end
-
-function HomeStationMarker.CurrentHouseKey()
-    local house_owner  = GetCurrentHouseOwner()
-    local house_id     = GetCurrentZoneHouseId()
-
-    if house_owner and (house_owner ~= "")
-        and house_id and (0 < house_id) then
-        return string.format("%d\t%s", house_id, house_owner)
-    end
-    return nil
+    self.RecordStationLocation(house_key, station_id, set_info, station_pos)
 end
 
 -- Return the station's set bonus info, if currently interacting with a
@@ -270,30 +330,76 @@ function HomeStationMarker.CurrentStationLocation()
                         -- In the future, we might want to offset by a meter or
                         -- two in the player's current orientation. For now,
                         -- just use the player's location. Close enough.
+                        --
+                        -- Remarkably stable! Regardless of how I walk up to a
+                        -- station, whether from front, side, or back, I get
+                        -- the same 3D coords for CurrentPlayerLocation().
     return HomeStationMarker.CurrentPlayerLocation()
 end
 
 -- Marking Stations ----------------------------------------------------------
+--
+-- saved_vars.requested_mark is a list of stations that we'd like to mark if
+-- we can.
+--
+-- Just a collection of <set_id + station_id> 2-tuples.
+-- No house or 3D control data here.
+--
+-- Requesting/unrequesting a mark here does NOT automatically show/hide any
+-- corresponding 3D control! A higher-level function should call MarkControl
+-- functions to show/hide 3D controls.
 
-function HomeStationMarker.Test()
-    d("Testing!")
-end
-
-function HomeStationMarker.ToggleStation(args)
-    local self = HomeStationMarker
-    local station_key = self.StationKey(args)
-    local sv   = self.saved_vars
-    sv.marks = sv.marks or {}
-
+function HomeStationMarker.RequestMark(args)
+    local self    = HomeStationMarker
     local found_i = self.FindMarkIndex(args)
     if found_i then
-        self.DeleteMark(args)
-    else
-        self.AddMark(args)
+        Error( "RequestMark: requested mark already exists for set_id:%s station_id:%s found_i:%d"
+             , tostring(args.set_id)
+             , tostring(args.station_id)
+             , found_i)
+        return nil
     end
+    Debug("RequestMark: set:%s station:%s"
+            , tostring(args.set_id)
+            , tostring(args.station_id)
+            )
+    local mark_val = self.MarkValue(args)
+    table.insert(self.saved_vars.requested_mark, mark_val)
+    return true
 end
 
-function HomeStationMarker.StationKey(args)
+function HomeStationMarker.UnrequestMark(args)
+    local self    = HomeStationMarker
+    local found_i = self.FindMarkIndex(args)
+    if not found_i then
+        Error( "UnrequestMark: no requested mark found for set_id:%s station_id:%s"
+             , tostring(args.set_id)
+             , tostring(args.station_id)
+             )
+        return nil
+    end
+    Debug("UnrequestMark: set:%s station:%s found_i:%s"
+            , tostring(args.set_id)
+            , tostring(args.station_id)
+            , tostring(found_i)
+            )
+    table.remove(self.saved_vars.requested_mark, found_i)
+end
+
+function HomeStationMarker.FindMarkIndex(args)
+    local self = HomeStationMarker
+    local mark_val     = HomeStationMarker.MarkValue(args)
+    self.saved_vars.requested_mark = self.saved_vars.requested_mark or {}
+    for i,sk in ipairs(self.saved_vars.requested_mark) do
+        if sk == mark_val then
+            return i
+        end
+    end
+    return nil
+end
+
+-- A value in saved_vars.requested_mark
+function HomeStationMarker.MarkValue(args)
     local function tostr(x)
         if not x then return "" else return tostring(x) end
     end
@@ -303,8 +409,8 @@ function HomeStationMarker.StationKey(args)
             )
 end
 
-function HomeStationMarker.FromStationKey(station_key)
-    local w = HomeStationMarker.split(station_key)
+function HomeStationMarker.FromMarkValue(mark_val)
+    local w = HomeStationMarker.split(mark_val)
     local function fromstr(s)
         if s == "" then return nil end
         return tonumber(s) or s
@@ -316,67 +422,25 @@ function HomeStationMarker.FromStationKey(station_key)
     return r
 end
 
-function HomeStationMarker.FindMarkIndex(args)
-    local self = HomeStationMarker
-    local station_key     = HomeStationMarker.StationKey(args)
-    self.saved_vars.marks = self.saved_vars.marks or {}
-    for i,sk in ipairs(self.saved_vars.marks) do
-        if sk == station_key then
-            return i
-        end
-    end
-    return nil
-end
-
-function HomeStationMarker.DeleteMark(args)
-    local self    = HomeStationMarker
-    local found_i = self.FindMarkIndex(args)
-    if not found_i then
-        Error( "DeleteMark: no marker found for set_id:%s station_id:%s"
-             , tostring(args.set_id)
-             , tostring(args.station_id)
-             )
-        return nil
-    end
-    Debug("DeleteMark: set:%s station:%s found_i:%s"
-            , tostring(args.set_id)
-            , tostring(args.station_id)
-            , tostring(found_i)
-            )
-    table.remove(self.saved_vars.marks, found_i)
-
-    self.HideMarkControl(args.set_id, args.station_id)
-end
-
--- Add this station to the list of stations that get a 3D marker control
--- whenever we enter a house that has this station.
---
--- If already in a house with this station, immediately create a 3D
--- marker control.
---
-function HomeStationMarker.AddMark(args)
-    local self    = HomeStationMarker
-    local found_i = self.FindMarkIndex(args)
-    if found_i then
-        Error( "AddMark: marker already exists for set_id:%s station_id:%s found_i:%d"
-             , tostring(args.set_id)
-             , tostring(args.station_id)
-             , found_i)
-        return nil
-    end
-    Debug("AddMark: set:%s station:%s"
-            , tostring(args.set_id)
-            , tostring(args.station_id)
-            )
-    local station_key = self.StationKey(args)
-    table.insert(self.saved_vars.marks, station_key)
-
-    self.ShowMarkControl(args.set_id, args.station_id)
-end
-
 -- 3D Marker Controls --------------------------------------------------------
 function HomeStationMarker.ShowMarkControl(set_id, station_id)
-    Error("ShowMarkControl: unimplemented")
+    local self      = HomeStationMarker
+
+                        -- ### if already showing, don't show a second one
+
+                        -- Where?
+    local house_key = self.CurrentHouseKey()
+    if not house_key then
+        Debug("ShowMarkControl: Ignored. Not in player housing.")
+        return nil
+    end
+
+    local coords    = self.FindStationLocation(house_key, set_id, station_id)
+    if not coords then
+        Debug("ShowMarkControl: Ignored: No known coords.")
+        return nil
+    end
+
 end
 
 function HomeStationMarker.HideMarkControl(set_id, station_id)
@@ -411,29 +475,4 @@ EVENT_MANAGER:RegisterForEvent( HomeStationMarker.name
                               )
 
 HomeStationMarker.RegisterSlashCommands()
-
-
---[[
-
-EU server:
-Stations, by DLC chronology? Huh.
-/script JumpToSpecificHouse("@marcopolo184", 46)
-
-Stations, alphabetical:
-/script JumpToHouse("@ireniicus")
-
-NA server:
-/script JumpToHouse("@ziggr")
-
-
-|H0:item:135717:30:1:0:0:0:0:0:0:0:0:0:0:0:0:1:0:0:0:0:0|h|h
-
-Adept Rider's Axe
-
-zos_set_index = 385
-
-GetItemLinkSetInfo(string itemLink, boolean equipped)
-Returns: boolean hasSet, string setName, number numBonuses, number numEquipped, number maxEquipped, number setId
-
---]]
 
