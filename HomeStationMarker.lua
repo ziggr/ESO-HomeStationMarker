@@ -200,7 +200,18 @@ end
 function HomeStationMarker.FindStationLocation(house_key, set_id, station_id)
     assert(house_key)
     assert(set_id or station_id)
+    local self = HomeStationMarker
+    local sv_l = self.saved_vars.station_location
+    if not (sv_l
+            and sv_l[house_key]
+            and sv_l[house_key][set_id]
+            and sv_l[house_key][set_id][station_id]) then
+        return nil
+    end
 
+    local s = sv_l[house_key][set_id][station_id]
+    if not s then return nil end
+    return self.FromStationLocationString(s)
 end
 
 function HomeStationMarker.RecordStationLocation( house_key, station_id
@@ -212,10 +223,7 @@ function HomeStationMarker.RecordStationLocation( house_key, station_id
     assert(station_pos.world_x and station_pos.world_y and station_pos.world_z )
 
     local set_id = (set_info and set_info.set_id) or self.SET_ID_NONE
-    local xyz    = { station_pos.world_x
-                   , station_pos.world_y
-                   , station_pos.world_z }
-    local xyz_string = table.concat(xyz, "\t")
+    local xyz_string = self.ToStationLocationString(station_pos)
 
     self.saved_vars["station_location"] = self.saved_vars["station_location"] or {}
     local sv_loc = self.saved_vars["station_location"]
@@ -231,6 +239,30 @@ function HomeStationMarker.RecordStationLocation( house_key, station_id
          , xyz_string
          , (set_info and set_info.set_name) or ""
          )
+end
+
+function HomeStationMarker.ToStationLocationString(station_pos)
+    assert(station_pos)
+    assert(station_pos.world_x and station_pos.world_y and station_pos.world_z )
+    local xyz    = { station_pos.world_x
+                   , station_pos.world_y
+                   , station_pos.world_z }
+    local xyz_string = table.concat(xyz, "\t")
+    return xyz_string
+end
+
+function HomeStationMarker.FromStationLocationString(s)
+    assert(s)
+    assert(s ~= "")
+    local self = HomeStationMarker
+    local w = self.split(s, "\t")
+    assert(3 <= #w)
+    local r = { world_x = tonumber(w[1])
+              , world_y = tonumber(w[2])
+              , world_z = tonumber(w[3])
+              }
+    assert(r.world_x and r.world_y and r.world_z)
+    return r
 end
 
 -- Register/unregister event listener to detect station locations while
@@ -337,6 +369,17 @@ function HomeStationMarker.CurrentStationLocation()
     return HomeStationMarker.CurrentPlayerLocation()
 end
 
+function HomeStationMarker.AddGuiRenderCoords(world_coords)
+    local x,y,z = WorldPositionToGuiRender3DPosition( world_coords.world_x
+                                                    , world_coords.world_y
+                                                    , world_coords.world_z
+                                                    )
+    world_coords.gui_x = x
+    world_coords.gui_y = y
+    world_coords.gui_z = z
+    return world_coords
+end
+
 -- Marking Stations ----------------------------------------------------------
 --
 -- saved_vars.requested_mark is a list of stations that we'd like to mark if
@@ -434,18 +477,57 @@ function HomeStationMarker.ShowMarkControl(set_id, station_id)
         Debug("ShowMarkControl: Ignored. Not in player housing.")
         return nil
     end
-
     local coords    = self.FindStationLocation(house_key, set_id, station_id)
     if not coords then
-        Debug("ShowMarkControl: Ignored: No known coords.")
+        Debug( "ShowMarkControl: set_id:%s station_id:%s ignored. No known coords."
+             , tostring(set_id)
+             , tostring(station_id)
+             )
         return nil
     end
+    Debug( "ShowMarkControl: set_id:%s station_id:%s xyz:%6.6d %6.6d %6.6d"
+         , tostring(set_id)
+         , tostring(station_id)
+         , coords.world_x
+         , coords.world_y
+         , coords.world_z
+         )
 
+    self.CreateMarkControl(set_id, station_id, coords)
 end
 
 function HomeStationMarker.HideMarkControl(set_id, station_id)
     Error("HideMarkControl: unimplemented")
 end
+
+function HomeStationMarker.CreateMarkControl(set_id, station_id, coords)
+    local self = HomeStationMarker
+    local top_level = self.TopLevelControl()
+
+                        -- ### Need to virtualize or programmify this
+                        -- ### eventually so that we can have more than
+                        -- ### one of these markers.
+    local c = top_level:GetNamedChild("Marker")
+
+    c:Create3DRenderSpace()
+    c:SetTexture("esoui/art/inventory/inventory_tabicon_craftbag_blacksmithing_down.dds")
+    c:Set3DLocalDimensions(1.4, 1.4)
+    c:SetColor(1.0, 1.0, 1.0, 1.0)
+    c:SetHidden(false)
+
+    self.AddGuiRenderCoords(coords)
+    c:Set3DRenderSpaceOrigin(coords.gui_x, coords.gui_y, coords.gui_z)
+end
+
+function HomeStationMarker.TopLevelControl()
+    local self = HomeStationMarker
+    if not self.top_level then
+        HomeStationMarker_TopLevel:Set3DRenderSpaceOrigin(0, 0, 0)
+        self.top_level = HomeStationMarker_TopLevel
+    end
+    return self.top_level
+end
+
 
 -- Init ----------------------------------------------------------------------
 
