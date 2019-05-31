@@ -502,19 +502,12 @@ end
 
 function HomeStationMarker.CreateMarkControl(set_id, station_id, coords)
     local self = HomeStationMarker
-    local top_level = self.TopLevelControl()
-
-                        -- ### Need to virtualize or programmify this
-                        -- ### eventually so that we can have more than
-                        -- ### one of these markers.
-    local c = top_level:GetNamedChild("Marker")
-
+    local c = self.NewMarkControl()
     c:Create3DRenderSpace()
     c:SetTexture("esoui/art/inventory/inventory_tabicon_craftbag_blacksmithing_down.dds")
     c:Set3DLocalDimensions(1.4, 1.4)
     c:SetColor(1.0, 1.0, 1.0, 1.0)
     c:SetHidden(false)
-
     self.AddGuiRenderCoords(coords)
     c:Set3DRenderSpaceOrigin(coords.gui_x, coords.gui_y, coords.gui_z)
 end
@@ -527,6 +520,23 @@ function HomeStationMarker.TopLevelControl()
     end
     return self.top_level
 end
+
+function HomeStationMarker.NewMarkControl()
+    local self = HomeStationMarker
+    self.mark_control_serial = (self.mark_control_serial or 0) + 1
+    local top_level = HomeStationMarker.TopLevelControl()
+    local c = top_level:CreateControl( string.format( "Marker_%03d"
+                                                    , self.mark_control_serial )
+                                     , CT_TEXTURE )
+
+    Debug("CreateMarkControl returning:"..tostring(c))
+    return c
+end
+
+function HomeStationMarker.ReleaseMarkControl(control)
+    control:SetHidden(true)
+end
+
 
 
 -- Init ----------------------------------------------------------------------
