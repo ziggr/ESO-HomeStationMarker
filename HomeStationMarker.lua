@@ -147,7 +147,7 @@ end
 
 function HomeStationMarker.ToggleStation(args)
     local self = HomeStationMarker
-    local found_i = self.FindMarkIndex(args)
+    local found_i = self.FindRequestedMarkIndex(args)
     if found_i then
         local removed = self.UnrequestMark(args)
         if removed then
@@ -394,7 +394,7 @@ end
 
 function HomeStationMarker.RequestMark(args)
     local self    = HomeStationMarker
-    local found_i = self.FindMarkIndex(args)
+    local found_i = self.FindRequestedMarkIndex(args)
     if found_i then
         Error( "RequestMark: requested mark already exists for set_id:%s station_id:%s found_i:%d"
              , tostring(args.set_id)
@@ -413,7 +413,7 @@ end
 
 function HomeStationMarker.UnrequestMark(args)
     local self    = HomeStationMarker
-    local found_i = self.FindMarkIndex(args)
+    local found_i = self.FindRequestedMarkIndex(args)
     if not found_i then
         Error( "UnrequestMark: no requested mark found for set_id:%s station_id:%s"
              , tostring(args.set_id)
@@ -427,9 +427,10 @@ function HomeStationMarker.UnrequestMark(args)
             , tostring(found_i)
             )
     table.remove(self.saved_vars.requested_mark, found_i)
+    return true
 end
 
-function HomeStationMarker.FindMarkIndex(args)
+function HomeStationMarker.FindRequestedMarkIndex(args)
     local self = HomeStationMarker
     local mark_val     = HomeStationMarker.MarkValue(args)
     self.saved_vars.requested_mark = self.saved_vars.requested_mark or {}
@@ -468,15 +469,20 @@ end
 -- 3D Marker Controls --------------------------------------------------------
 function HomeStationMarker.ShowMarkControl(set_id, station_id)
     local self      = HomeStationMarker
-
-                        -- ### if already showing, don't show a second one
-
-                        -- Where?
     local house_key = self.CurrentHouseKey()
     if not house_key then
         Debug("ShowMarkControl: Ignored. Not in player housing.")
         return nil
     end
+
+    if self.MCPoolFind(set_id, station_id) then
+        Debug( "ShowMarkControl: set_id:%s station_id:%s ignored. Already showing."
+             , tostring(set_id)
+             , tostring(station_id)
+             )
+        return nil
+    end
+                        -- Where?
     local coords    = self.FindStationLocation(house_key, set_id, station_id)
     if not coords then
         Debug( "ShowMarkControl: set_id:%s station_id:%s ignored. No known coords."
@@ -497,12 +503,13 @@ function HomeStationMarker.ShowMarkControl(set_id, station_id)
 end
 
 function HomeStationMarker.HideMarkControl(set_id, station_id)
-    Error("HideMarkControl: unimplemented")
+    local self = HomeStationMarker
+    self.ReleaseMarkControl(set_id, station_id)
 end
 
 function HomeStationMarker.CreateMarkControl(set_id, station_id, coords)
     local self = HomeStationMarker
-    local c = self.AcquireMarkControl()
+    local c = self.AcquireMarkControl(set_id, station_id)
     c:Create3DRenderSpace()
     c:SetTexture("esoui/art/inventory/inventory_tabicon_craftbag_blacksmithing_down.dds")
     c:Set3DLocalDimensions(1.4, 1.4)
@@ -510,6 +517,15 @@ function HomeStationMarker.CreateMarkControl(set_id, station_id, coords)
     c:SetHidden(false)
     self.AddGuiRenderCoords(coords)
     c:Set3DRenderSpaceOrigin(coords.gui_x, coords.gui_y, coords.gui_z)
+end
+
+-- A unique-for-this-marker key used to identify a control in a ZO_ObjectPool.
+function HomeStationMarker.MCKey(set_id, station_id)
+                        -- We already have a key-like string generator
+                        -- used for saved_vars.requested_mark values.
+    return HomeStationMarker.MarkValue({ set_id     = set_id
+                                       , station_id = station_id
+                                       })
 end
 
 function HomeStationMarker.TopLevelControl()
@@ -523,13 +539,25 @@ end
 
 -- Return next available MarkControl, or create a new one if there are no
 -- available ones.
-function HomeStationMarker.AcquireMarkControl()
+function HomeStationMarker.AcquireMarkControl(set_id, station_id)
     local self = HomeStationMarker
     if not self.mark_control_pool then
         self.mark_control_pool = ZO_ObjectPool:New( self.MCPoolFactory
                                                   , self.MCPoolRelease )
     end
-    return self.mark_control_pool:AcquireObject()
+    local mckey = self.MCKey(set_id, station_id)
+    local mc    = self.mark_control_pool:AcquireObject(mckey)
+    -- self.MCPoolDump()
+    return mc
+end
+
+function HomeStationMarker.ReleaseMarkControl(set_id, station_id)
+    local self = HomeStationMarker
+    local mckey = self.MCKey(set_id, station_id)
+    if self.mark_control_pool then
+        self.mark_control_pool:ReleaseObject(mckey)
+        -- self.MCPoolDump()
+    end
 end
 
 function HomeStationMarker.MCPoolFactory(pool)
@@ -541,10 +569,35 @@ function HomeStationMarker.MCPoolFactory(pool)
 end
 
 function HomeStationMarker.MCPoolRelease(control)
+    Debug("MCPoolRelease")
     control:SetHidden(true)
 end
 
+function HomeStationMarker.MCPoolFind(set_id, station_id)
+    local self = HomeStationMarker
+    if not self.mark_control_pool then return nil end
+    local mckey = self.MCKey(set_id, station_id)
+    return self.mark_control_pool:GetExistingObject(mckey)
+end
 
+function HomeStationMarker.MCPoolDump()
+    local mcp = HomeStationMarker.mark_control_pool
+    if not mcp then return end
+    local total_ct  = mcp:GetTotalObjectCount()
+    local active_ct = mcp:GetActiveObjectCount()
+    local free_ct   = mcp:GetFreeObjectCount()
+    Debug( "mcpool total:%d active:%d free:%d"
+         , total_ct
+         , active_ct
+         , free_ct
+         )
+    if 0 < active_ct then
+        for k,v in pairs(mcp:GetActiveObjects()) do
+            Debug("mcpool %s", tostring(k))
+        end
+    end
+
+end
 
 -- Init ----------------------------------------------------------------------
 
