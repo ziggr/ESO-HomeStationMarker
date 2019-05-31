@@ -109,7 +109,10 @@ function HomeStationMarker.SlashCommand(cmd, args)
 
                         -- Figure out which station to toggle
     local r = self.TextToStation(cmd)
-    if r and (r.set_id or r.station_id) then
+    if r and r.station_id then
+                        -- Convert text prcessor's `nil` to "no set"
+                        -- which we can use as a valid table key.
+        r.set_id = r.set_id or self.SET_ID_NONE
         Info( "Toggling mark for %s"
              , self.ArgToSetStationText(r)
             )
