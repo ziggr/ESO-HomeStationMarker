@@ -42,6 +42,17 @@ HomeStationMarker.SET_ID_TRANSMUTE  = "transmute"
 HomeStationMarker.SET_ID_ASSISTANTS = "assistants"
 HomeStationMarker.SET_ID_MUNDUS     = "mundus"
 
+-- Textures for the 3D MarkControl
+HomeStationMarker.STATION_TEXTURE = {
+    [CRAFTING_TYPE_BLACKSMITHING   or 1] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_blacksmithing_down.dds"
+,   [CRAFTING_TYPE_CLOTHIER        or 2] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_clothing_down.dds"
+,   [CRAFTING_TYPE_ENCHANTING      or 3] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_enchanting_down.dds"
+,   [CRAFTING_TYPE_ALCHEMY         or 4] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_alchemy_down.dds"
+,   [CRAFTING_TYPE_PROVISIONING    or 5] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_provisioning_down.dds"
+,   [CRAFTING_TYPE_WOODWORKING     or 6] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_woodworking_down.dds"
+,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_jewelrycrafting_down.dds"
+}
+
 -- Slash Commands and Command-Line Interface UI ------------------------------
 
 function HomeStationMarker.RegisterSlashCommands()
@@ -511,7 +522,7 @@ function HomeStationMarker.CreateMarkControl(set_id, station_id, coords)
     local self = HomeStationMarker
     local c = self.AcquireMarkControl(set_id, station_id)
     c:Create3DRenderSpace()
-    c:SetTexture("esoui/art/inventory/inventory_tabicon_craftbag_blacksmithing_down.dds")
+    c:SetTexture(self.STATION_TEXTURE[station_id])
     c:Set3DLocalDimensions(1.4, 1.4)
     c:SetColor(1.0, 1.0, 1.0, 1.0)
     c:SetHidden(false)
