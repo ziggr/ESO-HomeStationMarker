@@ -11,9 +11,9 @@
       movable = "false"
       hidden = "false"
     >
-        <Controls>
-            <Texture name="$(parent)Marker" />
-        </Controls>
     </TopLevelControl>
+
+    <Texture name = "HomeStationMarker_MC"
+      virtual = "true"/>
   </Controls>
 </GuiXml>

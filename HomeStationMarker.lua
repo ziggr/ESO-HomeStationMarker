@@ -502,7 +502,7 @@ end
 
 function HomeStationMarker.CreateMarkControl(set_id, station_id, coords)
     local self = HomeStationMarker
-    local c = self.NewMarkControl()
+    local c = self.AcquireMarkControl()
     c:Create3DRenderSpace()
     c:SetTexture("esoui/art/inventory/inventory_tabicon_craftbag_blacksmithing_down.dds")
     c:Set3DLocalDimensions(1.4, 1.4)
@@ -521,19 +521,26 @@ function HomeStationMarker.TopLevelControl()
     return self.top_level
 end
 
-function HomeStationMarker.NewMarkControl()
+-- Return next available MarkControl, or create a new one if there are no
+-- available ones.
+function HomeStationMarker.AcquireMarkControl()
     local self = HomeStationMarker
-    self.mark_control_serial = (self.mark_control_serial or 0) + 1
-    local top_level = HomeStationMarker.TopLevelControl()
-    local c = top_level:CreateControl( string.format( "Marker_%03d"
-                                                    , self.mark_control_serial )
-                                     , CT_TEXTURE )
-
-    Debug("CreateMarkControl returning:"..tostring(c))
-    return c
+    if not self.mark_control_pool then
+        self.mark_control_pool = ZO_ObjectPool:New( self.MCPoolFactory
+                                                  , self.MCPoolRelease )
+    end
+    return self.mark_control_pool:AcquireObject()
 end
 
-function HomeStationMarker.ReleaseMarkControl(control)
+function HomeStationMarker.MCPoolFactory(pool)
+    Debug("MCPoolFactory")
+    return ZO_ObjectPool_CreateControl( "HomeStationMarker_MC"
+                                      , pool
+                                      , HomeStationMarker.TopLevelControl()
+                                      )
+end
+
+function HomeStationMarker.MCPoolRelease(control)
     control:SetHidden(true)
 end
 
