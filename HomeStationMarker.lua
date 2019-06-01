@@ -53,6 +53,18 @@ HomeStationMarker.STATION_TEXTURE = {
 ,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_jewelrycrafting_down.dds"
 }
 
+-- Offsets to position the 3D MarkControl above its station.
+local pi = math.pi
+HomeStationMarker.STATION_OFFSET = {
+    [CRAFTING_TYPE_BLACKSMITHING   or 1] = { y = 3, a = 1.2*pi, r = 0.5 }
+,   [CRAFTING_TYPE_CLOTHIER        or 2] = { y = 3, a = 0.1*pi, r = 1.2 }
+,   [CRAFTING_TYPE_WOODWORKING     or 6] = { y = 3, a = 0.1*pi, r = 1.2 }
+,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = { y = 3, a = 0.2*pi, r = 1.3 }
+,   [CRAFTING_TYPE_ENCHANTING      or 3] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [CRAFTING_TYPE_ALCHEMY         or 4] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [CRAFTING_TYPE_PROVISIONING    or 5] = { y = 3, a = 0.0*pi, r = 0.0 }
+}
+
 -- Slash Commands and Command-Line Interface UI ------------------------------
 
 function HomeStationMarker.RegisterSlashCommands()
@@ -246,7 +258,7 @@ function HomeStationMarker.RecordStationLocation( house_key, station_id
     sv_loc[house_key][set_id]["name"]     = (set_info and set_info.set_name)
     sv_loc[house_key][set_id][station_id] = xyz_string
 
-    Debug("RecordStationLocation: h:%s set_id:%-3.3s station_id:%s xyz:%-20.20s %s"
+    Debug("RecordStationLocation: h:%s set_id:%-3.3s station_id:%s xyz:%-25.25s %s"
          , tostring(house_key)
          , tostring(set_id)
          , tostring(station_id)
@@ -260,7 +272,12 @@ function HomeStationMarker.ToStationLocationString(station_pos)
     assert(station_pos.world_x and station_pos.world_y and station_pos.world_z )
     local xyz    = { station_pos.world_x
                    , station_pos.world_y
-                   , station_pos.world_z }
+                   , station_pos.world_z
+                   }
+    if station_pos.orientation then
+        local o = string.format("%4.3g", station_pos.orientation)
+        table.insert(xyz, o)
+    end
     local xyz_string = table.concat(xyz, "\t")
     return xyz_string
 end
@@ -271,9 +288,10 @@ function HomeStationMarker.FromStationLocationString(s)
     local self = HomeStationMarker
     local w = self.split(s, "\t")
     assert(3 <= #w)
-    local r = { world_x = tonumber(w[1])
-              , world_y = tonumber(w[2])
-              , world_z = tonumber(w[3])
+    local r = { world_x     = tonumber(w[1])
+              , world_y     = tonumber(w[2])
+              , world_z     = tonumber(w[3])
+              , orientation = tonumber(w[4])
               }
     assert(r.world_x and r.world_y and r.world_z)
     return r
@@ -380,7 +398,9 @@ function HomeStationMarker.CurrentStationLocation()
                         -- Remarkably stable! Regardless of how I walk up to a
                         -- station, whether from front, side, or back, I get
                         -- the same 3D coords for CurrentPlayerLocation().
-    return HomeStationMarker.CurrentPlayerLocation()
+    local pos = HomeStationMarker.CurrentPlayerLocation()
+    pos.orientation = GetPlayerCameraHeading()
+    return pos
 end
 
 function HomeStationMarker.AddGuiRenderCoords(world_coords)
@@ -392,6 +412,24 @@ function HomeStationMarker.AddGuiRenderCoords(world_coords)
     world_coords.gui_y = y
     world_coords.gui_z = z
     return world_coords
+end
+
+function HomeStationMarker.OffsetGuiRenderCoords(coords, station_id)
+    local self = HomeStationMarker
+    local off  = HomeStationMarker.STATION_OFFSET[station_id]
+    if not off then return coords end
+d(off)
+    coords.gui_y = (coords.gui_y or 0) +  (off.y or 0)
+
+    if coords.orientation and off.a and off.r then
+        local theta = coords.orientation + off.a
+        local z     = math.sin(theta) * (off.r)
+        local x     = math.cos(theta) * (off.r)
+        coords.gui_x = coords.gui_x + x
+        coords.gui_z = coords.gui_z + z
+    end
+
+    return coords
 end
 
 -- Marking Stations ----------------------------------------------------------
@@ -530,6 +568,8 @@ function HomeStationMarker.CreateMarkControl(set_id, station_id, coords)
     c:SetColor(1.0, 1.0, 1.0, 1.0)
     c:SetHidden(false)
     self.AddGuiRenderCoords(coords)
+    self.OffsetGuiRenderCoords(coords, station_id)
+d(coords)
     c:Set3DRenderSpaceOrigin(coords.gui_x, coords.gui_y, coords.gui_z)
 end
 

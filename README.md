@@ -79,3 +79,14 @@ HomeStationMarker.DeleteMarker(setId, stationId)
 HomeStationMarker.DeleteAllMarkers()
 
 ```
+
+# TODO
+
+- [ ] Elevate markers 2-3m higher than they currently are
+- [ ] Translate markers to actually above station, not above where player stands.
+        Probably requires a little trigonometry and station_id-specific translation matrix.
+        Can Lua even _do_ linear algebra, or must I reinvent _that_ wheel, too?
+- [ ] Rotate textures to alway face player
+- [ ] Auto-show all requested markers upon entering a player house
+- [ ] Hide/Show top level control on entering just about every scene.
+- [ ] YAGNI away unused+unimplemented slash commands.
