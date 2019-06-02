@@ -53,18 +53,6 @@ HomeStationMarker.STATION_TEXTURE = {
 ,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_jewelrycrafting_down.dds"
 }
 
--- Offsets to position the 3D MarkControl above its station.
-local pi = math.pi
-HomeStationMarker.STATION_OFFSET = {
-    [CRAFTING_TYPE_BLACKSMITHING   or 1] = { y = 3, a = 1.2*pi, r = 0.5 }
-,   [CRAFTING_TYPE_CLOTHIER        or 2] = { y = 3, a = 0.1*pi, r = 1.2 }
-,   [CRAFTING_TYPE_WOODWORKING     or 6] = { y = 3, a = 0.1*pi, r = 1.2 }
-,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = { y = 3, a = 0.2*pi, r = 1.3 }
-,   [CRAFTING_TYPE_ENCHANTING      or 3] = { y = 3, a = 0.0*pi, r = 0.0 }
-,   [CRAFTING_TYPE_ALCHEMY         or 4] = { y = 3, a = 0.0*pi, r = 0.0 }
-,   [CRAFTING_TYPE_PROVISIONING    or 5] = { y = 3, a = 0.0*pi, r = 0.0 }
-}
-
 -- Slash Commands and Command-Line Interface UI ------------------------------
 
 function HomeStationMarker.RegisterSlashCommands()
@@ -418,11 +406,40 @@ function HomeStationMarker.AddGuiRenderCoords(world_coords)
     return world_coords
 end
 
+-- Offsets to position the 3D MarkControl above its station.
+--
+-- Y offset raises MarkControl above station.
+--
+
+-- X/Z offsets are based on the camera orientation recorded when the player
+-- interacted with the station. In theory, the station would be about 1 meter
+-- in front of the player, so a little sine/cosine trigonometry and you've
+-- found the X/Z center of the crafting station.
+--
+-- But that's not what I see when I do that. Any offset I use that works well
+-- for North/South-facing stations seems to be terrible for East/West-facing
+-- stations, plopping markers down in the middle of the hallway, or far behind
+-- the station.
+--
+-- Zeroing out X/Z offsets and giving up for now. If I pick this up again,
+-- I should plop down 8-12 sets of stations in circles in the ColdHarbour
+-- home and test there.
+--
+local pi = math.pi
+HomeStationMarker.STATION_OFFSET = {
+    [CRAFTING_TYPE_BLACKSMITHING   or 1] = { y = 1, a = 0.0*pi, r = 0.0 }
+,   [CRAFTING_TYPE_CLOTHIER        or 2] = { y = 1, a = 0.0*pi, r = 0.0 }
+,   [CRAFTING_TYPE_WOODWORKING     or 6] = { y = 1, a = 0.0*pi, r = 0.0 }
+,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = { y = 1, a = 0.0*pi, r = 0.0 }
+,   [CRAFTING_TYPE_ENCHANTING      or 3] = { y = 1, a = 0.0*pi, r = 0.0 }
+,   [CRAFTING_TYPE_ALCHEMY         or 4] = { y = 1, a = 0.0*pi, r = 0.0 }
+,   [CRAFTING_TYPE_PROVISIONING    or 5] = { y = 1, a = 0.0*pi, r = 0.0 }
+}
+
 function HomeStationMarker.OffsetGuiRenderCoords(coords, station_id)
     local self = HomeStationMarker
     local off  = HomeStationMarker.STATION_OFFSET[station_id]
     if not off then return coords end
-d(off)
     coords.gui_y = (coords.gui_y or 0) +  (off.y or 0)
 
     if coords.orientation and off.a and off.r then
