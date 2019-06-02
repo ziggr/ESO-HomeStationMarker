@@ -419,7 +419,8 @@ end
 -- But that's not what I see when I do that. Any offset I use that works well
 -- for North/South-facing stations seems to be terrible for East/West-facing
 -- stations, plopping markers down in the middle of the hallway, or far behind
--- the station.
+-- the station. Is this due to the camera pan for the first 5+ seconds after
+-- interacting with a station?
 --
 -- Zeroing out X/Z offsets and giving up for now. If I pick this up again,
 -- I should plop down 8-12 sets of stations in circles in the ColdHarbour
@@ -593,17 +594,6 @@ function HomeStationMarker.HideAllMarkControls()
     HomeStationMarker_TopLevel:SetHidden(true)
     if self.mark_control_pool then
         self.mark_control_pool:ReleaseAllObjects()
-
-                        -- ZO_ObjectPool never disposes/destroys any object
-                        -- that it creates. It just leaves the object there in
-                        -- its m_Free table until you ask for the same object,
-                        -- same key, again. So until you call
-                        -- DestroyAllFreeObjects(), the pool fills up with
-                        -- dozens (hundreds!) of unused 3D MarkControl objects
-                        -- that you needed during crafting, hours ago, but
-                        -- don't need any more now that you're back in the
-                        -- field, killing mudcrabs.
-        self.mark_control_pool:DestroyAllFreeObjects()
     end
 end
 

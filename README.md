@@ -83,7 +83,7 @@ HomeStationMarker.DeleteAllMarkers()
 # TODO
 
 - [x] Elevate markers 2-3m higher than they currently are
-- [ ] Translate markers to actually above station, not above where player stands.
+- [-] Translate markers to actually above station, not above where player stands.
         Probably requires a little trigonometry and station_id-specific translation matrix.
         Can Lua even _do_ linear algebra, or must I reinvent _that_ wheel, too?
 - [x] Rotate textures to alway face player
