@@ -305,8 +305,10 @@ function HomeStationMarker.OnPlayerActivated(event, initial)
     self.Debug("EVENT_PLAYER_ACTIVATED house_key:%s", tostring(house_key))
     if house_key then
         self.RegisterCraftListener()
+        self.ShowAllMarkControls()
     else
         self.UnregisterCraftListener()
+        self.HideAllMarkControls()
     end
 end
 
@@ -432,7 +434,7 @@ d(off)
     return coords
 end
 
--- Marking Stations ----------------------------------------------------------
+-- Requested Marks -----------------------------------------------------------
 --
 -- saved_vars.requested_mark is a list of stations that we'd like to mark if
 -- we can.
@@ -458,7 +460,7 @@ function HomeStationMarker.RequestMark(args)
             , tostring(args.set_id)
             , tostring(args.station_id)
             )
-    local mark_val = self.MarkValue(args)
+    local mark_val = self.RequestedMarkValue(args)
     table.insert(self.saved_vars.requested_mark, mark_val)
     return true
 end
@@ -484,7 +486,7 @@ end
 
 function HomeStationMarker.FindRequestedMarkIndex(args)
     local self = HomeStationMarker
-    local mark_val     = HomeStationMarker.MarkValue(args)
+    local mark_val     = HomeStationMarker.RequestedMarkValue(args)
     self.saved_vars.requested_mark = self.saved_vars.requested_mark or {}
     for i,sk in ipairs(self.saved_vars.requested_mark) do
         if sk == mark_val then
@@ -495,7 +497,7 @@ function HomeStationMarker.FindRequestedMarkIndex(args)
 end
 
 -- A value in saved_vars.requested_mark
-function HomeStationMarker.MarkValue(args)
+function HomeStationMarker.RequestedMarkValue(args)
     local function tostr(x)
         if not x then return "" else return tostring(x) end
     end
@@ -505,8 +507,8 @@ function HomeStationMarker.MarkValue(args)
             )
 end
 
-function HomeStationMarker.FromMarkValue(mark_val)
-    local w = HomeStationMarker.split(mark_val)
+function HomeStationMarker.FromRequestedMarkValue(mark_val)
+    local w = HomeStationMarker.split(mark_val, "\t")
     local function fromstr(s)
         if s == "" then return nil end
         return tonumber(s) or s
@@ -519,6 +521,17 @@ function HomeStationMarker.FromMarkValue(mark_val)
 end
 
 -- 3D Marker Controls --------------------------------------------------------
+
+function HomeStationMarker.ShowAllMarkControls()
+    Debug("ShowAllMarkControls")
+    local self      = HomeStationMarker
+    HomeStationMarker_TopLevel:SetHidden(false)
+    for _,v in ipairs(self.saved_vars.requested_mark) do
+        local r = self.FromRequestedMarkValue(v)
+        self.ShowMarkControl(r.set_id, r.station_id)
+    end
+end
+
 function HomeStationMarker.ShowMarkControl(set_id, station_id)
     local self      = HomeStationMarker
     local house_key = self.CurrentHouseKey()
@@ -554,6 +567,26 @@ function HomeStationMarker.ShowMarkControl(set_id, station_id)
     self.CreateMarkControl(set_id, station_id, coords)
 end
 
+function HomeStationMarker.HideAllMarkControls()
+    Debug("HideAllMarkControls")
+    local self      = HomeStationMarker
+    HomeStationMarker_TopLevel:SetHidden(true)
+    if self.mark_control_pool then
+        self.mark_control_pool:ReleaseAllObjects()
+
+                        -- ZO_ObjectPool never disposes/destroys any object
+                        -- that it creates. It just leaves the object there in
+                        -- its m_Free table until you ask for the same object,
+                        -- same key, again. So until you call
+                        -- DestroyAllFreeObjects(), the pool fills up with
+                        -- dozens (hundreds!) of unused 3D MarkControl objects
+                        -- that you needed during crafting, hours ago, but
+                        -- don't need any more now that you're back in the
+                        -- field, killing mudcrabs.
+        self.mark_control_pool:DestroyAllFreeObjects()
+    end
+end
+
 function HomeStationMarker.HideMarkControl(set_id, station_id)
     local self = HomeStationMarker
     self.ReleaseMarkControl(set_id, station_id)
@@ -577,7 +610,7 @@ end
 function HomeStationMarker.MCKey(set_id, station_id)
                         -- We already have a key-like string generator
                         -- used for saved_vars.requested_mark values.
-    return HomeStationMarker.MarkValue({ set_id     = set_id
+    return HomeStationMarker.RequestedMarkValue({ set_id     = set_id
                                        , station_id = station_id
                                        })
 end

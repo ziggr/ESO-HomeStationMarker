@@ -2,6 +2,7 @@ HomeStationMarker = HomeStationMarker or {}
 
 -- From http://lua-users.org/wiki/SplitJoin
 function HomeStationMarker.split(str,sep)
+    sep = sep or "\t"
     local ret={}
     local n=1
     for w in str:gmatch("([^"..sep.."]*)") do
