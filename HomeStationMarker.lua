@@ -306,9 +306,11 @@ function HomeStationMarker.OnPlayerActivated(event, initial)
     if house_key then
         self.RegisterCraftListener()
         self.ShowAllMarkControls()
+        self.StartPeriodicRotate()
     else
         self.UnregisterCraftListener()
         self.HideAllMarkControls()
+        self.StopPeriodicRotate()
     end
 end
 
@@ -526,6 +528,7 @@ function HomeStationMarker.ShowAllMarkControls()
     Debug("ShowAllMarkControls")
     local self      = HomeStationMarker
     HomeStationMarker_TopLevel:SetHidden(false)
+    self.curr_rotate_orientation = nil -- Reset cached rotation for periodic.
     for _,v in ipairs(self.saved_vars.requested_mark) do
         local r = self.FromRequestedMarkValue(v)
         self.ShowMarkControl(r.set_id, r.station_id)
@@ -684,6 +687,59 @@ function HomeStationMarker.MCPoolDump()
         end
     end
 
+end
+
+-- Rotate 3D MarkControls ----------------------------------------------------
+--
+-- Rotate all 3D MarkControls to face the camera so that you don't see the
+-- textures edge-on and you can recognize the texture from far away.
+
+function HomeStationMarker.RotateAllMarkControls()
+    local self = HomeStationMarker
+    if self.mark_control_pool then
+        local orientation = GetPlayerCameraHeading()
+                        -- +++ Cache current orientation, and don't waste
+                        -- CPU time re-rotating markers to their current
+                        -- orientation.
+        if self.curr_rotate_orientation == orientation then return end
+        local active      = self.mark_control_pool:GetActiveObjects()
+        for key, mark_control in pairs(active) do
+            mark_control:Set3DRenderSpaceOrientation(0, orientation, 0)
+        end
+        self.curr_rotate_orientation = orientation
+    end
+end
+
+function HomeStationMarker.StartPeriodicRotate()
+    local self = HomeStationMarker
+    Debug("StartPeriodicRotate")
+    if not self.periodic_rotate then
+        self.periodic_rotate = true
+        self.PeriodicRotate()
+    end
+end
+
+function HomeStationMarker.StopPeriodicRotate()
+    Debug("StopPeriodicRotate")
+    HomeStationMarker.periodic_rotate = false
+end
+
+function HomeStationMarker.PeriodicRotate()
+    -- Debug("PeriodicRotate") -- Noisy!
+    local self = HomeStationMarker
+    if self.periodic_rotate then
+        self.RotateAllMarkControls()
+
+                        -- 250ms is a bit too slow: you can see the 3D
+                        -- MarkControls rotate as you spin your camera around.
+                        -- 125ms is soother, that'll do. I don't want to run
+                        -- this too frequently and waste CPU time. Add-on CPU
+                        -- time gets hammered and FPS drops so brutally during
+                        -- crafting sessions due to all the inventory and craft
+                        -- result listeners in so many add-ons that I'm loathe
+                        -- to add any more while in a crafting house.
+        zo_callLater(self.PeriodicRotate, 125)
+    end
 end
 
 -- Init ----------------------------------------------------------------------
