@@ -7,6 +7,8 @@ function NOP:Info(...) end
 function NOP:Warn(...) end
 function NOP:Error(...) end
 
+HomeStationMarker.log_to_chat = false
+
 function HomeStationMarker.Logger()
     local self = HomeStationMarker
     if not self.logger then
@@ -21,7 +23,9 @@ function HomeStationMarker.Logger()
 end
 
 function HomeStationMarker.Log(color, ...)
-    d("|c"..color..HomeStationMarker.name..": "..string.format(...).."|r")
+    if HomeStationMarker.log_to_chat then
+        d("|c"..color..HomeStationMarker.name..": "..string.format(...).."|r")
+    end
 end
 
 function HomeStationMarker.Debug(...)
