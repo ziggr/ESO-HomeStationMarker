@@ -1,3 +1,8 @@
+--[[
+Convert LibDebugLogger saved_vars to a text dump of just HomeStationMarker
+log lines.
+--]]
+
 dofile("data/LibDebugLogger.lua")
 
 HSM = "HomeStationMarker"

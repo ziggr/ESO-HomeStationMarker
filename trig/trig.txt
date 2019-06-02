@@ -1,0 +1,285 @@
+53809	98308	19534	151.941	Blacksmithing Station	Armor Master
+53800	98469	19544	90.000	Clothing Station	Armor Master
+53800	98717	19544	90.000	Woodworking Station	Armor Master
+60050	97479	19544	149.996	Blacksmithing Station	Noble's Conquest
+60050	97236	19544	90.000	Clothing Station	Noble's Conquest
+60050	97028	19544	90.000	Woodworking Station	Noble's Conquest
+60611	90900	19842	59.996	Blacksmithing Station	Redistributor
+60410	90900	19842	0.000	Clothing Station	Redistributor
+60130	90900	19843	0.000	Woodworking Station	Redistributor
+60050	92877	19544	149.996	Blacksmithing Station	Orgnum's Scales
+60050	93060	19544	90.000	Clothing Station	Orgnum's Scales
+60050	93323	19544	90.000	Woodworking Station	Orgnum's Scales
+54300	92765	19539	-30.004	Blacksmithing Station	Kagrenac's Hope
+54300	93006	19539	-90.000	Clothing Station	Kagrenac's Hope
+54300	93211	19539	-90.000	Woodworking Station	Kagrenac's Hope
+53553	90800	19842	59.996	Blacksmithing Station	Hunding's Rage
+53801	90800	19842	0.000	Clothing Station	Hunding's Rage
+54015	90800	19843	0.000	Woodworking Station	Hunding's Rage
+54300	94935	19539	-30.004	Blacksmithing Station	Law of Julianos
+54300	95218	19539	-90.000	Clothing Station	Law of Julianos
+54300	95476	19539	-90.000	Woodworking Station	Law of Julianos
+54296	97380	19544	-26.598	Blacksmithing Station	Magnus' Gift
+54300	97230	19539	-90.000	Clothing Station	Magnus' Gift
+54300	96982	19539	-90.000	Woodworking Station	Magnus' Gift
+56789	88582	15808	-173.353	Breton Sconce, Torch
+59317	99222	19498	59.996	Blacksmithing Station	Night Mother's Gaze
+59122	99248	19499	0.000	Clothing Station	Night Mother's Gaze
+58836	99237	19497	0.000	Woodworking Station	Night Mother's Gaze
+56028	99229	19502	59.996	Blacksmithing Station	Morkuldin
+55875	99238	19510	0.000	Clothing Station	Morkuldin
+55622	99246	19529	0.000	Woodworking Station	Morkuldin
+52284	90963	19858	150.875	Blacksmithing Station	Eternal Hunt
+52275	91130	19860	90.000	Clothing Station	Eternal Hunt
+52275	91384	19860	90.000	Woodworking Station	Eternal Hunt
+60894	91705	19846	-118.081	Blacksmithing Station	Twice-Born Star
+61051	91700	19865	-180.000	Clothing Station	Twice-Born Star
+61300	91700	19871	-180.000	Woodworking Station	Twice-Born Star
+53800	94108	19542	149.996	Blacksmithing Station	Clever Alchemist
+53800	93868	19542	90.000	Clothing Station	Clever Alchemist
+53800	93662	19541	90.000	Woodworking Station	Clever Alchemist
+59800	91625	19843	149.996	Blacksmithing Station	Pelinal's Aptitude
+59800	91394	19843	90.000	Clothing Station	Pelinal's Aptitude
+59800	91200	19843	90.000	Woodworking Station	Pelinal's Aptitude
+61200	90045	19868	149.996	Blacksmithing Station	Seducer
+61200	89792	19868	90.000	Clothing Station	Seducer
+61200	89571	19868	90.000	Woodworking Station	Seducer
+61900	90212	19868	-30.004	Blacksmithing Station	Torug's Pact
+61900	90037	19868	-90.000	Clothing Station	Torug's Pact
+61900	89782	19869	-90.000	Woodworking Station	Torug's Pact
+57547	89230	15043	-173.716	Breton Sconce, Torch
+56701	89367	15068	-172.771	Breton Sconce, Torch
+56719	87205	14975	-3.417	Breton Sconce, Torch
+57318	87261	14990	-13.733	Breton Sconce, Torch
+59269	87482	15700	-85.122	Breton Sconce, Torch
+54292	94018	19540	-27.180	Blacksmithing Station	Kvatch Gladiator
+54295	93864	19540	-90.000	Clothing Station	Kvatch Gladiator
+54315	93613	19539	-90.000	Woodworking Station	Kvatch Gladiator
+60503	96123	19544	-30.004	Blacksmithing Station	Varen's Legacy
+60505	96365	19544	-90.000	Clothing Station	Varen's Legacy
+60507	96572	19544	-90.000	Woodworking Station	Varen's Legacy
+61900	88897	19870	-30.004	Blacksmithing Station	Tava's Favor
+61900	89145	19870	-90.000	Clothing Station	Tava's Favor
+61900	89360	19869	-90.000	Woodworking Station	Tava's Favor
+61611	90923	19871	-30.004	Blacksmithing Station	Trial by Fire
+61611	91170	19871	-90.000	Clothing Station	Trial by Fire
+61611	91384	19871	-90.000	Woodworking Station	Trial by Fire
+53802	92860	19537	155.358	Blacksmithing Station	Daedric Trickery
+53800	93011	19540	90.000	Clothing Station	Daedric Trickery
+53814	93262	19540	90.000	Woodworking Station	Daedric Trickery
+61215	88696	19855	150.765	Blacksmithing Station	Shacklebreaker
+61200	88875	19868	90.000	Clothing Station	Shacklebreaker
+61200	89136	19868	90.000	Woodworking Station	Shacklebreaker
+53818	96212	19544	152.919	Blacksmithing Station	Assassin's Guile
+53800	96371	19544	90.000	Clothing Station	Assassin's Guile
+53800	96618	19544	90.000	Woodworking Station	Assassin's Guile
+52120	90250	19858	149.996	Blacksmithing Station	Eyes of Mara
+52120	90007	19858	90.000	Clothing Station	Eyes of Mara
+52120	89798	19858	90.000	Woodworking Station	Eyes of Mara
+61200	87572	19868	90.000	Clothing Station	Shalidor's Curse
+61200	87825	19868	149.996	Blacksmithing Station	Shalidor's Curse
+61201	87351	19867	90.297	Woodworking Station	Shalidor's Curse
+54300	98220	19539	-30.004	Blacksmithing Station	Mechanical Acuity
+54300	98463	19539	-90.000	Clothing Station	Mechanical Acuity
+54300	98671	19539	-90.000	Woodworking Station	Mechanical Acuity
+54470	91517	19843	-30.004	Blacksmithing Station	Innate Axiom
+54470	91273	19843	-90.000	Clothing Station	Innate Axiom
+54470	90950	19843	-90.000	Woodworking Station	Innate Axiom
+52128	88980	19858	154.380	Blacksmithing Station	Fortified Brass
+52120	89136	19858	90.000	Clothing Station	Fortified Brass
+52120	89385	19858	90.000	Woodworking Station	Fortified Brass
+60500	92797	19544	-30.004	Blacksmithing Station	Twilight's Embrace
+60500	93051	19544	-90.000	Clothing Station	Twilight's Embrace
+60500	93274	19544	-90.000	Woodworking Station	Twilight's Embrace
+60530	97389	19540	-29.235	Blacksmithing Station	Way of the Arena
+60510	97230	19544	-90.000	Clothing Station	Way of the Arena
+60510	96982	19544	-90.000	Woodworking Station	Way of the Arena
+61900	87982	19871	-30.004	Blacksmithing Station	Spectre's Eye
+61900	87769	19871	-90.000	Clothing Station	Spectre's Eye
+61901	87475	19871	-89.220	Woodworking Station	Spectre's Eye
+60050	94239	19544	149.996	Blacksmithing Station	Oblivion's Foe
+60050	93984	19544	90.000	Clothing Station	Oblivion's Foe
+60050	93761	19544	90.000	Woodworking Station	Oblivion's Foe
+60534	99485	19551	-27.883	Blacksmithing Station	Willow's Path
+60510	99328	19544	-90.000	Clothing Station	Willow's Path
+60510	99081	19544	-90.000	Woodworking Station	Willow's Path
+60500	94158	19544	-30.004	Blacksmithing Station	Vampire's Kiss
+60500	93975	19544	-90.000	Clothing Station	Vampire's Kiss
+60500	93712	19544	-90.000	Woodworking Station	Vampire's Kiss
+61894	86449	19864	-29.421	Blacksmithing Station	Song of Lamae
+61898	86728	19867	-89.703	Clothing Station	Song of Lamae
+61897	86984	19866	-90.000	Woodworking Station	Song of Lamae
+53800	99576	19544	149.996	Blacksmithing Station	Alessia's Bulwark
+53800	99334	19544	90.000	Clothing Station	Alessia's Bulwark
+53800	99127	19544	90.000	Woodworking Station	Alessia's Bulwark
+52952	90036	19861	-33.409	Blacksmithing Station	Hist Bark
+52945	89874	19858	-90.000	Clothing Station	Hist Bark
+52945	89644	19858	-90.000	Woodworking Station	Hist Bark
+60540	98213	19549	-29.366	Blacksmithing Station	Whitestrake's Retribution
+60510	98463	19544	-90.000	Clothing Station	Whitestrake's Retribution
+60510	98671	19544	-90.000	Woodworking Station	Whitestrake's Retribution
+60059	98312	19544	153.018	Blacksmithing Station	Night's Silence
+60050	98469	19544	90.000	Clothing Station	Night's Silence
+60050	98717	19544	90.000	Woodworking Station	Night's Silence
+53404	91700	19844	-120.004	Blacksmithing Station	Death's Wind
+53115	91700	19844	-180.000	Clothing Station	Death's Wind
+52850	91700	19859	-180.000	Woodworking Station	Death's Wind
+53800	97479	19544	149.996	Blacksmithing Station	Ashen Grip
+53800	97236	19544	90.000	Clothing Station	Ashen Grip
+53800	97028	19544	90.000	Woodworking Station	Ashen Grip
+59981	100798	19900	177.352	Breton Sconce, Torch
+58690	100558	19900	-179.791	Breton Sconce, Torch
+57907	100400	19900	178.000	Breton Sconce, Torch
+53762	99945	20035	-131.001	Common Lantern, Hanging
+53600	99945	19544	0.000	Dark Elf Streetpost, Banner
+53762	98900	20035	120.004	Common Lantern, Hanging
+53600	98900	19544	0.000	Dark Elf Streetpost, Banner
+53600	93437	19541	0.000	Dark Elf Streetpost, Banner
+53762	97850	20035	165.004	Common Lantern, Hanging
+53600	97850	19544	0.000	Dark Elf Streetpost, Banner
+53600	96800	19544	0.000	Dark Elf Streetpost, Banner
+59850	95755	19544	0.000	Dark Elf Streetpost, Banner
+53600	95755	19544	0.000	Dark Elf Streetpost, Banner
+53600	94475	19544	0.000	Dark Elf Streetpost, Banner
+53762	96800	20035	92.000	Common Lantern, Hanging
+52370	100278	19839	-27.125	Common Lantern, Hanging
+53762	95755	20035	27.004	Common Lantern, Hanging
+53762	94475	20035	119.004	Common Lantern, Hanging
+53762	93437	20032	71.005	Common Lantern, Hanging
+53600	93437	19541	0.000	Dark Elf Streetpost, Banner
+53600	92400	19539	0.000	Dark Elf Streetpost, Banner
+53145	88515	19858	-180.000	Dark Elf Streetpost, Banner
+53145	89477	19858	-180.000	Dark Elf Streetpost, Banner
+53762	92400	20030	-141.998	Common Lantern, Hanging
+52983	88515	20349	30.004	Common Lantern, Hanging
+52983	89477	20349	99.998	Common Lantern, Hanging
+52983	90440	20349	148.997	Common Lantern, Hanging
+53145	90440	19858	-180.000	Dark Elf Streetpost, Banner
+54338	92400	20030	-62.996	Common Lantern, Hanging
+54500	92400	19539	-180.000	Dark Elf Streetpost, Banner
+54500	93437	19539	-180.000	Dark Elf Streetpost, Banner
+54500	94475	19539	-180.000	Dark Elf Streetpost, Banner
+54500	95755	19539	-180.000	Dark Elf Streetpost, Banner
+54500	96800	19539	-180.000	Dark Elf Streetpost, Banner
+54338	93437	20030	156.995	Common Lantern, Hanging
+54338	94475	20030	159.005	Common Lantern, Hanging
+54338	95755	20030	-93.999	Common Lantern, Hanging
+54500	97850	19539	-180.000	Dark Elf Streetpost, Banner
+54500	98900	19539	-180.000	Dark Elf Streetpost, Banner
+59850	98900	19544	0.000	Dark Elf Streetpost, Banner
+59850	97850	19544	0.000	Dark Elf Streetpost, Banner
+54338	96800	20030	52.998	Common Lantern, Hanging
+54338	97850	20030	-75.004	Common Lantern, Hanging
+54338	98900	20030	-27.004	Common Lantern, Hanging
+60012	98900	20035	142.998	Common Lantern, Hanging
+60012	97850	20035	50.999	Common Lantern, Hanging
+60012	96800	20035	5.999	Common Lantern, Hanging
+56025	100401	19900	-179.187	Breton Sconce, Torch
+51843	90596	20243	90.231	Breton Sconce, Torch
+55241	100557	19900	176.342	Breton Sconce, Torch
+55643	100876	19900	-179.736	Breton Sconce, Torch
+54374	100559	19900	179.363	Breton Sconce, Torch
+53496	100793	19900	-179.143	Breton Sconce, Torch
+59850	96800	19544	0.000	Dark Elf Streetpost, Banner
+59850	95755	19544	0.000	Dark Elf Streetpost, Banner
+59850	94636	19544	0.000	Dark Elf Streetpost, Banner
+59850	93518	19544	0.000	Dark Elf Streetpost, Banner
+59850	92400	19544	0.000	Dark Elf Streetpost, Banner
+61000	90440	19868	0.000	Dark Elf Streetpost, Banner
+61000	89330	19868	0.000	Dark Elf Streetpost, Banner
+61000	88220	19868	0.000	Dark Elf Streetpost, Banner
+61000	87110	19868	0.000	Dark Elf Streetpost, Banner
+61000	86000	19868	0.000	Dark Elf Streetpost, Banner
+60700	92400	19544	-180.000	Dark Elf Streetpost, Banner
+60700	93518	19544	-180.000	Dark Elf Streetpost, Banner
+60700	95755	19544	-180.000	Dark Elf Streetpost, Banner
+60710	96800	19544	-180.000	Dark Elf Streetpost, Banner
+60012	95755	20035	-167.003	Common Lantern, Hanging
+60012	94636	20035	-108.995	Common Lantern, Hanging
+60012	93518	20035	-33.003	Common Lantern, Hanging
+60012	92400	20035	118.004	Common Lantern, Hanging
+61162	90440	20359	-81.002	Common Lantern, Hanging
+61162	89330	20359	57.997	Common Lantern, Hanging
+61162	88220	20359	0.000	Common Lantern, Hanging
+61162	87110	20359	34.003	Common Lantern, Hanging
+61162	86000	20359	115.005	Common Lantern, Hanging
+60538	92400	20035	-20.995	Common Lantern, Hanging
+60538	93518	20035	-123.003	Common Lantern, Hanging
+60538	95755	20035	141.998	Common Lantern, Hanging
+60548	96800	20035	111.995	Common Lantern, Hanging
+60548	97850	20035	-100.997	Common Lantern, Hanging
+62153	90596	20243	-90.692	Breton Sconce, Torch
+62153	88515	20243	-90.802	Breton Sconce, Torch
+62153	89601	20243	-90.011	Breton Sconce, Torch
+54990	99807	19550	-120.004	Blacksmithing Station	Adept Rider
+54726	99807	19550	-180.000	Clothing Station	Adept Rider
+55205	99807	19550	-180.000	Jewelry Crafting Station	Adept Rider
+54492	99807	19550	-180.000	Woodworking Station	Adept Rider
+60050	95114	19544	149.996	Blacksmithing Station	Nocturnal's Favor
+60050	95297	19544	90.000	Clothing Station	Nocturnal's Favor
+60050	94879	19544	90.000	Jewelry Crafting Station	Nocturnal's Favor
+60050	95560	19544	90.000	Woodworking Station	Nocturnal's Favor
+61206	86477	19868	151.073	Blacksmithing Station	Sload's Semblance
+61211	86659	19865	90.780	Clothing Station	Sload's Semblance
+61205	86241	19863	90.297	Jewelry Crafting Station	Sload's Semblance
+61203	86916	19865	90.297	Woodworking Station	Sload's Semblance
+54470	91800	19843	-90.000	Jewelry Crafting Station	Innate Axiom
+54300	98032	19539	-90.000	Jewelry Crafting Station	Mechanical Acuity
+52120	88744	19858	90.000	Jewelry Crafting Station	Fortified Brass
+60050	94442	19544	90.000	Jewelry Crafting Station	Oblivion's Foe
+61900	88241	19871	-90.000	Jewelry Crafting Station	Spectre's Eye
+60660	91700	19841	-180.000	Jewelry Crafting Station	Twice-Born Star
+60510	97621	19544	-90.000	Jewelry Crafting Station	Way of the Arena
+61900	90440	19868	-90.000	Jewelry Crafting Station	Torug's Pact
+61200	90246	19868	90.000	Jewelry Crafting Station	Seducer
+60500	92594	19544	-90.000	Jewelry Crafting Station	Twilight's Embrace
+52120	90440	19858	90.000	Jewelry Crafting Station	Eyes of Mara
+61200	88026	19868	90.000	Jewelry Crafting Station	Shalidor's Curse
+60050	92643	19544	90.000	Jewelry Crafting Station	Orgnum's Scales
+54300	92580	19539	-90.000	Jewelry Crafting Station	Kagrenac's Hope
+60501	95936	19544	-90.000	Jewelry Crafting Station	Varen's Legacy
+54294	94252	19540	-90.297	Jewelry Crafting Station	Kvatch Gladiator
+59800	91800	19843	90.000	Jewelry Crafting Station	Pelinal's Aptitude
+61896	86216	19867	-88.231	Jewelry Crafting Station	Song of Lamae
+60500	94392	19544	-90.000	Jewelry Crafting Station	Vampire's Kiss
+53800	99763	19544	90.000	Jewelry Crafting Station	Alessia's Bulwark
+54300	97621	19539	-90.000	Jewelry Crafting Station	Magnus' Gift
+60510	98032	19544	-90.000	Jewelry Crafting Station	Whitestrake's
+52937	90288	19860	-90.978	Jewelry Crafting Station	Hist Bark
+60050	98078	19544	90.000	Jewelry Crafting Station	Night's Silence
+52275	90730	19860	90.000	Jewelry Crafting Station	Eternal Hunt
+61900	88702	19870	-90.000	Jewelry Crafting Station	Tava's Favor
+53800	94294	19543	90.000	Jewelry Crafting Station	Clever Alchemist
+53650	91700	19841	-180.000	Jewelry Crafting Station	Death's Wind
+53800	97667	19544	90.000	Jewelry Crafting Station	Ashen Grip
+59571	99229	19509	0.000	Jewelry Crafting Station	Night Mother's Gaze
+53360	90800	19842	0.000	Jewelry Crafting Station	Hunding's Rage
+60510	99717	19544	-90.000	Jewelry Crafting Station	Willow's Path
+53800	95982	19544	90.000	Jewelry Crafting Station	Assassin's Guile
+53800	92625	19539	90.000	Jewelry Crafting Station	Daedric Trickery
+61200	88461	19868	90.000	Jewelry Crafting Station	Shacklebreaker
+54293	94696	19544	-89.901	Jewelry Crafting Station	Law of Julianos
+56264	99219	19491	-3.406	Jewelry Crafting Station	Morkuldin
+61611	90730	19871	-90.000	Jewelry Crafting Station	Trial by Fire
+53800	98078	19544	90.000	Jewelry Crafting Station	Armor Master
+60860	90900	19842	0.000	Jewelry Crafting Station	Redistributor
+60050	97667	19544	90.000	Jewelry Crafting Station	Noble's Conquest
+52945	88851	19858	-30.004	Blacksmithing Station	Grave-Stake Collector
+52945	89079	19858	-90.000	Clothing Station	Grave-Stake Collector
+52923	88666	19852	-86.199	Jewelry Crafting Station	Grave-Stake Collector
+52945	89268	19858	-90.000	Woodworking Station	Grave-Stake Collector
+57842	99226	19493	59.996	Blacksmithing Station	Naga Shaman
+58130	99260	19491	0.000	Clothing Station	Naga Shaman
+57629	99230	19488	2.395	Jewelry Crafting Station	Naga Shaman
+58374	99247	19491	0.000	Woodworking Station	Naga Shaman
+54760	99256	19542	59.996	Blacksmithing Station	Might of the Lost Legion
+55027	99282	19550	0.000	Clothing Station	Might of the Lost Legion
+54609	99262	19530	-0.099	Jewelry Crafting Station	Might of the Lost Legio
+55229	99271	19535	0.000	Woodworking Station	Might of the Lost Legion
+60548	98900	20035	0.000	Common Lantern, Hanging
+60548	99945	20035	-176.001	Common Lantern, Hanging
+60710	97850	19544	-180.000	Dark Elf Streetpost, Banner
+60710	98900	19544	-180.000	Dark Elf Streetpost, Banner
+60710	99945	19544	-180.000	Dark Elf Streetpost, Banner
+62174	86461	20237	-89.572	Breton Sconce, Torch
+62150	87517	20240	-92.769	Breton Sconce, Torch

@@ -1,10 +1,11 @@
-.PHONY: put get getpts log test
+.PHONY: put getpts get test log clayget deg
 
 put:
 	rsync -vrt --delete --exclude=.git \
 	--exclude=data \
 	--exclude=doc \
 	--exclude=test \
+	--exclude=trig \
 	. /Volumes/Elder\ Scrolls\ Online/live/AddOns/HomeStationMarker
 
 
@@ -21,3 +22,9 @@ test:
 
 log:
 	lua tool/log_to_text.lua > data/log.txt
+
+clayget:
+	lua trig/clayget.lua
+
+deg:
+	lua trig/trig.lua
