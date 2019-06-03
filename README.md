@@ -4,7 +4,7 @@ An add-on for Elder Scrolls Online that draws 3D markers over crafting stations 
 
 ![player house with some stations marked](doc/hsm_stations_marked.jpg)
 
-Adapted from [Shinni's HarvestMap](https://www.esoui.com/downloads/info57-HarvestMap.html) and [Marify's Confirm Master Writ](https://www.esoui.com/downloads/info57-HarvestMap.html).
+Adapted from [Shinni's HarvestMap](https://www.esoui.com/downloads/info57-HarvestMap.html) and [Marify's Confirm Master Writ](https://www.esoui.com/downloads/info2160-ConfirmMasterWrit.html).
 
 Originally written to help visitors find stations when crafting master writs with [WritWorthy](https://www.esoui.com/downloads/info1605-WritWorthy.html).
 
