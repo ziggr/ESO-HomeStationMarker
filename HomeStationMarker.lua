@@ -22,6 +22,30 @@ HomeStationMarker.SET_ID_TRANSMUTE  = "transmute"       -- not implemented
 HomeStationMarker.SET_ID_ASSISTANTS = "assistants"      -- not implemented
 HomeStationMarker.SET_ID_MUNDUS     = "mundus"          -- not implemented
 
+HomeStationMarker.STATION_ID = {
+    -- SET_ID_ASSITANTS
+    BANKER              = "banker"      -- Tythis
+,   MERCHANT            = "merchant"    -- Nuzhimeh
+,   FENCE               = "fence"       -- Pirharri
+
+    -- SET_ID_TRANSMUTE
+,   TRANSMUTE           = "transmute"
+
+    -- SET_ID_MUNDUS
+,   MUNDUS_APPRENTICE   = "apprentice"
+,   MUNDUS_ATRONACH     = "atronach"
+,   MUNDUS_LADY         = "lady"
+,   MUNDUS_LORD         = "lord"
+,   MUNDUS_LOVER        = "lover"
+,   MUNDUS_MAGE         = "mage"
+,   MUNDUS_RITUAL       = "ritual"
+,   MUNDUS_SERPENT      = "serpent"
+,   MUNDUS_SHADOW       = "shadow"
+,   MUNDUS_STEED        = "steed"
+,   MUNDUS_THIEF        = "thief"
+,   MUNDUS_TOWER        = "tower"
+,   MUNDUS_WARRIOR      = "warrior"
+}
 -- RefCounted API ------------------------------------------------------------
 
 -- Request a marker above a station.
@@ -136,6 +160,7 @@ function HomeStationMarker.RegisterSlashCommands()
 
         local t = { {"forgetlocs"    , "Forget all station locations for current house, also deletes all markers for current house." }
                   , {"forgetlocs all", "Forget all station locations for all houses, also deletes all markers for all houses." }
+                  , {"scanlocs",       "Scan furnishings to learn station locations." }
                   }
         for _, v in pairs(t) do
             local sub = cmd:RegisterSubCommand()
@@ -167,7 +192,8 @@ function HomeStationMarker.SlashCommand(cmd, args)
     end
 
     if cmd:lower() == "scanlocs" then
-        Info("Sccanning current house's station locations...")
+        Info("Scanning current house's station locations...")
+        self.ScanStationLocations()
         return
     end
 
@@ -274,7 +300,41 @@ function HomeStationMarker.ForgetStationLocations(args)
 end
 
 function HomeStationMarker.ScanStationLocations()
-    Error("ScanStationLocations: unimplemented")
+    local self = HomeStationMarker
+    local house_key = self.CurrentHouseKey()
+    if not house_key then
+        Error("ScanStationLocations: not in player housing.")
+        return
+    end
+    if nil == GetNextPlacedHousingFurnitureId(nil) then
+        Error("ScanStationLocations: no decorator permission in this house,"
+              .." or house has no furniture.")
+        return
+    end
+    if not self.LibSets() then
+        return
+    end
+
+    local furniture_id = GetNextPlacedHousingFurnitureId(nil)
+    local loop_limit   = 1000 -- avoid infinite loops in case GNPHFI() surprises us
+    local furn_ct      = 0
+    local loc_ct       = 0
+    while furniture_id and 0 < loop_limit do
+        furn_ct = furn_ct + 1
+        local o = self.FurnitureToInfo(furniture_id)
+        if o then
+            loc_ct = loc_ct + 1
+            self.RecordStationLocation( house_key
+                                      , o.station_id
+                                      , o.set_info
+                                      , o.station_pos
+                                      )
+        end
+        furniture_id = GetNextPlacedHousingFurnitureId(furniture_id)
+        loop_limit = loop_limit - 1
+    end
+
+    Info("ScanStationLocations: station locations recorded:%d", loc_ct)
 end
 
 function HomeStationMarker.Test()
@@ -507,16 +567,17 @@ function HomeStationMarker.UnregisterSceneListener()
 end
 
 function HomeStationMarker.OnSceneChange(scene_name, old_state, new_state)
-    Debug("OnSceneChange scene_name:%s old_state:%s new_state:%s"
-         , tostring(scene_name)
-         , tostring(old_state)
-         , tostring(new_state)
-         )
+    -- NOISY!
+    -- Debug("OnSceneChange scene_name:%s old_state:%s new_state:%s"
+    --      , tostring(scene_name)
+    --      , tostring(old_state)
+    --      , tostring(new_state)
+    --      )
     if SCENE_SHOWN == new_state then
-        Debug("OnSceneChange showing 3D MarkControls")
+        -- Debug("OnSceneChange showing 3D MarkControls")
         HomeStationMarker_TopLevel:SetHidden(false)
     elseif SCENE_HIDDEN == new_state then
-        Debug("OnSceneChange hiding 3D MarkControls")
+        -- Debug("OnSceneChange hiding 3D MarkControls")
         HomeStationMarker_TopLevel:SetHidden(true)
     end
 end
@@ -923,6 +984,164 @@ function HomeStationMarker.PeriodicRotate()
                         -- to add any more while in a crafting house.
         zo_callLater(self.PeriodicRotate, 125)
     end
+end
+
+-- Furniture -----------------------------------------------------------------
+
+function HomeStationMarker.FurnitureToInfo(furniture_id)
+    local self = HomeStationMarker
+    if not furniture_id then return nil end
+    -- .station_id
+    -- .set_info.set_id
+    -- .set_info.set_name
+    -- .station_pos.world_x y z orientation
+
+    local o = {}
+    local r = { GetPlacedHousingFurnitureInfo(furniture_id) }
+    o.item_name             = r[1]
+    o.texture_name          = r[2]
+    o.furniture_data_id     = r[3]
+    local furniture_data_id = r[3]
+    o.quality           = GetPlacedHousingFurnitureQuality(furniture_id)
+    o.link              = GetPlacedFurnitureLink(
+                                furniture_id, LINK_STYLE_DEFAULT)
+    o.collectible_id    = GetCollectibleIdFromFurnitureId(furniture_id)
+    o.unique_id         = GetItemUniqueIdFromFurnitureId(furniture_id)
+    r = { HousingEditorGetFurnitureWorldPosition(furniture_id) }
+    o.station_pos = {}
+    o.station_pos.world_x = r[1]
+    o.station_pos.world_y = r[2]
+    o.station_pos.world_z = r[3]
+    r = { HousingEditorGetFurnitureOrientation(furniture_id) }
+    o.station_pos.orientation = r[2]
+    r = { GetFurnitureDataCategoryInfo(furniture_data_id) }
+    o.category_id = r[1]
+    o.subcategory_id = r[2]
+
+    -- if o.category_id == 25
+    --     or string.find(o.item_name, "Provision")
+    --     then -- category_id for crafting stations, mundus stones, assistants, others.
+    --     local row = { tostring(o.item_name)
+    --                 , tostring(o.category_id)
+    --                 , tostring(o.subcategory_id)
+    --                 , tostring(o.link)
+    --                 , tostring(o.texture_name)
+    --                 }
+    --     local line = table.concat(row, "\t")
+    --     Debug(line)
+    -- end
+
+    if not o.texture_name then return nil end
+    local tinfo = HomeStationMarker.FURNITURE_TEXTURE_INFO[o.texture_name]
+    if not tinfo then return nil end
+
+    o.station_id = tinfo.station_id
+    o.set_info   = {}
+    if tinfo.set_id then
+        o.set_info.set_id = tinfo.set_id
+    else
+        o.set_info.set_id = self.StationNameToSetID(o.item_name)
+        if o.set_info.set_id then
+            o.set_info.set_name = self.LibSets().GetSetName(o.set_info.set_id)
+        else
+            o.set_info_set_id = self.SET_ID_NONE
+        end
+    end
+    return o
+end
+
+-- Hardcoded list of known furniture textures and the set/station they map to.
+-- There's no reliable programmatic way to query a furniture for set/station
+-- identifiers. There's also no reliable programmatic way to extract attuned
+-- station set bonuses. Have to string match for those.
+
+local nos = HomeStationMarker.SET_ID_NONE
+local tra = HomeStationMarker.SET_ID_TRANSMUTE
+local ast = HomeStationMarker.SET_ID_ASSISTANTS
+local mun = HomeStationMarker.SET_ID_MUNDUS
+local sid = HomeStationMarker.STATION_ID
+
+HomeStationMarker.FURNITURE_TEXTURE_INFO = {
+    ["/esoui/art/icons/assistant_banker_01.dds"                           ] = { set_id = ast, station_id = sid.BANKER                    }
+,   ["/esoui/art/icons/assistant_fence_01.dds"                            ] = { set_id = ast, station_id = sid.FENCE                     }
+,   ["/esoui/art/icons/assistant_vendor_01.dds"                           ] = { set_id = ast, station_id = sid.MERCHANT                  }
+,   ["/esoui/art/icons/housing_cwc_crf_housingretrait001.dds"             ] = { set_id = tra, station_id = sid.TRANSMUTE                 }
+
+    -- These textures match both attuned and non-attuned crafting stations.
+,   ["/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds"         ] = { set_id = nil, station_id = CRAFTING_TYPE_BLACKSMITHING   }
+,   ["/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds"] = { set_id = nil, station_id = CRAFTING_TYPE_CLOTHIER        }
+,   ["/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds"   ] = { set_id = nil, station_id = CRAFTING_TYPE_WOODWORKING     }
+,   ["/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds"       ] = { set_id = nil, station_id = CRAFTING_TYPE_JEWELRYCRAFTING }
+
+,   ["/esoui/art/icons/housing_gen_crf_portabletablealchemy001.dds"       ] = { set_id = nos, station_id = CRAFTING_TYPE_ALCHEMY         }
+,   ["/esoui/art/icons/housing_gen_crf_portabletableenchanter001.dds"     ] = { set_id = nos, station_id = CRAFTING_TYPE_ENCHANTING      }
+,   ["/esoui/art/icons/housing_gen_crf_portablecampfire001.dds"           ] = { set_id = nos, station_id = CRAFTING_TYPE_PROVISIONING    }
+
+    -- Clockwork City, non-attuned versions
+    -- There doesn't seem to be a clockwork jewelry station.
+,   ["/esoui/art/icons/housing_cwc_crf_tableblacksmith001.dds"            ] = { set_id = nos, station_id = CRAFTING_TYPE_BLACKSMITHING   }
+,   ["/esoui/art/icons/housing_cwc_crf_tableleatherworking001.dds"        ] = { set_id = nos, station_id = CRAFTING_TYPE_CLOTHIER        }
+,   ["/esoui/art/icons/housing_cwc_crf_tablewoodworking001.dds"           ] = { set_id = nos, station_id = CRAFTING_TYPE_WOODWORKING     }
+,   ["/esoui/art/icons/housing_cwc_crf_tablealchemycrafting001.dds"       ] = { set_id = nos, station_id = CRAFTING_TYPE_ALCHEMY         }
+,   ["/esoui/art/icons/housing_cwc_crf_tableenchanter001.dds"             ] = { set_id = nos, station_id = CRAFTING_TYPE_ENCHANTING      }
+,   ["/esoui/art/icons/housing_cwc_crf_provisioning001.dds"               ] = { set_id = nos, station_id = CRAFTING_TYPE_PROVISIONING    }
+
+    -- new life/winter fest cook fire
+,   ["/esoui/art/icons/housing_uni_inc_holidayhearthlogs001.dds"          ] = { set_id = nos, station_id = CRAFTING_TYPE_PROVISIONING    }
+
+    -- witchest fest alchemy station
+,   ["/esoui/art/icons/housing_uni_exc_reachhealingtotem001.dds"          ] = { set_id = nos, station_id = CRAFTING_TYPE_ALCHEMY         }
+
+,   ["/esoui/art/icons/housing_gen_exc_mundusstoneapprentice001.dds"      ] = { set_id = mun, station_id = sid.MUNDUS_APPRENTICE         }
+,   ["/esoui/art/icons/housing_gen_exc_mundusstoneatronach001.dds"        ] = { set_id = mun, station_id = sid.MUNDUS_ATRONACH           }
+,   ["/esoui/art/icons/housing_gen_exc_mundusstonelady001.dds"            ] = { set_id = mun, station_id = sid.MUNDUS_LADY               }
+,   ["/esoui/art/icons/housing_gen_exc_mundusstonelord001.dds"            ] = { set_id = mun, station_id = sid.MUNDUS_LORD               }
+,   ["/esoui/art/icons/housing_gen_exc_mundusstonelover001.dds"           ] = { set_id = mun, station_id = sid.MUNDUS_LOVER              }
+,   ["/esoui/art/icons/housing_gen_exc_mundusstonemage001.dds"            ] = { set_id = mun, station_id = sid.MUNDUS_MAGE               }
+,   ["/esoui/art/icons/housing_gen_exc_mundusstoneritual001.dds"          ] = { set_id = mun, station_id = sid.MUNDUS_RITUAL             }
+,   ["/esoui/art/icons/housing_gen_exc_mundusstoneserpent001.dds"         ] = { set_id = mun, station_id = sid.MUNDUS_SERPENT            }
+,   ["/esoui/art/icons/housing_gen_exc_mundusstoneshadow001.dds"          ] = { set_id = mun, station_id = sid.MUNDUS_SHADOW             }
+,   ["/esoui/art/icons/housing_gen_exc_mundusstonesteed001.dds"           ] = { set_id = mun, station_id = sid.MUNDUS_STEED              }
+,   ["/esoui/art/icons/housing_gen_exc_mundusstonethief001.dds"           ] = { set_id = mun, station_id = sid.MUNDUS_THIEF              }
+,   ["/esoui/art/icons/housing_gen_exc_mundusstonetower001.dds"           ] = { set_id = mun, station_id = sid.MUNDUS_TOWER              }
+,   ["/esoui/art/icons/housing_gen_exc_mundusstonewarrior001.dds"         ] = { set_id = mun, station_id = sid.MUNDUS_WARRIOR            }
+
+    -- Other furniture that appear in category 25 "Services" but which
+    -- HomeStationMarker does not touch.
+,   ["/esoui/art/icons/housing_gen_crf_transmogtable001.dds"              ] = nil -- outfit station
+,   ["/esoui/art/icons/housing_gen_crf_portabletabledye001.dds"           ] = nil -- dye station
+
+,   ["/esoui/art/icons/housing_targetdummy_humanoid_01.dds"               ] = nil
+,   ["/esoui/art/icons/housing_targetdummy_robusthumanoid_01.dds"         ] = nil
+,   ["/esoui/art/icons/targetdummy_theprecursor.dds"                      ] = nil
+
+,   ["/esoui/art/icons/housing_uni_inc_musicboxaldmeri001.dds"            ] = nil
+,   ["/esoui/art/icons/housing_uni_inc_musicboxdaggerfall001.dds"         ] = nil
+,   ["/esoui/art/icons/housing_uni_inc_musicboxebonhart001.dds"           ] = nil
+,   ["/esoui/art/icons/housing_uni_inc_musicboxeso001.dds"                ] = nil
+
+,   ["/esoui/art/icons/housing_gen_con_housingchest003.dds"               ] = nil -- storage chest
+,   ["/esoui/art/icons/housing_gen_con_housingchest004.dds"               ] = nil -- storage coffer
+
+}
+
+nos = nil
+tra = nil
+ast = nil
+mun = nil
+sid = nil
+
+function HomeStationMarker.StationNameToSetID(item_name)
+    local self = HomeStationMarker
+    local simpler_name = self.SimplifyString(item_name)
+    local snt  = self.SetNameTable()
+    for _,row in ipairs(snt) do
+        if string.find(simpler_name, row.set_name) then
+            return row.set_id
+        end
+    end
+    Debug("StationNameToSetID: no match for '%s'", item_name)
+    return nil
 end
 
 -- RefCounts -----------------------------------------------------------------

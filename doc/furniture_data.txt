@@ -1,0 +1,226 @@
+# item_name	category_id	subcategory_id	item_link	texture
+Blacksmithing Station (Armor Master)	25	104	|H0:item:119807:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Enchanting Station	25	104	|H0:item:118330:124:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableenchanter001.dds
+Clothing Station (Armor Master)	25	104	|H0:item:119733:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Armor Master)	25	104	|H0:item:119770:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Alchemy Station	25	104	|H0:item:118328:124:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablealchemy001.dds
+Blacksmithing Station (Noble's Conquest)	25	104	|H0:item:119805:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Noble's Conquest)	25	104	|H0:item:119731:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Noble's Conquest)	25	104	|H0:item:119768:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Redistributor)	25	104	|H0:item:119806:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Redistributor)	25	104	|H0:item:119732:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Redistributor)	25	104	|H0:item:119769:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Orgnum's Scales)	25	104	|H0:item:119799:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Orgnum's Scales)	25	104	|H0:item:119725:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Orgnum's Scales)	25	104	|H0:item:119762:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Kagrenac's Hope)	25	104	|H0:item:119801:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Kagrenac's Hope)	25	104	|H0:item:119727:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Kagrenac's Hope)	25	104	|H0:item:119764:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Hunding's Rage)	25	104	|H0:item:119796:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Hunding's Rage)	25	104	|H0:item:119722:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Hunding's Rage)	25	104	|H0:item:119759:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Law of Julianos)	25	104	|H0:item:119808:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Law of Julianos)	25	104	|H0:item:119734:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Law of Julianos)	25	104	|H0:item:119771:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Magnus' Gift)	25	104	|H0:item:119788:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Magnus' Gift)	25	104	|H0:item:119714:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Magnus' Gift)	25	104	|H0:item:119751:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Night Mother's Gaze)	25	104	|H0:item:119789:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Night Mother's Gaze)	25	104	|H0:item:119715:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Night Mother's Gaze)	25	104	|H0:item:119752:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Morkuldin)	25	104	|H0:item:119811:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Morkuldin)	25	104	|H0:item:119737:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Morkuldin)	25	104	|H0:item:119774:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Eternal Hunt)	25	104	|H0:item:119814:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Eternal Hunt)	25	104	|H0:item:119740:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Eternal Hunt)	25	104	|H0:item:119777:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Twice-Born Star)	25	104	|H0:item:119804:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Twice-Born Star)	25	104	|H0:item:119730:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Twice-Born Star)	25	104	|H0:item:119767:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Clever Alchemist)	25	104	|H0:item:119813:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Clever Alchemist)	25	104	|H0:item:119739:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Clever Alchemist)	25	104	|H0:item:119776:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Pelinal's Aptitude)	25	104	|H0:item:119817:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Pelinal's Aptitude)	25	104	|H0:item:119743:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Pelinal's Aptitude)	25	104	|H0:item:119780:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Seducer)	25	104	|H0:item:119786:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Seducer)	25	104	|H0:item:119712:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Seducer)	25	104	|H0:item:119749:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Torug's Pact)	25	104	|H0:item:119793:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Torug's Pact)	25	104	|H0:item:119719:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Torug's Pact)	25	104	|H0:item:119756:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Kvatch Gladiator)	25	104	|H0:item:119815:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Kvatch Gladiator)	25	104	|H0:item:119741:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Kvatch Gladiator)	25	104	|H0:item:119778:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Varen's Legacy)	25	104	|H0:item:119816:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Varen's Legacy)	25	104	|H0:item:119742:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Varen's Legacy)	25	104	|H0:item:119779:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Tava's Favor)	25	104	|H0:item:119812:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Tava's Favor)	25	104	|H0:item:119738:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Tava's Favor)	25	104	|H0:item:119775:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Trial by Fire)	25	104	|H0:item:119809:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Trial by Fire)	25	104	|H0:item:119735:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Trial by Fire)	25	104	|H0:item:119772:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Daedric Trickery)	25	104	|H0:item:122608:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Daedric Trickery)	25	104	|H0:item:122602:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Daedric Trickery)	25	104	|H0:item:122605:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Shacklebreaker)	25	104	|H0:item:122609:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Shacklebreaker)	25	104	|H0:item:122603:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Shacklebreaker)	25	104	|H0:item:122606:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Assassin's Guile)	25	104	|H0:item:122607:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Assassin's Guile)	25	104	|H0:item:122601:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Assassin's Guile)	25	104	|H0:item:122604:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Eyes of Mara)	25	104	|H0:item:119800:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Eyes of Mara)	25	104	|H0:item:119726:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Eyes of Mara)	25	104	|H0:item:119763:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Clothing Station (Shalidor's Curse)	25	104	|H0:item:119728:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Blacksmithing Station (Shalidor's Curse)	25	104	|H0:item:119802:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Woodworking Station (Shalidor's Curse)	25	104	|H0:item:119765:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Mechanical Acuity)	25	104	|H0:item:130369:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Mechanical Acuity)	25	104	|H0:item:130363:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Mechanical Acuity)	25	104	|H0:item:130366:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Innate Axiom)	25	104	|H0:item:130368:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Innate Axiom)	25	104	|H0:item:130362:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Innate Axiom)	25	104	|H0:item:130365:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Fortified Brass)	25	104	|H0:item:130367:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Fortified Brass)	25	104	|H0:item:130361:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Fortified Brass)	25	104	|H0:item:130364:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Twilight's Embrace)	25	104	|H0:item:119783:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Twilight's Embrace)	25	104	|H0:item:119709:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Twilight's Embrace)	25	104	|H0:item:119746:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Way of the Arena)	25	104	|H0:item:119803:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Way of the Arena)	25	104	|H0:item:119729:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Way of the Arena)	25	104	|H0:item:119766:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Spectre's Eye)	25	104	|H0:item:119792:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Spectre's Eye)	25	104	|H0:item:119718:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Spectre's Eye)	25	104	|H0:item:119755:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Oblivion's Foe)	25	104	|H0:item:119791:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Oblivion's Foe)	25	104	|H0:item:119717:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Oblivion's Foe)	25	104	|H0:item:119754:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Willow's Path)	25	104	|H0:item:119795:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Willow's Path)	25	104	|H0:item:119721:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Willow's Path)	25	104	|H0:item:119758:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Vampire's Kiss)	25	104	|H0:item:119787:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Vampire's Kiss)	25	104	|H0:item:119713:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Vampire's Kiss)	25	104	|H0:item:119750:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Song of Lamae)	25	104	|H0:item:119797:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Song of Lamae)	25	104	|H0:item:119723:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Song of Lamae)	25	104	|H0:item:119760:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Alessia's Bulwark)	25	104	|H0:item:119798:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Alessia's Bulwark)	25	104	|H0:item:119724:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Alessia's Bulwark)	25	104	|H0:item:119761:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Hist Bark)	25	104	|H0:item:119794:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Hist Bark)	25	104	|H0:item:119720:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Hist Bark)	25	104	|H0:item:119757:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Whitestrake's Retribution)	25	104	|H0:item:119785:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Whitestrake's Retribution)	25	104	|H0:item:119711:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Whitestrake's Retribution)	25	104	|H0:item:119748:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Night's Silence)	25	104	|H0:item:119784:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Night's Silence)	25	104	|H0:item:119710:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Night's Silence)	25	104	|H0:item:119747:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Death's Wind)	25	104	|H0:item:119782:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Death's Wind)	25	104	|H0:item:119708:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Death's Wind)	25	104	|H0:item:119745:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Ashen Grip)	25	104	|H0:item:119790:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Ashen Grip)	25	104	|H0:item:119716:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Woodworking Station (Ashen Grip)	25	104	|H0:item:119753:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+The Apprentice	25	160	|H0:item:125451:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_exc_mundusstoneapprentice001.dds
+The Atronach	25	160	|H0:item:119556:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_exc_mundusstoneatronach001.dds
+The Lady	25	160	|H0:item:125452:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_exc_mundusstonelady001.dds
+The Lord	25	160	|H0:item:126034:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_exc_mundusstonelord001.dds
+The Lover	25	160	|H0:item:125461:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_exc_mundusstonelover001.dds
+The Mage	25	160	|H0:item:125460:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_exc_mundusstonemage001.dds
+The Ritual	25	160	|H0:item:125459:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_exc_mundusstoneritual001.dds
+The Serpent	25	160	|H0:item:125458:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_exc_mundusstoneserpent001.dds
+The Shadow	25	160	|H0:item:125457:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_exc_mundusstoneshadow001.dds
+The Steed	25	160	|H0:item:125456:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_exc_mundusstonesteed001.dds
+The Thief	25	160	|H0:item:125455:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_exc_mundusstonethief001.dds
+The Tower	25	160	|H0:item:125454:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_exc_mundusstonetower001.dds
+The Warrior	25	160	|H0:item:125453:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_exc_mundusstonewarrior001.dds
+Target Skeleton, Humanoid	25	98	|H0:item:118553:6:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h	/esoui/art/icons/housing_targetdummy_humanoid_01.dds
+Target Skeleton, Robust Humanoid	25	98	|H0:item:121314:6:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h	/esoui/art/icons/housing_targetdummy_robusthumanoid_01.dds
+Target Skeleton, Humanoid	25	98	|H0:item:118553:6:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h	/esoui/art/icons/housing_targetdummy_humanoid_01.dds
+Outfit Station	25	104	|H0:item:134675:124:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_transmogtable001.dds
+Blacksmithing Station (Adept Rider)	25	104	|H0:item:138739:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Adept Rider)	25	104	|H0:item:138737:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Jewelry Crafting Station (Adept Rider)	25	104	|H0:item:138740:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Woodworking Station (Adept Rider)	25	104	|H0:item:138738:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Nocturnal's Favor)	25	104	|H0:item:138747:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Nocturnal's Favor)	25	104	|H0:item:138745:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Jewelry Crafting Station (Nocturnal's Favor)	25	104	|H0:item:138748:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Woodworking Station (Nocturnal's Favor)	25	104	|H0:item:138746:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Sload's Semblance)	25	104	|H0:item:138743:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Sload's Semblance)	25	104	|H0:item:138741:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Jewelry Crafting Station (Sload's Semblance)	25	104	|H0:item:138744:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Woodworking Station (Sload's Semblance)	25	104	|H0:item:138742:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Jewelry Crafting Station (Innate Axiom)	25	104	|H0:item:137910:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Mechanical Acuity)	25	104	|H0:item:137912:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Fortified Brass)	25	104	|H0:item:137911:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Oblivion's Foe)	25	104	|H0:item:137880:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Spectre's Eye)	25	104	|H0:item:137881:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Twice-Born Star)	25	104	|H0:item:137893:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Way of the Arena)	25	104	|H0:item:137892:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Torug's Pact)	25	104	|H0:item:137882:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Seducer)	25	104	|H0:item:137875:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Twilight's Embrace)	25	104	|H0:item:137872:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Eyes of Mara)	25	104	|H0:item:137889:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Shalidor's Curse)	25	104	|H0:item:137891:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Orgnum's Scales)	25	104	|H0:item:137888:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Kagrenac's Hope)	25	104	|H0:item:137890:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Varen's Legacy)	25	104	|H0:item:137905:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Kvatch Gladiator)	25	104	|H0:item:137904:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Pelinal's Aptitude)	25	104	|H0:item:137906:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Song of Lamae)	25	104	|H0:item:137886:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Vampire's Kiss)	25	104	|H0:item:137876:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Alessia's Bulwark)	25	104	|H0:item:137887:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Magnus' Gift)	25	104	|H0:item:137877:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Whitestrake's)	25	104	|H0:item:137874:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Hist Bark)	25	104	|H0:item:137883:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Night's Silence)	25	104	|H0:item:137873:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Eternal Hunt)	25	104	|H0:item:137903:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Tava's Favor)	25	104	|H0:item:137901:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Clever Alchemist)	25	104	|H0:item:137902:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Death's Wind)	25	104	|H0:item:137871:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Ashen Grip)	25	104	|H0:item:137879:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Night Mother's Gaze)	25	104	|H0:item:137878:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Hunding's Rage)	25	104	|H0:item:137885:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Willow's Path)	25	104	|H0:item:137884:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Assassin's Guile)	25	104	|H0:item:137907:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Daedric Trickery)	25	104	|H0:item:137908:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Shacklebreaker)	25	104	|H0:item:137909:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Law of Julianos)	25	104	|H0:item:137897:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Morkuldin)	25	104	|H0:item:137900:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Trial by Fire)	25	104	|H0:item:137898:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Armor Master)	25	104	|H0:item:137896:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Redistributor)	25	104	|H0:item:137895:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Jewelry Crafting Station (Noble's Conquest)	25	104	|H0:item:137894:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Blacksmithing Station (Grave-Stake Collector)	25	104	|H0:item:145496:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Grave-Stake Collector)	25	104	|H0:item:145494:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Jewelry Crafting Station (Grave-Stake Collector)	25	104	|H0:item:145497:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Woodworking Station (Grave-Stake Collector)	25	104	|H0:item:145495:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Naga Shaman)	25	104	|H0:item:145500:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Naga Shaman)	25	104	|H0:item:145498:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Jewelry Crafting Station (Naga Shaman)	25	104	|H0:item:145501:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Woodworking Station (Naga Shaman)	25	104	|H0:item:145499:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Blacksmithing Station (Might of the Lost Legion)	25	104	|H0:item:145504:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds
+Clothing Station (Might of the Lost Legion)	25	104	|H0:item:145502:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletableleatherworking001.dds
+Jewelry Crafting Station (Might of the Lost Legion	25	104	|H0:item:145505:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablejewelry001.dds
+Woodworking Station (Might of the Lost Legion)	25	104	|H0:item:145503:124:1:0:0:0:0:0:0:0:0:0:0:0:1:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_gen_crf_portabletablewoodworking001.dds
+Music Box, Blood and Glory	25	182	|H0:item:145322:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_uni_inc_musicboxeso001.dds
+Winter Festival Hearthfire	25	104	|H0:item:146050:4:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_uni_inc_holidayhearthlogs001.dds
+Music Box, Hinterlands	25	182	|H0:item:147507:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_uni_inc_musicboxebonhart001.dds
+Music Box, Sands of the Alik'r	25	182	|H0:item:147506:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_uni_inc_musicboxdaggerfall001.dds
+Music Box, Y'ffre in Every Leaf	25	182	|H0:item:147505:6:1:0:0:0:0:0:0:0:0:0:0:0:65:0:0:1:0:0:0|h|h	/esoui/art/icons/housing_uni_inc_musicboxaldmeri001.dds
+Transmute Station	25	104	|H0:item:133576:6:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h	/esoui/art/icons/housing_cwc_crf_housingretrait001.dds
+Target Skeleton, Robust Humanoid	25	98	|H0:item:121314:6:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h	/esoui/art/icons/housing_targetdummy_robusthumanoid_01.dds
+Tythis Andromo, the Banker	25	31		/esoui/art/icons/assistant_banker_01.dds
+Pirharri the Smuggler	25	32		/esoui/art/icons/assistant_fence_01.dds
+Nuzhimeh the Merchant	25	32		/esoui/art/icons/assistant_vendor_01.dds
+Storage Coffer, Fortified	25	172		/esoui/art/icons/housing_gen_con_housingchest004.dds
+Storage Chest, Fortified	25	172		/esoui/art/icons/housing_gen_con_housingchest003.dds
+Storage Coffer, Oaken	25	172		/esoui/art/icons/housing_gen_con_housingchest004.dds
+Storage Coffer, Secure	25	172		/esoui/art/icons/housing_gen_con_housingchest004.dds
+Storage Coffer, Sturdy	25	172		/esoui/art/icons/housing_gen_con_housingchest004.dds
+Storage Chest, Oaken	25	172		/esoui/art/icons/housing_gen_con_housingchest003.dds
+Storage Chest, Secure	25	172		/esoui/art/icons/housing_gen_con_housingchest003.dds
+Storage Chest, Sturdy	25	172		/esoui/art/icons/housing_gen_con_housingchest003.dds

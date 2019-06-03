@@ -14,7 +14,9 @@ function StartsWith(longer, prefix)
 end
 
 for i,row in ipairs(LibDebugLoggerLog) do
-    if row[5] == HSM then
+    if row[5] == HSM
+        or row[5] == "UI"
+        then
         print(row[4].." "..row[6])
     elseif row[5] == LDB and StartsWith(row[6], INT) then
         print("")

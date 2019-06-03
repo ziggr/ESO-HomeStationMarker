@@ -117,11 +117,12 @@ function HomeStationMarker.TextToStationSetIDs(text)
 end
 
 HomeStationMarker.SET_ABBREV = {
-    ["tbs"      ] = 161 -- Twice-Born Star
-,   ["nmg"      ] =  51 -- Night Mother's Gaze
-,   ["julianos" ] = 207 -- Law of Julianos
-,   ["kags"     ] =  92 -- Kagrenac's Hope
-,   ["seducer"  ] =  43 -- Armor of the Seducer
+    ["tbs"          ] = 161 -- Twice-Born Star
+,   ["nmg"          ] =  51 -- Night Mother's Gaze
+,   ["julianos"     ] = 207 -- Law of Julianos
+,   ["kags"         ] =  92 -- Kagrenac's Hope
+,   ["seducer"      ] =  43 -- Armor of the Seducer
+,   ["whitestrake"  ] =  41 -- Whitestrake's Retribution
 }
 
 -- Return a sorted table of set names, including any aliases.
