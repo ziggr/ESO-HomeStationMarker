@@ -22,39 +22,52 @@ HomeStationMarker.SET_ID_TRANSMUTE  = "transmute"       -- not implemented
 HomeStationMarker.SET_ID_ASSISTANTS = "assistants"      -- not implemented
 HomeStationMarker.SET_ID_MUNDUS     = "mundus"          -- not implemented
 
--- API -----------------------------------------------------------------------
+-- RefCounted API ------------------------------------------------------------
 
 -- Request a marker above a station.
 --
--- returns true if request added, nil if not.
+-- returns true if request added, nil if not, either due to there already
+-- having a previous request for that station, or unable to show because
+-- no known location for the station in this house (or not in a house.)
 --
 -- Requested station will be shown immediately if in a player house with that
 -- station, and station location is already known to HomeStationMarker from
 -- a previous player interaction with that station.
+--
 function HomeStationMarker.AddMarker(set_id, station_id)
     local self = HomeStationMarker
     Debug( "AddMarker set_id:%s station_id:%s"
          , tostring(set_id)
          , tostring(station_id)
          )
+    set_id = set_id or self.SET_ID_NONE
     assert(station_id)
     local requested =  self.RequestMark(
                                 { set_id     = set_id
                                 , station_id = station_id
                                 })
+    local shown = nil
     if requested then
-        self.ShowMarkControl(set_id, station_id)
+        shown = self.ShowMarkControl(set_id, station_id)
     end
-    return requested
+    self.IncrementRefCount(set_id, station_id)
+    return requested = shown
 end
 
+-- Decrement refcount for this station. If refcount becomes 0, then
+-- hide the marker.
 function HomeStationMarker.DeleteMarker(set_id, station_id)
     local self = HomeStationMarker
     Debug( "DeleteMarker set_id:%s station_id:%s"
          , tostring(set_id)
          , tostring(station_id)
          )
+    set_id = set_id or self.SET_ID_NONE
     assert(station_id)
+    local rc = self.DecrementRefCount(set_id, station_id)
+    if 0 < rc then      -- Non-zero refcount means somebody else still
+        return nil      -- wants this marker.
+    end
     local unrequested = self.UnrequestMark(
                                 { set_id     = set_id
                                 , station_id = station_id
@@ -65,10 +78,12 @@ function HomeStationMarker.DeleteMarker(set_id, station_id)
     return unrequested
 end
 
+-- Unconditionally clear refcounts and hide all markers.
 function HomeStationMarker.DeleteAllMarkers()
     local self = HomeStationMarker
     Debug("DeleteAllMarkers")
     self.saved_vars.requested_mark = {}
+    self.ResetAllRefCounts()
     local house_key = self.CurrentHouseKey()
     if house_key then
         self.HideAllMarkControls()
@@ -89,6 +104,7 @@ end
 --   Stations that we should draw beacons over, when possible.
 --   Just a list of set_id+station_id tuples.
 --   AddRequestedMark() / DeleteRequestedMark() / saved_vars.requested_mark
+--   Increment/Decrement/ClearRefCount()        / saved_vars.requested_mark_refcounts
 --
 -- * MarkControl
 --   3D Controls that are the beacons that appear in 3D space.
@@ -723,6 +739,7 @@ function HomeStationMarker.ShowMarkControl(set_id, station_id)
 
     self.CreateMarkControl(set_id, station_id, coords)
     self.InvalidateRotateCache()
+    return true
 end
 
 function HomeStationMarker.HideAllMarkControls()
@@ -888,6 +905,32 @@ function HomeStationMarker.PeriodicRotate()
                         -- to add any more while in a crafting house.
         zo_callLater(self.PeriodicRotate, 125)
     end
+end
+
+-- RefCounts -----------------------------------------------------------------
+
+function HomeStationMarker.IncrementRefCount(set_id, station_id)
+    local self = HomeStationMarker
+    local key  = self.MCKey(set_id, station_id)
+    self.saved_vars.requested_mark_refcounts
+        = self.saved_vars.requested_mark_refcounts or {}
+    local rc = self.saved_vars.requested_mark_refcounts -- for less typing
+    rc[key] = (rc[key] or 0) + 1
+    return rc[key]
+end
+
+function HomeStationMarker.DecrementRefCount(set_id, station_id)
+    local self = HomeStationMarker
+    local key  = self.MCKey(set_id, station_id)
+    self.saved_vars.requested_mark_refcounts
+        = self.saved_vars.requested_mark_refcounts or {}
+    local rc = self.saved_vars.requested_mark_refcounts -- for less typing
+    rc[key] = math.min(1, rc[key] or 1) - 1
+    return rc[key]
+end
+
+function HomeStationMarker.ResetAllRefCounts()
+    self.saved_vars.requested_mark_refcounts = {}
 end
 
 -- Init ----------------------------------------------------------------------

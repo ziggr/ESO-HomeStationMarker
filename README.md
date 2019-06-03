@@ -21,7 +21,8 @@ Originally written to help visitors find stations when crafting master writs wit
 
 # Why don't I see any markers?
 
-Learns station locations as you visit them.
+HomeStationMarker starts out not knowing any station locations. Once it has some station locations recorded to SavedVariables, it can show markers for those stations.
+
 1. Run around the player house and interact with a few crafting stations, such as Enchanting or Armor Master Blacksmithing.
 2. `/hsm enchanting` or `/hsm armor bs` to show the above marker.
    (This command requires [Baertram's LibSets](https://www.esoui.com/downloads/info2241-LibSets.html).)
@@ -78,10 +79,20 @@ No thank you. That's an additional API and complexity that I don't want to spend
 
 ```
 HomeStationMarker.AddMarker(setId, stationId)
+    Increment ref count for <setId, stationId>.
+    Show a marker for that station if in player housing and its
+    location is known.
+    Return true if shown, false if not shown was already shown.
 
 HomeStationMarker.DeleteMarker(setId, stationId)
+    Decrement ref count for <setId, stationId>.
+    Hide any marker for that station if refcount hit 0.
+    Return true if refcount hit zero and there was a request for that marker.
 
 HomeStationMarker.DeleteAllMarkers()
+    Reset all ref counts to zero.
+    Delete all requests for markers.
+    Hide any markers.
 
 - setId:     integer set bonus ID, such as 82 for Alessia's Bulwark.
              nil or string "no_set" for set-less stations such as Alchemy
@@ -90,11 +101,18 @@ HomeStationMarker.DeleteAllMarkers()
 - stationId: integer crafting type such as CRAFTING_TYPE_BLACKSMITHING or 1.
 ```
 
-### Markers are a shared resource
+## Why RefCount?
 
-Markers are a global, shared, resource: if one add-on adds a marker, then a different add-on deletes that marker, then that marker is gone.
+Reference counts free up other code from worrying about whether they need a station for two or more crafting requests, and whether the completion of a request means it is time to remove the marker or not. Let the refcounts do the worrying for you.
 
-I thought about implementing per-add-on marker lists or reference counting. If this becomes a problem, I'll do so.
+Ref counts also help if multiple add-ons use HomeStationMarker: what if WritWorthy needed a station, but some other add-on also needed that same station. If either one removed the marker, the other add-on's requested marker would end up lost.
+
+## RefCount/Marker Desync
+
+The above API functions are the only ones that touch or see the ref counts.
+Slash commands such as `/hsm <set> <station>` bypass the ref count and toggle the marker regardless of API requests.
+
+Learning a station location _after_ requesting a marker for it will not show a marker for that station. The marker will appear next time you enter the house or `/reloadui`.
 
 # FPS Cost
 
@@ -114,3 +132,9 @@ Scene Listener : An event listener that shows/hides all markers when the HUD is 
 
 - **station locations:** for each player house: each known crafting station's location
 - **requested markers:** list of set and station ids for each requested marker
+- **reference counts:** keep track of how many times a marker has beed requested via API.
+
+# TODO
+
+- [ ] suppress TopLevel:SetHidden(false) from ShowMarkControl() if currently suppressed due to interaction. Either shadow-track our scene listeners, or figure out the incantation to detect scene state.
+
