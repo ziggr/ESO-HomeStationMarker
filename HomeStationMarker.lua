@@ -669,7 +669,8 @@ end
 -- I should plop down 8-12 sets of stations in circles in the ColdHarbour
 -- home and test there.
 --
-local pi = math.pi
+local pi  = math.pi -- for less typing
+local sid = HomeStationMarker.STATION_ID
 HomeStationMarker.STATION_OFFSET = {
     [CRAFTING_TYPE_BLACKSMITHING   or 1] = { y = 3, a = 0.0*pi, r = 0.0 }
 ,   [CRAFTING_TYPE_CLOTHIER        or 2] = { y = 3, a = 0.0*pi, r = 0.0 }
@@ -678,7 +679,27 @@ HomeStationMarker.STATION_OFFSET = {
 ,   [CRAFTING_TYPE_ENCHANTING      or 3] = { y = 3, a = 0.0*pi, r = 0.0 }
 ,   [CRAFTING_TYPE_ALCHEMY         or 4] = { y = 3, a = 0.0*pi, r = 0.0 }
 ,   [CRAFTING_TYPE_PROVISIONING    or 5] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.BANKER                        ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.MERCHANT                      ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.FENCE                         ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.TRANSMUTE                     ] = { y = 4, a = 0.0*pi, r = 0.0 }
+,   [sid.MUNDUS_APPRENTICE             ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.MUNDUS_ATRONACH               ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.MUNDUS_LADY                   ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.MUNDUS_LORD                   ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.MUNDUS_LOVER                  ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.MUNDUS_MAGE                   ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.MUNDUS_RITUAL                 ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.MUNDUS_SERPENT                ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.MUNDUS_SHADOW                 ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.MUNDUS_STEED                  ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.MUNDUS_THIEF                  ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.MUNDUS_TOWER                  ] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [sid.MUNDUS_WARRIOR                ] = { y = 3, a = 0.0*pi, r = 0.0 }
+
 }
+pi = nil
+sid = nil
 
 function HomeStationMarker.OffsetGuiRenderCoords(coords, station_id)
     local self = HomeStationMarker
