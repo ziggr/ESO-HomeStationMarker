@@ -89,4 +89,5 @@ HomeStationMarker.DeleteAllMarkers()
 - [x] Rotate textures to alway face player
 - [x] Auto-show all requested markers upon entering a player house
 - [x] Hide/Show top level control on entering just about every scene.
+- [ ] Actual programmatic API created and used in a sentence.
 - [ ] YAGNI away unused+unimplemented slash commands.
