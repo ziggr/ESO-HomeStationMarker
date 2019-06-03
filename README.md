@@ -2,15 +2,33 @@
 
 An add-on for Elder Scrolls Online that draws 3D markers over crafting stations in a player home.
 
+![player house with some stations marked](doc/hsm_stations_marked.jpg)
+
 Adapted from [Shinni's HarvestMap](https://www.esoui.com/downloads/info57-HarvestMap.html) and [Marify's Confirm Master Writ](https://www.esoui.com/downloads/info57-HarvestMap.html).
-
-Learns station locations as you visit them. Also scans current house for all stations, but only if you own or have decorator privileges for current house.
-
-Hides a house's markers when you exit that house, shows them again when you re-enter.
 
 Originally written to help visitors find stations when crafting master writs with [WritWorthy](https://www.esoui.com/downloads/info1605-WritWorthy.html).
 
-## Slash Commands
+# Libraries
+
+## Required Libraries:
+
+- [Shinni's Lib3d-v3](https://www.esoui.com/downloads/info1664-Lib3D-v3.html)
+
+## Optional Libraries, recommended:
+
+- [Baertram's LibSets](https://www.esoui.com/downloads/info2241-LibSets.html)
+  Allows you to type `/hsm Alessia cl` instead of `/hsm 82 2` for Alessia's Bulwark clothier station.
+
+# Why don't I see any markers?
+
+Learns station locations as you visit them.
+1. Run around the player house and interact with a few crafting stations, such as Enchanting or Armor Master Blacksmithing.
+2. `/hsm enchanting` or `/hsm armor bs` to show the above marker.
+   (This command requires [Baertram's LibSets](https://www.esoui.com/downloads/info2241-LibSets.html).)
+
+# Slash Commands
+
+A few commands to help while testing, probably not useful to players:
 
 ### `/hsm <station> <set>`
 Toggle a marker above the given station. Can omit either argument.
@@ -19,7 +37,7 @@ Toggle a marker above the given station. Can omit either argument.
 - `/hsm alessia's blacksmithing` toggles a marker over the Alessia's Bulwark blacksmithing station
 - `/hsm hist` toggles a marker over a random Hist Bark station
 
-This is mostly for testing/debugging this add-on. The simplistic string matching here only works for EN English clients.
+This is mostly for testing/debugging this add-on. The simplistic string matching here was designed for, and tested on, EN English only. If it doesn't work in DE German, sorry.
 
 Requires [Baertram's LibSets](https://www.esoui.com/downloads/info2241-LibSets.html)
 
@@ -27,12 +45,13 @@ Requires [Baertram's LibSets](https://www.esoui.com/downloads/info2241-LibSets.h
 
 Nobody wants to type "Jewelry Crafting Station".
 
-- two-letters: bs, cl, ww, jw, al, en, pr, tr (transmute)
+- two-letters: bs, cl, ww, jw, al, en, pr
 - first few letters: black, cloth, wood, jewel
 
 #### Set abbreviations
 
 - first few letters: alessia, twice-born, eternal
+- tbs, nmg, juli, kags, seducer
 
 Uppercase and punctuation ignored.
 
@@ -46,24 +65,15 @@ I might add these later:
 - Transmute station
 - Mundus stones
 - Assistants: Banker, Merchant, Fence
+- `/hsm scanlocs` to scan house furniture for all station locations. Requires decorator permission, so would only work in your own housing unless you're a highly trusted guest.
 
-Custom markers? No thank you. That's an additional API and complexity that I don't want to spend my days supporting.
+### I have no desire to add these ever:
 
+- custom markers
+- colors
+- per-add-on sets of markers
 
-# FPS Cost
-
-Each marker slows down your frames per second.
-
-`zo_callLater` : a periodic task updates each marker rotation 4 times per second. Only registered within player housing, and only if you have one or more shown markers.
-
-`EVENT_CRAFTING_STATION_INTERACT` : An event listener records station location each time you interact with a crafting station. This listener is only registered within player housing.
-
-`EVENT_PLAYER_ACTIVATED` : An event listener hides all of a house's markers when you exit player housing, shows that house's previously hidden markers when you enter player housing.
-
-# SavedVariables
-
-- **station locations:** for each player house: each known crafting station's location
-- **marker locations:** for each player house: each marker location
+No thank you. That's an additional API and complexity that I don't want to spend my days supporting.
 
 # API
 
@@ -85,14 +95,23 @@ HomeStationMarker.DeleteAllMarkers()
 
 Markers are a global, shared, resource: if one add-on adds a marker, then a different add-on deletes that marker, then that marker is gone.
 
-# TODO
+I thought about implementing per-add-on marker lists or reference counting. If this becomes a problem, I'll do so.
 
-- [x] Elevate markers 2-3m higher than they currently are
-- [-] Translate markers to actually above station, not above where player stands.
-        Probably requires a little trigonometry and station_id-specific translation matrix.
-        Can Lua even _do_ linear algebra, or must I reinvent _that_ wheel, too?
-- [x] Rotate textures to alway face player
-- [x] Auto-show all requested markers upon entering a player house
-- [x] Hide/Show top level control on entering just about every scene.
-- [ ] Actual programmatic API created and used in a sentence.
-- [ ] YAGNI away unused+unimplemented slash commands.
+# FPS Cost
+
+Each marker slows down your frames per second.
+
+This add-on also slows down frames per second while in player housing:
+
+`zo_callLater` : a periodic task updates each marker rotation 8 times per second. Only registered within player housing, and only if you have one or more shown markers.
+
+`EVENT_CRAFTING_STATION_INTERACT` : An event listener records station location each time you interact with a crafting station. This listener is only registered within player housing.
+
+`EVENT_PLAYER_ACTIVATED` : An event listener hides all of a house's markers when you exit player housing, shows that house's previously hidden markers when you enter player housing.
+
+Scene Listener : An event listener that shows/hides all markers when the HUD is shown/hidden while in player housing. Hides the markers when you're in the inventory/bank/dialog/whatever scene, unhides when you're back to walking around the house.
+
+# SavedVariables
+
+- **station locations:** for each player house: each known crafting station's location
+- **marker locations:** for each player house: each marker location

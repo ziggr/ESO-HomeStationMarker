@@ -1,4 +1,4 @@
-.PHONY: put getpts get test log clayget deg
+.PHONY: put getpts get test log clayget deg zip
 
 put:
 	rsync -vrt --delete --exclude=.git \
@@ -28,3 +28,13 @@ clayget:
 
 deg:
 	lua trig/trig.lua
+
+zip:
+	-rm -rf published/HomeStationMarker published/HomeStationMarker\ x.x.x.zip
+	mkdir -p published/HomeStationMarker
+	cp ./HomeStationMarker* published/HomeStationMarker/
+
+	cd published; zip -r HomeStationMarker\ x.x.x.zip HomeStationMarker
+
+	rm -rf published/HomeStationMarker
+
