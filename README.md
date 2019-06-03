@@ -35,7 +35,6 @@ Toggle a marker above the given station. Can omit either argument.
 
 - `/hsm alchemy` toggles a marker over an alchemy station
 - `/hsm alessia's blacksmithing` toggles a marker over the Alessia's Bulwark blacksmithing station
-- `/hsm hist` toggles a marker over a random Hist Bark station
 
 This is mostly for testing/debugging this add-on. The simplistic string matching here was designed for, and tested on, EN English only. If it doesn't work in DE German, sorry.
 
@@ -57,7 +56,7 @@ Uppercase and punctuation ignored.
 
 ### `/hsm forgetlocs [all]`
 
-Forget all station locations for current house, or all houses if `/hsm forget all`. Use `/hsm forgetlocs` in a house after moving any crafting stations. Deletes all markers in current house (or all houses if `/hsm forgetlocs all`) as a necessary side effect.
+Forget all station locations for current house, or all houses if `/hsm forgetlocs all`. Use `/hsm forgetlocs` in a house after moving any crafting stations. Deletes all markers in current house (or all houses if `/hsm forgetlocs all`) as a necessary side effect.
 
 # Not Supported
 
@@ -103,7 +102,7 @@ Each marker slows down your frames per second.
 
 This add-on also slows down frames per second while in player housing:
 
-`zo_callLater` : a periodic task updates each marker rotation 8 times per second. Only registered within player housing, and only if you have one or more shown markers.
+`zo_callLater` : a periodic task updates each marker rotation 8 times per second. Only registered within player housing.
 
 `EVENT_CRAFTING_STATION_INTERACT` : An event listener records station location each time you interact with a crafting station. This listener is only registered within player housing.
 
@@ -114,4 +113,4 @@ Scene Listener : An event listener that shows/hides all markers when the HUD is 
 # SavedVariables
 
 - **station locations:** for each player house: each known crafting station's location
-- **marker locations:** for each player house: each marker location
+- **requested markers:** list of set and station ids for each requested marker
