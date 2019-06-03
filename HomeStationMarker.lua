@@ -722,6 +722,7 @@ function HomeStationMarker.ShowMarkControl(set_id, station_id)
          )
 
     self.CreateMarkControl(set_id, station_id, coords)
+    self.InvalidateRotateCache()
 end
 
 function HomeStationMarker.HideAllMarkControls()
@@ -850,6 +851,11 @@ function HomeStationMarker.RotateAllMarkControls()
         end
         self.curr_rotate_orientation = orientation
     end
+end
+
+function HomeStationMarker.InvalidateRotateCache()
+    local self = HomeStationMarker
+    self.curr_rotate_orientation = nil
 end
 
 function HomeStationMarker.StartPeriodicRotate()
