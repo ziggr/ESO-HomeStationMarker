@@ -748,7 +748,6 @@ function HomeStationMarker.CreateMarkControl(set_id, station_id, coords)
     c:SetHidden(false)
     self.AddGuiRenderCoords(coords)
     self.OffsetGuiRenderCoords(coords, station_id)
-d(coords)
     c:Set3DRenderSpaceOrigin(coords.gui_x, coords.gui_y, coords.gui_z)
 end
 
