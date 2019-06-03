@@ -88,5 +88,5 @@ HomeStationMarker.DeleteAllMarkers()
         Can Lua even _do_ linear algebra, or must I reinvent _that_ wheel, too?
 - [x] Rotate textures to alway face player
 - [x] Auto-show all requested markers upon entering a player house
-- [ ] Hide/Show top level control on entering just about every scene.
+- [x] Hide/Show top level control on entering just about every scene.
 - [ ] YAGNI away unused+unimplemented slash commands.

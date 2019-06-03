@@ -293,10 +293,12 @@ function HomeStationMarker.OnPlayerActivated(event, initial)
     self.Debug("EVENT_PLAYER_ACTIVATED house_key:%s", tostring(house_key))
     if house_key then
         self.RegisterCraftListener()
+        self.RegisterSceneListener()
         self.ShowAllMarkControls()
         self.StartPeriodicRotate()
     else
         self.UnregisterCraftListener()
+        self.UnregisterSceneListener()
         self.HideAllMarkControls()
         self.StopPeriodicRotate()
     end
@@ -369,6 +371,62 @@ function HomeStationMarker.CurrentStationSetInfo(station_id)
               }
     HomeStationMarker.AddNames(r)
     return r
+end
+
+-- Scene Listener ------------------------------------------------------------
+--
+-- Hide/Show 3D Mark Controls when starting an interaction, inventory, bank,
+-- or other scene.
+-- Inspired by Manavortex's Inventory Insight IIfA:RegisterForSceneChanges()
+--
+HomeStationMarker.SCENES = {
+    ["hudui"] = {}
+,   ["hud"  ] = {}
+}
+function HomeStationMarker.RegisterSceneListener()
+    local self = HomeStationMarker
+    for scene_name, fn_list in pairs(self.SCENES) do
+        local scene = SCENE_MANAGER:GetScene(scene_name)
+        if scene then
+            local fn = function(...)
+                        HomeStationMarker.OnSceneChange(scene_name, ...)
+                    end
+            fn_list.fn = fn
+            Debug("RegisterSceneListener %s", scene_name)
+            scene:RegisterCallback("StateChange", fn)
+        else
+            Debug("RegisterSceneListener skipped")
+        end
+    end
+end
+
+function HomeStationMarker.UnregisterSceneListener()
+    local self = HomeStationMarker
+    for scene_name, fn_list in pairs(self.SCENES) do
+        local scene = SCENE_MANAGER:GetScene(scene_name)
+        if scene and fn_list.fn then
+            Debug("UnregisterSceneListener %s", scene_name)
+            scene:UnregisterCallback("StateChange", fn_list.fn)
+            fn_list.fn = nil
+        else
+            Debug("UnregisterSceneListener skipped")
+        end
+    end
+end
+
+function HomeStationMarker.OnSceneChange(scene_name, old_state, new_state)
+    Debug("OnSceneChange scene_name:%s old_state:%s new_state:%s"
+         , tostring(scene_name)
+         , tostring(old_state)
+         , tostring(new_state)
+         )
+    if SCENE_SHOWN == new_state then
+        Debug("OnSceneChange showing 3D MarkControls")
+        HomeStationMarker_TopLevel:SetHidden(false)
+    elseif SCENE_HIDDEN == new_state then
+        Debug("OnSceneChange hiding 3D MarkControls")
+        HomeStationMarker_TopLevel:SetHidden(true)
+    end
 end
 
 -- Geometry/Location ---------------------------------------------------------
