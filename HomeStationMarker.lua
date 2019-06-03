@@ -486,13 +486,13 @@ end
 --
 local pi = math.pi
 HomeStationMarker.STATION_OFFSET = {
-    [CRAFTING_TYPE_BLACKSMITHING   or 1] = { y = 1, a = 0.0*pi, r = 0.0 }
-,   [CRAFTING_TYPE_CLOTHIER        or 2] = { y = 1, a = 0.0*pi, r = 0.0 }
-,   [CRAFTING_TYPE_WOODWORKING     or 6] = { y = 1, a = 0.0*pi, r = 0.0 }
-,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = { y = 1, a = 0.0*pi, r = 0.0 }
-,   [CRAFTING_TYPE_ENCHANTING      or 3] = { y = 1, a = 0.0*pi, r = 0.0 }
-,   [CRAFTING_TYPE_ALCHEMY         or 4] = { y = 1, a = 0.0*pi, r = 0.0 }
-,   [CRAFTING_TYPE_PROVISIONING    or 5] = { y = 1, a = 0.0*pi, r = 0.0 }
+    [CRAFTING_TYPE_BLACKSMITHING   or 1] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [CRAFTING_TYPE_CLOTHIER        or 2] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [CRAFTING_TYPE_WOODWORKING     or 6] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [CRAFTING_TYPE_ENCHANTING      or 3] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [CRAFTING_TYPE_ALCHEMY         or 4] = { y = 3, a = 0.0*pi, r = 0.0 }
+,   [CRAFTING_TYPE_PROVISIONING    or 5] = { y = 3, a = 0.0*pi, r = 0.0 }
 }
 
 function HomeStationMarker.OffsetGuiRenderCoords(coords, station_id)
