@@ -680,6 +680,7 @@ function HomeStationMarker.ShowAllMarkControls()
     Debug("ShowAllMarkControls")
     local self      = HomeStationMarker
     HomeStationMarker_TopLevel:SetHidden(false)
+    self.saved_vars.requested_mark = self.saved_vars.requested_mark or {}
     self.curr_rotate_orientation = nil -- Reset cached rotation for periodic.
     for _,v in ipairs(self.saved_vars.requested_mark) do
         local r = self.FromRequestedMarkValue(v)
