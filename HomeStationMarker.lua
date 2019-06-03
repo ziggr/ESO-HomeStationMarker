@@ -138,16 +138,38 @@ end
 --   ShowMarkControl() / HideMarkControl() / never saved_vars
 
 
+local sid = HomeStationMarker.STATION_ID -- for less typing
 -- Textures for the 3D MarkControl
 HomeStationMarker.STATION_TEXTURE = {
-    [CRAFTING_TYPE_BLACKSMITHING   or 1] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_blacksmithing_down.dds"
-,   [CRAFTING_TYPE_CLOTHIER        or 2] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_clothing_down.dds"
-,   [CRAFTING_TYPE_ENCHANTING      or 3] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_enchanting_down.dds"
-,   [CRAFTING_TYPE_ALCHEMY         or 4] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_alchemy_down.dds"
-,   [CRAFTING_TYPE_PROVISIONING    or 5] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_provisioning_down.dds"
-,   [CRAFTING_TYPE_WOODWORKING     or 6] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_woodworking_down.dds"
-,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = "EsoUI/Art/Inventory/inventory_tabIcon_Craftbag_jewelrycrafting_down.dds"
+    [CRAFTING_TYPE_BLACKSMITHING   or 1] = "esoui/art/icons/servicemappins/servicepin_smithy.dds"
+,   [CRAFTING_TYPE_CLOTHIER        or 2] = "esoui/art/icons/servicemappins/servicepin_clothier.dds"
+,   [CRAFTING_TYPE_ENCHANTING      or 3] = "esoui/art/icons/servicemappins/servicepin_enchanting.dds"
+,   [CRAFTING_TYPE_ALCHEMY         or 4] = "esoui/art/icons/servicemappins/servicepin_alchemy.dds"
+,   [CRAFTING_TYPE_PROVISIONING    or 5] = "esoui/art/icons/servicemappins/servicepin_inn.dds"
+,   [CRAFTING_TYPE_WOODWORKING     or 6] = "esoui/art/icons/servicemappins/servicepin_woodworking.dds"
+,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = "esoui/art/icons/servicemappins/servicepin_jewelrycrafting.dds"
+
+,   [sid.TRANSMUTE                     ] = "esoui/art/icons/servicemappins/servicepin_transmute.dds"
+
+,   [sid.BANKER                        ] = "esoui/art/icons/servicemappins/servicepin_bank.dds"
+,   [sid.MERCHANT                      ] = "esoui/art/icons/servicemappins/servicepin_vendor.dds"
+,   [sid.FENCE                         ] = "esoui/art/icons/servicemappins/servicepin_fence.dds"
+
+,   [sid.MUNDUS_APPRENTICE             ] = "esoui/art/icons/mapkey/mapkey_mundus.dds"
+,   [sid.MUNDUS_ATRONACH               ] = "esoui/art/icons/mapkey/mapkey_mundus.dds"
+,   [sid.MUNDUS_LADY                   ] = "esoui/art/icons/mapkey/mapkey_mundus.dds"
+,   [sid.MUNDUS_LORD                   ] = "esoui/art/icons/mapkey/mapkey_mundus.dds"
+,   [sid.MUNDUS_LOVER                  ] = "esoui/art/icons/mapkey/mapkey_mundus.dds"
+,   [sid.MUNDUS_MAGE                   ] = "esoui/art/icons/mapkey/mapkey_mundus.dds"
+,   [sid.MUNDUS_RITUAL                 ] = "esoui/art/icons/mapkey/mapkey_mundus.dds"
+,   [sid.MUNDUS_SERPENT                ] = "esoui/art/icons/mapkey/mapkey_mundus.dds"
+,   [sid.MUNDUS_SHADOW                 ] = "esoui/art/icons/mapkey/mapkey_mundus.dds"
+,   [sid.MUNDUS_STEED                  ] = "esoui/art/icons/mapkey/mapkey_mundus.dds"
+,   [sid.MUNDUS_THIEF                  ] = "esoui/art/icons/mapkey/mapkey_mundus.dds"
+,   [sid.MUNDUS_TOWER                  ] = "esoui/art/icons/mapkey/mapkey_mundus.dds"
+,   [sid.MUNDUS_WARRIOR                ] = "esoui/art/icons/mapkey/mapkey_mundus.dds"
 }
+sid = nil
 
 -- Slash Commands and Command-Line Interface UI ------------------------------
 
@@ -840,7 +862,7 @@ function HomeStationMarker.CreateMarkControl(set_id, station_id, coords)
     local c = self.AcquireMarkControl(set_id, station_id)
     c:Create3DRenderSpace()
     c:SetTexture(self.STATION_TEXTURE[station_id])
-    c:Set3DLocalDimensions(1.4, 1.4)
+    c:Set3DLocalDimensions(1.0, 1.0)
     c:SetColor(1.0, 1.0, 1.0, 1.0)
     c:SetHidden(false)
     self.AddGuiRenderCoords(coords)
