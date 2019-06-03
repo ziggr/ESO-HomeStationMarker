@@ -51,7 +51,7 @@ function HomeStationMarker.AddMarker(set_id, station_id)
         shown = self.ShowMarkControl(set_id, station_id)
     end
     self.IncrementRefCount(set_id, station_id)
-    return requested = shown
+    return requested and shown
 end
 
 -- Decrement refcount for this station. If refcount becomes 0, then
@@ -521,6 +521,16 @@ function HomeStationMarker.OnSceneChange(scene_name, old_state, new_state)
     end
 end
 
+function HomeStationMarker.IsHUDVisible()
+    local self = HomeStationMarker
+    for scene_name, fn_list in pairs(self.SCENES) do
+        if SCENE_MANAGER:IsShowing(scene_name) then
+            return true
+        end
+    end
+    return false
+end
+
 -- Geometry/Location ---------------------------------------------------------
 
 function HomeStationMarker.CurrentPlayerLocation()
@@ -712,7 +722,15 @@ function HomeStationMarker.ShowMarkControl(set_id, station_id)
         return nil
     end
 
-    HomeStationMarker_TopLevel:SetHidden(false)
+    if self.IsHUDVisible() then
+                        -- Usually we want to force our TopLevel container to
+                        -- be visible when showing MarkControls. But if
+                        -- somebody requests a marker while currently showing
+                        -- inventory or some other scene, don't force TopLevel
+                        -- visible: you'll end up showing all our markers on
+                        -- top of the inventory screen and that is ugly.
+        HomeStationMarker_TopLevel:SetHidden(false)
+    end
     if self.MCPoolFind(set_id, station_id) then
         Debug( "ShowMarkControl: set_id:%s station_id:%s ignored. Already showing."
              , tostring(set_id)

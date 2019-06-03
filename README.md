@@ -134,7 +134,3 @@ Scene Listener : An event listener that shows/hides all markers when the HUD is 
 - **requested markers:** list of set and station ids for each requested marker
 - **reference counts:** keep track of how many times a marker has beed requested via API.
 
-# TODO
-
-- [ ] suppress TopLevel:SetHidden(false) from ShowMarkControl() if currently suppressed due to interaction. Either shadow-track our scene listeners, or figure out the incantation to detect scene state.
-
