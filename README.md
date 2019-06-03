@@ -36,13 +36,15 @@ Nobody wants to type "Jewelry Crafting Station".
 
 Uppercase and punctuation ignored.
 
-### `/hsm clear`
+### `/hsm forgetlocs [all]`
 
-Deletes all markers.
+Forget all station locations for current house, or all houses if `/hsm forget all`. Use `/hsm forgetlocs` in a house after moving any crafting stations. Deletes all markers in current house (or all houses if `/hsm forgetlocs all`) as a necessary side effect.
 
-### `/hsm forget [all]`
+### `/hsm scanlocs`
 
-Forget all station locations for current house, or all houses if `/hsm forget all`. Use `/hsm forget` in a house after moving any crafting stations. Deletes all markers in current house (or all houses if `/hsm forget all`) as a necessary side effect.
+Scan the furnishings in the current house and record each crafting station's location.
+
+Requires decorator permission: scanning furnishings is not permitted for most house guests.
 
 # Not Supported
 
@@ -78,7 +80,16 @@ HomeStationMarker.DeleteMarker(setId, stationId)
 
 HomeStationMarker.DeleteAllMarkers()
 
+- setId:     integer set bonus ID, such as 82 for Alessia's Bulwark.
+             nil or string "no_set" for set-less stations such as Alchemy
+             or Enchanting.
+
+- stationId: integer crafting type such as CRAFTING_TYPE_BLACKSMITHING or 1.
 ```
+
+### Markers are a shared resource
+
+Markers are a global, shared, resource: if one add-on adds a marker, then a different add-on deletes that marker, then that marker is gone.
 
 # TODO
 

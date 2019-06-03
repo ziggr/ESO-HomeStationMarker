@@ -1,6 +1,82 @@
 -- HomeStationMarker
 --
 -- Draw 3D beacons above crafting stations in player housing.
+
+HomeStationMarker.saved_var_version = 2
+HomeStationMarker.saved_var_name    = HomeStationMarker.name .. "Vars"
+
+local Debug = HomeStationMarker.Debug
+local Info  = HomeStationMarker.Info
+local Error = HomeStationMarker.Error
+
+-- "set_id" is usually the integer setId assigned by ESO, such as
+-- 82 for "Alessia's Bulwark". For such set_id, their "station_id" values
+-- will be integer CRAFTING_TYPE_X values [1..7].
+--
+-- We also reserve a few non-integer set_ids here for special categories
+-- because we might one day support beacons over Tythis the Banker and other
+-- important interactable items in player housing.
+--
+HomeStationMarker.SET_ID_NONE       = "no_set"
+HomeStationMarker.SET_ID_TRANSMUTE  = "transmute"       -- not implemented
+HomeStationMarker.SET_ID_ASSISTANTS = "assistants"      -- not implemented
+HomeStationMarker.SET_ID_MUNDUS     = "mundus"          -- not implemented
+
+-- API -----------------------------------------------------------------------
+
+-- Request a marker above a station.
+--
+-- returns true if request added, nil if not.
+--
+-- Requested station will be shown immediately if in a player house with that
+-- station, and station location is already known to HomeStationMarker from
+-- a previous player interaction with that station.
+function HomeStationMarker.AddMarker(set_id, station_id)
+    local self = HomeStationMarker
+    Debug( "AddMarker set_id:%s station_id:%s"
+         , tostring(set_id)
+         , tostring(station_id)
+         )
+    assert(station_id)
+    local requested =  self.RequestMark(
+                                { set_id     = set_id
+                                , station_id = station_id
+                                })
+    if requested then
+        self.ShowMarkControl(set_id, station_id)
+    end
+    return requested
+end
+
+function HomeStationMarker.DeleteMarker(set_id, station_id)
+    local self = HomeStationMarker
+    Debug( "DeleteMarker set_id:%s station_id:%s"
+         , tostring(set_id)
+         , tostring(station_id)
+         )
+    assert(station_id)
+    local unrequested = self.UnrequestMark(
+                                { set_id     = set_id
+                                , station_id = station_id
+                                })
+    if unrequested then
+        self.HideMarkControl(set_id, station_id)
+    end
+    return unrequested
+end
+
+function HomeStationMarker.DeleteAllMarkers()
+    local self = HomeStationMarker
+    Debug("DeleteAllMarkers")
+    self.saved_vars.requested_mark = {}
+    local house_key = self.CurrentHouseKey()
+    if house_key then
+        self.HideAllMarkControls()
+    end
+end
+
+-- Internal ------------------------------------------------------------------
+
 --
 -- * Station Location
 --   Record station locations as the player walks around an interacts with
@@ -21,26 +97,6 @@
 --   set_id + station_id
 --   ShowMarkControl() / HideMarkControl() / never saved_vars
 
-
-HomeStationMarker.saved_var_version = 2
-HomeStationMarker.saved_var_name    = HomeStationMarker.name .. "Vars"
-
-local Debug = HomeStationMarker.Debug
-local Info  = HomeStationMarker.Info
-local Error = HomeStationMarker.Error
-
--- "set_id" is usually the integer setId assigned by ESO, such as
--- 82 for "Alessia's Bulwark". For such set_id, their "station_id" values
--- will be integer CRAFTING_TYPE_X values [1..7].
---
--- We also reserve a few non-integer set_ids here for special categories
--- because we might one day support beacons over Tythis the Banker and other
--- important interactable items in player housing.
---
-HomeStationMarker.SET_ID_NONE       = "no_set"
-HomeStationMarker.SET_ID_TRANSMUTE  = "transmute"
-HomeStationMarker.SET_ID_ASSISTANTS = "assistants"
-HomeStationMarker.SET_ID_MUNDUS     = "mundus"
 
 -- Textures for the 3D MarkControl
 HomeStationMarker.STATION_TEXTURE = {
@@ -64,8 +120,8 @@ function HomeStationMarker.RegisterSlashCommands()
 
         local t = { {"forgetlocs"    , "Forget all station locations for current house, also deletes all markers for current house." }
                   , {"forgetlocs all", "Forget all station locations for all houses, also deletes all markers for all houses." }
-                  , {"clear"         , "Delete all markers for current house." }
-                  , {"clear all"     , "Delete all markers for all houses." }
+                  , {"scanlocs",       "Discover all station locations for current house. Requires decorator permission," }
+
                   }
         for _, v in pairs(t) do
             local sub = cmd:RegisterSubCommand()
@@ -96,14 +152,8 @@ function HomeStationMarker.SlashCommand(cmd, args)
         return
     end
 
-    if cmd:lower() == "clear" then
-        if args and args:lower() == "all" then
-            Info("Deleting all markers...")
-            self.UnrequestMarks({all=true})
-        else
-            Info("Deleting current house's markers...")
-            self.UnrequestMarks()
-        end
+    if cmd:lower() == "scanlocs" then
+        Info("Sccanning current house's station locations...")
         return
     end
 
@@ -176,17 +226,45 @@ function HomeStationMarker.ToggleStation(args)
 end
 
 function HomeStationMarker.ForgetStationLocations(args)
+    local self = HomeStationMarker
     local all_houses = args and args.all
-    Error("ForgetStationLocations: unimplemented")
+    Debug("ForgetStationLocations")
+
+                        -- Hide any showing 3D MarkControls: we're about to
+                        -- forget their locations.
+    local house_key = self.CurrentHouseKey()
+    if house_key then
+        self.HideAllMarkControls()
+    end
+
+    if not all_houses then
+        if not house_key then
+            Error("ForgetStationLocations: ignored. Only works within player housing.")
+            return
+        end
+        local sv_l = self.saved_vars.station_location
+        if sv_l and sv_l[house_key] then
+            sv_l[house_key] = nil
+            Info("Station locations forgotten for house:%s", house_key)
+        else
+            Info("No station locations to forget for house:%s", house_key)
+        end
+    else
+        if self.saved_vars.station_location then
+            self.saved_vars.station_location = {}
+            Info("Station locations forgotten all houses.")
+        else
+            Info("No station locations to forget for any house.")
+        end
+    end
 end
 
-function HomeStationMarker.UnrequestMarks(args)
-    local all_houses = args and args.all
-    Error("UnrequestMarks: unimplemented")
+function HomeStationMarker.ScanStationLocations()
+    Error("ScanStationLocations: unimplemented")
 end
 
 function HomeStationMarker.Test()
-    d("Testing!")
+    Debug("Testing!")
 end
 
 -- Util ----------------------------------------------------------------------
@@ -619,6 +697,7 @@ function HomeStationMarker.ShowMarkControl(set_id, station_id)
         return nil
     end
 
+    HomeStationMarker_TopLevel:SetHidden(false)
     if self.MCPoolFind(set_id, station_id) then
         Debug( "ShowMarkControl: set_id:%s station_id:%s ignored. Already showing."
              , tostring(set_id)
