@@ -120,8 +120,6 @@ function HomeStationMarker.RegisterSlashCommands()
 
         local t = { {"forgetlocs"    , "Forget all station locations for current house, also deletes all markers for current house." }
                   , {"forgetlocs all", "Forget all station locations for all houses, also deletes all markers for all houses." }
-                  , {"scanlocs",       "Discover all station locations for current house. Requires decorator permission," }
-
                   }
         for _, v in pairs(t) do
             local sub = cmd:RegisterSubCommand()

@@ -40,12 +40,6 @@ Uppercase and punctuation ignored.
 
 Forget all station locations for current house, or all houses if `/hsm forget all`. Use `/hsm forgetlocs` in a house after moving any crafting stations. Deletes all markers in current house (or all houses if `/hsm forgetlocs all`) as a necessary side effect.
 
-### `/hsm scanlocs`
-
-Scan the furnishings in the current house and record each crafting station's location.
-
-Requires decorator permission: scanning furnishings is not permitted for most house guests.
-
 # Not Supported
 
 I might add these later:
