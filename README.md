@@ -134,6 +134,3 @@ Scene Listener : An event listener that shows/hides all markers when the HUD is 
 - **requested markers:** list of set and station ids for each requested marker
 - **reference counts:** keep track of how many times a marker has beed requested via API.
 
-# TODO
-
-- [ ] BUG: erroneously showing 3D MarkControls for Grand Linchal coords when in Mistveil Keep. Check house_key!

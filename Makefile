@@ -6,6 +6,7 @@ put:
 	--exclude=doc \
 	--exclude=test \
 	--exclude=trig \
+	--exclude=published \
 	. /Volumes/Elder\ Scrolls\ Online/live/AddOns/HomeStationMarker
 
 

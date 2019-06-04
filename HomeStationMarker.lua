@@ -468,6 +468,11 @@ function HomeStationMarker.OnPlayerActivated(event, initial)
     if house_key then
         self.RegisterCraftListener()
         self.RegisterSceneListener()
+                        -- Yes, tear down any previous mark controls upon
+                        -- entering a house. Otherwise we erroneously leave
+                        -- the previous house's mark controls existent after
+                        -- porting from house A to house B.
+        self.HideAllMarkControls()
         self.ShowAllMarkControls()
         self.StartPeriodicRotate()
     else
