@@ -19,13 +19,25 @@ Originally written to help visitors find stations when crafting master writs wit
 - [Baertram's LibSets](https://www.esoui.com/downloads/info2241-LibSets.html)
   Allows you to type `/hsm Alessia cl` instead of `/hsm 82 2` for Alessia's Bulwark clothier station.
 
-# Why don't I see any markers?
+# FAQ
+
+## Why don't I see any markers?
 
 HomeStationMarker starts out not knowing any station locations. Once it has some station locations recorded to SavedVariables, it can show markers for those stations.
 
 1. Run around the player house and interact with a few crafting stations, such as Enchanting or Armor Master Blacksmithing.
 2. `/hsm enchanting` or `/hsm armor bs` to show the above marker.
    (This command requires [Baertram's LibSets](https://www.esoui.com/downloads/info2241-LibSets.html).)
+
+In your own house, or any house in which you are trusted enough to have "Decorator" access, you can replace step 1 with `/hsm scanlocs` to immediately teach HomeStationMarker the location of every crafting station in the house.
+
+Learning a station location _after_ requesting a marker for it will not show a marker for that station. The marker will appear next time you enter the house or `/reloadui`.
+
+## Why are the markers not perfectly aligned with their stations?
+
+When HomeStationMarker records a crafting station's location from you interacting with that station, HomeStationMarker actually records your player's position, not the crafting station's.
+
+The API to learn a station's location is restricted to a house's owner or guests with "Decorator" access. For all other players, this is as close as I can get it.
 
 # Slash Commands
 
@@ -59,13 +71,18 @@ Uppercase and punctuation ignored.
 
 Forget all station locations for current house, or all houses if `/hsm forgetlocs all`. Use `/hsm forgetlocs` in a house after moving any crafting stations. Deletes all markers in current house (or all houses if `/hsm forgetlocs all`) as a necessary side effect.
 
+### `/hsm scanlocs`
+
+Teach HomeStationMarker the location of every crafting station in this house.
+
+Requires "Decorator" access, which you automatically have in your own houses, and rarely ever have in anybody else's house.
+
 # Not Supported
 
-I might add these later:
+Partial support already exists for additional stations:
 - Transmute station
 - Mundus stones
 - Assistants: Banker, Merchant, Fence
-- `/hsm scanlocs` to scan house furniture for all station locations. Requires decorator permission, so would only work in your own housing unless you're a highly trusted guest.
 
 ### I have no desire to add these ever:
 
@@ -82,11 +99,11 @@ HomeStationMarker.AddMarker(setId, stationId)
     Increment ref count for <setId, stationId>.
     Show a marker for that station if in player housing and its
     location is known.
-    Return true if shown, false if not shown was already shown.
+    Return true if shown, false if not shown or was already shown.
 
 HomeStationMarker.DeleteMarker(setId, stationId)
     Decrement ref count for <setId, stationId>.
-    Hide any marker for that station if refcount hit 0.
+    Hide any marker for that station if refcount hits 0.
     Return true if refcount hit zero and there was a request for that marker.
 
 HomeStationMarker.DeleteAllMarkers()
@@ -109,10 +126,8 @@ Ref counts also help if multiple add-ons use HomeStationMarker: what if WritWort
 
 ## RefCount/Marker Desync
 
-The above API functions are the only ones that touch or see the ref counts.
+The above 3 API functions are the only ones that touch or see the ref counts.
 Slash commands such as `/hsm <set> <station>` bypass the ref count and toggle the marker regardless of API requests.
-
-Learning a station location _after_ requesting a marker for it will not show a marker for that station. The marker will appear next time you enter the house or `/reloadui`.
 
 # FPS Cost
 
@@ -132,5 +147,11 @@ Scene Listener : An event listener that shows/hides all markers when the HUD is 
 
 - **station locations:** for each player house: each known crafting station's location
 - **requested markers:** list of set and station ids for each requested marker
-- **reference counts:** keep track of how many times a marker has beed requested via API.
+- **reference counts:** keep track of how many times a marker has been requested via API.
 
+# To Do
+
+- Stop replacing `/hsm scanlocs` station location records every time you interact.
+  Add a "provenance" field to location records and then honor "scan" before "interact."
+- Event listener to detect and record assistant and mundus stone locations.
+- Slash command support to toggle above assistant and mundus stone locations.
