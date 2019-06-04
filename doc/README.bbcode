@@ -1,8 +1,8 @@
-[size=200][color=#BF2700][b]Home Station Marker[/b][/color][/size]
+[size=6][b]Home Station Marker[/b][/size]
 
 An add-on for Elder Scrolls Online that draws 3D markers over crafting stations in a player home.
 
-[img]bob[/img]
+[img]https://cdn-eso.mmoui.com/preview/pvw8154.jpg[/img]
 
 Adapted from [url=https://www.esoui.com/downloads/info57-HarvestMap.html]Shinni's HarvestMap[/url] and [url=https://www.esoui.com/downloads/info2160-ConfirmMasterWrit.html]Marify's Confirm Master Writ[/url].
 
@@ -10,61 +10,61 @@ Originally written to help visitors find stations when crafting master writs wit
 
 Follow development on [url=https://github.com/ziggr/ESO-HomeStationMarker]GitHub[/url]
 
-[size=200][color=#BF2700][b]Libraries[/b][/color][/size]
+[size=6][b]Libraries[/b][/size]
 
-[size=180][color=#002D97][b]Required Libraries:[/b][/color][/size]
+[size=4][b]Required Libraries:[/b][/size]
 
 [list]
 [*][url=https://www.esoui.com/downloads/info1664-Lib3D-v3.html]Shinni's Lib3d-v3[/url]
 [/list]
 
-[size=180][color=#002D97][b]Optional Libraries, recommended:[/b][/color][/size]
+[size=4][b]Optional Libraries, recommended:[/b][/size]
 
 [list]
 [*][url=https://www.esoui.com/downloads/info2241-LibSets.html]Baertram's LibSets[/url]
-Allows you to type [b][color=#BF2700]/hsm Alessia cl[/color][/b] instead of [b][color=#BF2700]/hsm 82 2[/color][/b] for Alessia's Bulwark clothier station.
+Allows you to type [b]/hsm Alessia cl[/b] instead of [b]/hsm 82 2[/b] for Alessia's Bulwark clothier station.
 [/list]
 
-[size=200][color=#BF2700][b]FAQ[/b][/color][/size]
+[size=6][b]FAQ[/b][/size]
 
-[size=180][color=#002D97][b]Why don't I see any markers?[/b][/color][/size]
+[size=4][b]Why don't I see any markers?[/b][/size]
 
 HomeStationMarker starts out not knowing any station locations. Once it has some station locations recorded to SavedVariables, it can show markers for those stations.
 
 [list=1]
 [*]Run around the player house and interact with a few crafting stations, such as Enchanting or Armor Master Blacksmithing.
-[*][b][color=#BF2700]/hsm enchanting[/color][/b] or [b][color=#BF2700]/hsm armor bs[/color][/b] to show the above marker.
+[*][b]/hsm enchanting[/b] or [b]/hsm armor bs[/b] to show the above marker.
 (This command requires [url=https://www.esoui.com/downloads/info2241-LibSets.html]Baertram's LibSets[/url].)
 [/list]
 
-In your own house, or any house in which you are trusted enough to have "Decorator" access, you can replace step 1 with [b][color=#BF2700]/hsm scanlocs[/color][/b] to immediately teach HomeStationMarker the location of every crafting station in the house.
+In your own house, or any house in which you are trusted enough to have "Decorator" access, you can replace step 1 with [b]/hsm scanlocs[/b] to immediately teach HomeStationMarker the location of every crafting station in the house.
 
-Learning a station location [i]after[/i] requesting a marker for it will not show a marker for that station. The marker will appear next time you enter the house or [b][color=#BF2700]/reloadui[/color][/b].
+Learning a station location [i]after[/i] requesting a marker for it will not show a marker for that station. The marker will appear next time you enter the house or [b]/reloadui[/b].
 
-[size=180][color=#002D97][b]Why are the markers not perfectly aligned with their stations?[/b][/color][/size]
+[size=4][b]Why are the markers not perfectly aligned with their stations?[/b][/size]
 
 When HomeStationMarker records a crafting station's location from you interacting with that station, HomeStationMarker actually records your player's position, not the crafting station's.
 
 The API to learn a station's location is restricted to a house's owner or guests with "Decorator" access. For all other players, this is as close as I can get it.
 
-[size=200][color=#BF2700][b]Slash Commands[/b][/color][/size]
+[size=6][b]Slash Commands[/b][/size]
 
 A few commands to help while testing, probably not useful to players:
 
-[size=160][color=#006600][b][b][color=#BF2700]/hsm <station> <set>[/color][/b][/b][/color][/size]
+[size=2][b][b]/hsm <station> <set>[/b][/b][/size]
 
 Toggle a marker above the given station. Can omit either argument.
 
 [list]
-[*][b][color=#BF2700]/hsm alchemy[/color][/b] toggles a marker over an alchemy station
-[*][b][color=#BF2700]/hsm alessia's blacksmithing[/color][/b] toggles a marker over the Alessia's Bulwark blacksmithing station
+[*][b]/hsm alchemy[/b] toggles a marker over an alchemy station
+[*][b]/hsm alessia's blacksmithing[/b] toggles a marker over the Alessia's Bulwark blacksmithing station
 [/list]
 
 This is mostly for testing/debugging this add-on. The simplistic string matching here was designed for, and tested on, EN English only. If it doesn't work in DE German, sorry.
 
 Requires [url=https://www.esoui.com/downloads/info2241-LibSets.html]Baertram's LibSets[/url]
 
-[size=150][color=#0C71A3][b]Crafting station abbreviations[/b][/color][/size]
+[size=2][b]Crafting station abbreviations[/b][/size]
 
 Nobody wants to type "Jewelry Crafting Station".
 
@@ -73,7 +73,7 @@ Nobody wants to type "Jewelry Crafting Station".
 [*]first few letters: black, cloth, wood, jewel
 [/list]
 
-[size=150][color=#0C71A3][b]Set abbreviations[/b][/color][/size]
+[size=2][b]Set abbreviations[/b][/size]
 
 [list]
 [*]first few letters: alessia, twice-born, eternal
@@ -82,17 +82,17 @@ Nobody wants to type "Jewelry Crafting Station".
 
 Uppercase and punctuation ignored.
 
-[size=160][color=#006600][b][b][color=#BF2700]/hsm forgetlocs [all][/color][/b][/b][/color][/size]
+[size=2][b][b]/hsm forgetlocs [all][/b][/b][/size]
 
-Forget all station locations for current house, or all houses if [b][color=#BF2700]/hsm forgetlocs all[/color][/b]. Use [b][color=#BF2700]/hsm forgetlocs[/color][/b] in a house after moving any crafting stations. Deletes all markers in current house (or all houses if [b][color=#BF2700]/hsm forgetlocs all[/color][/b]) as a necessary side effect.
+Forget all station locations for current house, or all houses if [b]/hsm forgetlocs all[/b]. Use [b]/hsm forgetlocs[/b] in a house after moving any crafting stations. Deletes all markers in current house (or all houses if [b]/hsm forgetlocs all[/b]) as a necessary side effect.
 
-[size=160][color=#006600][b][b][color=#BF2700]/hsm scanlocs[/color][/b][/b][/color][/size]
+[size=2][b][b]/hsm scanlocs[/b][/b][/size]
 
 Teach HomeStationMarker the location of every crafting station in this house.
 
 Requires "Decorator" access, which you automatically have in your own houses, and rarely ever have in anybody else's house.
 
-[size=200][color=#BF2700][b]Not Supported[/b][/color][/size]
+[size=6][b]Not Supported[/b][/size]
 
 Partial support already exists for additional stations:
 
@@ -102,7 +102,7 @@ Partial support already exists for additional stations:
 [*]Assistants: Banker, Merchant, Fence
 [/list]
 
-[size=160][color=#006600][b]I have no desire to add these ever:[/b][/color][/size]
+[size=2][b]I have no desire to add these ever:[/b][/size]
 
 [list]
 [*]custom markers
@@ -112,7 +112,7 @@ Partial support already exists for additional stations:
 
 No thank you. That's an additional API and complexity that I don't want to spend my days supporting.
 
-[size=200][color=#BF2700][b]API[/b][/color][/size]
+[size=6][b]API[/b][/size]
 
 [code]
 HomeStationMarker.AddMarker(setId, stationId)
@@ -138,32 +138,32 @@ HomeStationMarker.DeleteAllMarkers()
 - stationId: integer crafting type such as CRAFTING_TYPE_BLACKSMITHING or 1.
 [/code]
 
-[size=180][color=#002D97][b]Why RefCount?[/b][/color][/size]
+[size=4][b]Why RefCount?[/b][/size]
 
 Reference counts free up other code from worrying about whether they need a station for two or more crafting requests, and whether the completion of a request means it is time to remove the marker or not. Let the refcounts do the worrying for you.
 
 Ref counts also help if multiple add-ons use HomeStationMarker: what if WritWorthy needed a station, but some other add-on also needed that same station. If either one removed the marker, the other add-on's requested marker would end up lost.
 
-[size=180][color=#002D97][b]RefCount/Marker Desync[/b][/color][/size]
+[size=4][b]RefCount/Marker Desync[/b][/size]
 
 The above 3 API functions are the only ones that touch or see the ref counts.
-Slash commands such as [b][color=#BF2700]/hsm <set> <station>[/color][/b] bypass the ref count and toggle the marker regardless of API requests.
+Slash commands such as [b]/hsm <set> <station>[/b] bypass the ref count and toggle the marker regardless of API requests.
 
-[size=200][color=#BF2700][b]FPS Cost[/b][/color][/size]
+[size=6][b]FPS Cost[/b][/size]
 
 Each marker slows down your frames per second.
 
 This add-on also slows down frames per second while in player housing:
 
-[b][color=#BF2700]zo_callLater[/color][/b] : a periodic task updates each marker rotation 8 times per second. Only registered within player housing.
+[b]zo_callLater[/b] : a periodic task updates each marker rotation 8 times per second. Only registered within player housing.
 
-[b][color=#BF2700]EVENT_CRAFTING_STATION_INTERACT[/color][/b] : An event listener records station location each time you interact with a crafting station. This listener is only registered within player housing.
+[b]EVENT_CRAFTING_STATION_INTERACT[/b] : An event listener records station location each time you interact with a crafting station. This listener is only registered within player housing.
 
-[b][color=#BF2700]EVENT_PLAYER_ACTIVATED[/color][/b] : An event listener hides all of a house's markers when you exit player housing, shows that house's previously hidden markers when you enter player housing.
+[b]EVENT_PLAYER_ACTIVATED[/b] : An event listener hides all of a house's markers when you exit player housing, shows that house's previously hidden markers when you enter player housing.
 
 Scene Listener : An event listener that shows/hides all markers when the HUD is shown/hidden while in player housing. Hides the markers when you're in the inventory/bank/dialog/whatever scene, unhides when you're back to walking around the house.
 
-[size=200][color=#BF2700][b]SavedVariables[/b][/color][/size]
+[size=6][b]SavedVariables[/b][/size]
 
 [list]
 [*][b]station locations:[/b] for each player house: each known crafting station's location
@@ -171,10 +171,10 @@ Scene Listener : An event listener that shows/hides all markers when the HUD is 
 [*][b]reference counts:[/b] keep track of how many times a marker has been requested via API.
 [/list]
 
-[size=200][color=#BF2700][b]To Do[/b][/color][/size]
+[size=6][b]To Do[/b][/size]
 
 [list]
-[*]Stop replacing [b][color=#BF2700]/hsm scanlocs[/color][/b] station location records every time you interact.
+[*]Stop replacing [b]/hsm scanlocs[/b] station location records every time you interact.
 Add a "provenance" field to location records and then honor "scan" before "interact."
 [*]Event listener to detect and record assistant and mundus stone locations.
 [*]Slash command support to toggle above assistant and mundus stone locations.
