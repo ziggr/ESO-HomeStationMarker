@@ -8,6 +8,8 @@ Adapted from [Shinni's HarvestMap](https://www.esoui.com/downloads/info57-Harves
 
 Originally written to help visitors find stations when crafting master writs with [WritWorthy](https://www.esoui.com/downloads/info1605-WritWorthy.html).
 
+Follow development on [GitHub](https://github.com/ziggr/ESO-HomeStationMarker)
+
 # Libraries
 
 ## Required Libraries:
