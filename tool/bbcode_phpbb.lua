@@ -17,25 +17,25 @@
      -- https://github.com/lilydjwg/2bbcode/blob/master/LICENSE
 
      ==============================================================================
-                                  BSD 3-Clause License                             
+                                  BSD 3-Clause License
      ==============================================================================
      Copyright (c) 2016, 依云
      All rights reserved.
-     
+
      Redistribution and use in source and binary forms, with or without
      modification, are permitted provided that the following conditions are met:
-     
+
      * Redistributions of source code must retain the above copyright notice, this
        list of conditions and the following disclaimer.
-     
+
      * Redistributions in binary form must reproduce the above copyright notice,
        this list of conditions and the following disclaimer in the documentation
        and/or other materials provided with the distribution.
-     
+
      * Neither the name of the copyright holder nor the names of its
        contributors may be used to endorse or promote products derived from
        this software without specific prior written permission.
-     
+
      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
      AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
      IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -134,7 +134,7 @@ end
 -- CHANGES BY @tajmone: Inline Code
 --   *  Convert to bold and red.
 function Code(s, attr)
-  return "[b][color=#BF2700]" .. s .. "[/color][/b]"
+  return '[FONT="Courier New"]' .. s .. "[/FONT]"
 end
 
 function InlineMath(s)
@@ -165,17 +165,17 @@ end
 -- lev is an integer, the header level.
 function Header(lev, s, attr)
   if lev == 1 then
-    return "[size=200][color=#BF2700][b]" .. s .. "[/b][/color][/size]"
+    return "[size=6][b]" .. s .. "[/b][/size]"
   elseif lev == 2 then
-    return "[size=180][color=#002D97][b]" .. s .. "[/b][/color][/size]"
+    return "[size=4][b]" .. s .. "[/b][/size]"
   elseif lev == 3 then
-    return "[size=160][color=#006600][b]" .. s .. "[/b][/color][/size]"
+    return "[size=2][b]" .. s .. "[/b][/size]"
   elseif lev == 4 then
-    return "[size=150][color=#0C71A3][b]" .. s .. "[/b][/color][/size]"
+    return "[size=2][b]" .. s .. "[/b][/size]"
   elseif lev == 5 then
-    return "[size=140][color=#A9B8C2][b]" .. s .. "[/b][/color][/size]"
+    return "[size=2][b]" .. s .. "[/b][/size]"
   else
-    return "[size=130][b]" .. s .. "[/b][/size]"
+    return "[size=2][b]" .. s .. "[/b][/size]"
   end
 end
 
@@ -303,7 +303,7 @@ end
 -- CHANGES BY @tajmone: SoftBreak
 --   *  Added SoftBreak function (missing in original)
 --      This element was added in pandoc 1.16 as a matter of editing convenience
---      to preserve line breaks (as opposed to paragraph breaks) from input source to output. 
+--      to preserve line breaks (as opposed to paragraph breaks) from input source to output.
 --   *  Returns text followed by \n
 function SoftBreak()
   return "\n"
@@ -318,7 +318,7 @@ function PrintWarning(s)
 end
 --[[
 ==============================================================================
-                                 FILE HISTORY                                 
+                                 FILE HISTORY
 ==============================================================================
 v1.1 - 2016/12/20
      - Bug Fix: Added missing fucntions:

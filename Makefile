@@ -41,4 +41,4 @@ zip:
 
 doc:
 	tool/2bbcode_phpbb  <README.md >/tmp/hsmdoc
-	sed sSdoc/hsm_stations_marked.jpgSbobS /tmp/hsmdoc >doc/README.bbcode
+	sed sSdoc/hsm_stations_marked.jpgShttps://cdn-eso.mmoui.com/preview/pvw8154.jpgS /tmp/hsmdoc >doc/README.bbcode

@@ -22,7 +22,7 @@ Follow development on [url=https://github.com/ziggr/ESO-HomeStationMarker]GitHub
 
 [list]
 [*][url=https://www.esoui.com/downloads/info2241-LibSets.html]Baertram's LibSets[/url]
-Allows you to type [b]/hsm Alessia cl[/b] instead of [b]/hsm 82 2[/b] for Alessia's Bulwark clothier station.
+Allows you to type [FONT="Courier New"]/hsm Alessia cl[/FONT] instead of [FONT="Courier New"]/hsm 82 2[/FONT] for Alessia's Bulwark clothier station.
 [/list]
 
 [size=6][b]FAQ[/b][/size]
@@ -33,13 +33,13 @@ HomeStationMarker starts out not knowing any station locations. Once it has some
 
 [list=1]
 [*]Run around the player house and interact with a few crafting stations, such as Enchanting or Armor Master Blacksmithing.
-[*][b]/hsm enchanting[/b] or [b]/hsm armor bs[/b] to show the above marker.
+[*][FONT="Courier New"]/hsm enchanting[/FONT] or [FONT="Courier New"]/hsm armor bs[/FONT] to show the above marker.
 (This command requires [url=https://www.esoui.com/downloads/info2241-LibSets.html]Baertram's LibSets[/url].)
 [/list]
 
-In your own house, or any house in which you are trusted enough to have "Decorator" access, you can replace step 1 with [b]/hsm scanlocs[/b] to immediately teach HomeStationMarker the location of every crafting station in the house.
+In your own house, or any house in which you are trusted enough to have "Decorator" access, you can replace step 1 with [FONT="Courier New"]/hsm scanlocs[/FONT] to immediately teach HomeStationMarker the location of every crafting station in the house.
 
-Learning a station location [i]after[/i] requesting a marker for it will not show a marker for that station. The marker will appear next time you enter the house or [b]/reloadui[/b].
+Learning a station location [i]after[/i] requesting a marker for it will not show a marker for that station. The marker will appear next time you enter the house or [FONT="Courier New"]/reloadui[/FONT].
 
 [size=4][b]Why are the markers not perfectly aligned with their stations?[/b][/size]
 
@@ -51,13 +51,13 @@ The API to learn a station's location is restricted to a house's owner or guests
 
 A few commands to help while testing, probably not useful to players:
 
-[size=2][b][b]/hsm <station> <set>[/b][/b][/size]
+[size=2][b][FONT="Courier New"]/hsm <station> <set>[/FONT][/b][/size]
 
 Toggle a marker above the given station. Can omit either argument.
 
 [list]
-[*][b]/hsm alchemy[/b] toggles a marker over an alchemy station
-[*][b]/hsm alessia's blacksmithing[/b] toggles a marker over the Alessia's Bulwark blacksmithing station
+[*][FONT="Courier New"]/hsm alchemy[/FONT] toggles a marker over an alchemy station
+[*][FONT="Courier New"]/hsm alessia's blacksmithing[/FONT] toggles a marker over the Alessia's Bulwark blacksmithing station
 [/list]
 
 This is mostly for testing/debugging this add-on. The simplistic string matching here was designed for, and tested on, EN English only. If it doesn't work in DE German, sorry.
@@ -82,11 +82,11 @@ Nobody wants to type "Jewelry Crafting Station".
 
 Uppercase and punctuation ignored.
 
-[size=2][b][b]/hsm forgetlocs [all][/b][/b][/size]
+[size=2][b][FONT="Courier New"]/hsm forgetlocs [all][/FONT][/b][/size]
 
-Forget all station locations for current house, or all houses if [b]/hsm forgetlocs all[/b]. Use [b]/hsm forgetlocs[/b] in a house after moving any crafting stations. Deletes all markers in current house (or all houses if [b]/hsm forgetlocs all[/b]) as a necessary side effect.
+Forget all station locations for current house, or all houses if [FONT="Courier New"]/hsm forgetlocs all[/FONT]. Use [FONT="Courier New"]/hsm forgetlocs[/FONT] in a house after moving any crafting stations. Deletes all markers in current house (or all houses if [FONT="Courier New"]/hsm forgetlocs all[/FONT]) as a necessary side effect.
 
-[size=2][b][b]/hsm scanlocs[/b][/b][/size]
+[size=2][b][FONT="Courier New"]/hsm scanlocs[/FONT][/b][/size]
 
 Teach HomeStationMarker the location of every crafting station in this house.
 
@@ -147,7 +147,7 @@ Ref counts also help if multiple add-ons use HomeStationMarker: what if WritWort
 [size=4][b]RefCount/Marker Desync[/b][/size]
 
 The above 3 API functions are the only ones that touch or see the ref counts.
-Slash commands such as [b]/hsm <set> <station>[/b] bypass the ref count and toggle the marker regardless of API requests.
+Slash commands such as [FONT="Courier New"]/hsm <set> <station>[/FONT] bypass the ref count and toggle the marker regardless of API requests.
 
 [size=6][b]FPS Cost[/b][/size]
 
@@ -155,11 +155,11 @@ Each marker slows down your frames per second.
 
 This add-on also slows down frames per second while in player housing:
 
-[b]zo_callLater[/b] : a periodic task updates each marker rotation 8 times per second. Only registered within player housing.
+[FONT="Courier New"]zo_callLater[/FONT] : a periodic task updates each marker rotation 8 times per second. Only registered within player housing.
 
-[b]EVENT_CRAFTING_STATION_INTERACT[/b] : An event listener records station location each time you interact with a crafting station. This listener is only registered within player housing.
+[FONT="Courier New"]EVENT_CRAFTING_STATION_INTERACT[/FONT] : An event listener records station location each time you interact with a crafting station. This listener is only registered within player housing.
 
-[b]EVENT_PLAYER_ACTIVATED[/b] : An event listener hides all of a house's markers when you exit player housing, shows that house's previously hidden markers when you enter player housing.
+[FONT="Courier New"]EVENT_PLAYER_ACTIVATED[/FONT] : An event listener hides all of a house's markers when you exit player housing, shows that house's previously hidden markers when you enter player housing.
 
 Scene Listener : An event listener that shows/hides all markers when the HUD is shown/hidden while in player housing. Hides the markers when you're in the inventory/bank/dialog/whatever scene, unhides when you're back to walking around the house.
 
@@ -174,7 +174,7 @@ Scene Listener : An event listener that shows/hides all markers when the HUD is 
 [size=6][b]To Do[/b][/size]
 
 [list]
-[*]Stop replacing [b]/hsm scanlocs[/b] station location records every time you interact.
+[*]Stop replacing [FONT="Courier New"]/hsm scanlocs[/FONT] station location records every time you interact.
 Add a "provenance" field to location records and then honor "scan" before "interact."
 [*]Event listener to detect and record assistant and mundus stone locations.
 [*]Slash command support to toggle above assistant and mundus stone locations.
