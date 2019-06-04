@@ -1,4 +1,4 @@
-.PHONY: put getpts get test log clayget deg zip
+.PHONY: put getpts get test log clayget deg zip doc
 
 put:
 	rsync -vrt --delete --exclude=.git \
@@ -39,3 +39,6 @@ zip:
 
 	rm -rf published/HomeStationMarker
 
+doc:
+	tool/2bbcode_phpbb  <README.md >/tmp/hsmdoc
+	sed sSdoc/hsm_stations_marked.jpgSbobS /tmp/hsmdoc >doc/README.bbcode
