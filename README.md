@@ -45,7 +45,7 @@ The API to learn a station's location is restricted to a house's owner or guests
 
 A few commands to help while testing, probably not useful to players:
 
-### `/hsm <station> <set>`
+### `/hsm <set> <station>`
 Toggle a marker above the given station. Can omit either argument.
 
 - `/hsm alchemy` toggles a marker over an alchemy station
