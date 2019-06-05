@@ -18,7 +18,7 @@ local Error = HomeStationMarker.Error
 -- important interactable items in player housing.
 --
 HomeStationMarker.SET_ID_NONE       = "no_set"
-HomeStationMarker.SET_ID_TRANSMUTE  = "transmute"       -- not implemented
+HomeStationMarker.SET_ID_MISC       = "misc"            -- not implemented
 HomeStationMarker.SET_ID_ASSISTANTS = "assistants"      -- not implemented
 HomeStationMarker.SET_ID_MUNDUS     = "mundus"          -- not implemented
 
@@ -28,8 +28,9 @@ HomeStationMarker.STATION_ID = {
 ,   MERCHANT            = "merchant"    -- Nuzhimeh
 ,   FENCE               = "fence"       -- Pirharri
 
-    -- SET_ID_TRANSMUTE
+    -- SET_ID_MISC
 ,   TRANSMUTE           = "transmute"
+,   OUTFITTER           = "outfitter"
 
     -- SET_ID_MUNDUS
 ,   MUNDUS_APPRENTICE   = "apprentice"
@@ -150,6 +151,7 @@ HomeStationMarker.STATION_TEXTURE = {
 ,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = "esoui/art/icons/servicemappins/servicepin_jewelrycrafting.dds"
 
 ,   [sid.TRANSMUTE                     ] = "esoui/art/icons/servicemappins/servicepin_transmute.dds"
+,   [sid.OUTFITTER                     ] = "esoui/art/icons/servicemappins/servicepin_dyestation.dds"
 
 ,   [sid.BANKER                        ] = "esoui/art/icons/servicemappins/servicepin_bank.dds"
 ,   [sid.MERCHANT                      ] = "esoui/art/icons/servicemappins/servicepin_vendor.dds"
@@ -871,6 +873,7 @@ HomeStationMarker.STATION_OFFSET = {
 ,   [sid.MERCHANT                      ] = { y = 3, a = 0.0*pi, r = 0.0 }
 ,   [sid.FENCE                         ] = { y = 3, a = 0.0*pi, r = 0.0 }
 ,   [sid.TRANSMUTE                     ] = { y = 4, a = 0.0*pi, r = 0.0 }
+,   [sid.OUTFITTER                     ] = { y = 4, a = 0.0*pi, r = 0.0 }
 ,   [sid.MUNDUS_APPRENTICE             ] = { y = 3, a = 0.0*pi, r = 0.0 }
 ,   [sid.MUNDUS_ATRONACH               ] = { y = 3, a = 0.0*pi, r = 0.0 }
 ,   [sid.MUNDUS_LADY                   ] = { y = 3, a = 0.0*pi, r = 0.0 }
@@ -1287,7 +1290,7 @@ end
 -- station set bonuses. Have to string match for those.
 
 local nos = HomeStationMarker.SET_ID_NONE
-local tra = HomeStationMarker.SET_ID_TRANSMUTE
+local mis = HomeStationMarker.SET_ID_MISC
 local ast = HomeStationMarker.SET_ID_ASSISTANTS
 local mun = HomeStationMarker.SET_ID_MUNDUS
 local sid = HomeStationMarker.STATION_ID
@@ -1296,7 +1299,10 @@ HomeStationMarker.FURNITURE_TEXTURE_INFO = {
     ["/esoui/art/icons/assistant_banker_01.dds"                           ] = { set_id = ast, station_id = sid.BANKER                    }
 ,   ["/esoui/art/icons/assistant_fence_01.dds"                            ] = { set_id = ast, station_id = sid.FENCE                     }
 ,   ["/esoui/art/icons/assistant_vendor_01.dds"                           ] = { set_id = ast, station_id = sid.MERCHANT                  }
-,   ["/esoui/art/icons/housing_cwc_crf_housingretrait001.dds"             ] = { set_id = tra, station_id = sid.TRANSMUTE                 }
+
+,   ["/esoui/art/icons/housing_cwc_crf_housingretrait001.dds"             ] = { set_id = mis, station_id = sid.TRANSMUTE                 }
+,   ["/esoui/art/icons/housing_gen_crf_transmogtable001.dds"              ] = { set_id = mis, station_id = sid.OUTFITTER                 }
+,   ["/esoui/art/icons/housing_gen_crf_portabletabledye001.dds"           ] = { set_id = mis, station_id = sid.OUTFITTER                 }
 
     -- These textures match both attuned and non-attuned crafting stations.
 ,   ["/esoui/art/icons/housing_gen_crf_portableblacksmith001.dds"         ] = { set_id = nil, station_id = CRAFTING_TYPE_BLACKSMITHING   }
@@ -1339,8 +1345,6 @@ HomeStationMarker.FURNITURE_TEXTURE_INFO = {
 
     -- Other furniture that appear in category 25 "Services" but which
     -- HomeStationMarker does not touch.
-,   ["/esoui/art/icons/housing_gen_crf_transmogtable001.dds"              ] = nil -- outfit station
-,   ["/esoui/art/icons/housing_gen_crf_portabletabledye001.dds"           ] = nil -- dye station
 
 ,   ["/esoui/art/icons/housing_targetdummy_humanoid_01.dds"               ] = nil
 ,   ["/esoui/art/icons/housing_targetdummy_robusthumanoid_01.dds"         ] = nil
@@ -1357,7 +1361,7 @@ HomeStationMarker.FURNITURE_TEXTURE_INFO = {
 }
 
 nos = nil
-tra = nil
+mis = nil
 ast = nil
 mun = nil
 sid = nil
