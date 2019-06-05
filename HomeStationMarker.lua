@@ -731,6 +731,7 @@ function HomeStationMarker.InteractTargetToKey(target_name)
         self.interact_target_to_key = t
     end
     local tn = zo_strformat("<<1>>", target_name)
+Debug(tn)
     return self.interact_target_to_key[tn]
 end
 
