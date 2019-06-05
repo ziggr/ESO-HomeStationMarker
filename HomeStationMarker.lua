@@ -1210,7 +1210,7 @@ function HomeStationMarker.DecrementRefCount(set_id, station_id)
     self.saved_vars.requested_mark_refcounts
         = self.saved_vars.requested_mark_refcounts or {}
     local rc = self.saved_vars.requested_mark_refcounts -- for less typing
-    rc[key] = math.min(1, rc[key] or 1) - 1
+    rc[key] = math.max(1, rc[key] or 1) - 1
     return rc[key]
 end
 
