@@ -725,12 +725,13 @@ function HomeStationMarker.InteractTargetToKey(target_name)
     if not self.interact_target_to_key then
         local lang = GetCVar("language.2") or "en"
         local t    = {}
-        for k,v in pairs(self.LANG[lang]) do
+        for k,v in pairs(self.LANG[lang] or self.LANG["en"]) do
             t[v] = k
         end
         self.interact_target_to_key = t
     end
-    return self.interact_target_to_key[target_name]
+    local tn = zo_strformat("<<1>>", target_name)
+    return self.interact_target_to_key[tn]
 end
 
 -- Scene Listener ------------------------------------------------------------
