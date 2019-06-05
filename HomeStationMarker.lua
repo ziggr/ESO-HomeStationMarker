@@ -171,6 +171,20 @@ HomeStationMarker.STATION_TEXTURE = {
 }
 sid = nil
 
+-- Recording "from where did you learn this station's location?"
+-- Values used in RecordStationLocation() as elements of station_pos.
+-- Table values are in order of priority, lower values beat higher ones.
+-- So that we can stop replacing perfect `/hsm scanlocs` locations with
+-- awful `OnCraftingStationInteract()` locations.
+--
+-- FromStationMarker() assumes these values are numbers.
+--
+HomeStationMarker.LOCATION_FROM = {
+    ["HOUSE_SCAN"] = 1
+,   ["INTERACT"  ] = 2
+,   ["UNKNOWN"   ] = 9
+}
+
 -- Slash Commands and Command-Line Interface UI ------------------------------
 
 function HomeStationMarker.RegisterSlashCommands()
@@ -346,6 +360,7 @@ function HomeStationMarker.ScanStationLocations()
         local o = self.FurnitureToInfo(furniture_id)
         if o then
             loc_ct = loc_ct + 1
+            o.station_pos.provenance = self.LOCATION_FROM.HOUSE_SCAN
             self.RecordStationLocation( house_key
                                       , o.station_id
                                       , o.set_info
@@ -418,6 +433,22 @@ function HomeStationMarker.RecordStationLocation( house_key, station_id
     sv_loc[house_key]                     = sv_loc[house_key] or {}
     sv_loc[house_key][set_id]             = sv_loc[house_key][set_id] or {}
     sv_loc[house_key][set_id]["name"]     = (set_info and set_info.set_name)
+
+                        -- If we already have a location, don't let an awful
+                        -- OnCraftingStationInteract() location replace a
+                        -- perfect ScanStationLocations() location.
+    if (sv_loc[house_key][set_id][station_id]) then
+        local prev_pos = self.FromStationLocationString(
+                                        sv_loc[house_key][set_id][station_id])
+        if prev_pos and prev_pos.provenance then
+            local new_prov = station_pos.provenance or self.LOCATION_FROM.UNKNOWN
+            if prev_pos.provenance < new_prov then
+                Debug("RecordStationLocation: skipped, previous location retained.")
+                return
+            end
+        end
+    end
+
     sv_loc[house_key][set_id][station_id] = xyz_string
 
     Debug("RecordStationLocation: h:%s set_id:%-3.3s station_id:%s xyz:%-25.25s %s"
@@ -439,7 +470,10 @@ function HomeStationMarker.ToStationLocationString(station_pos)
     if station_pos.orientation then
         local o = string.format("%4.3g", station_pos.orientation)
         table.insert(xyz, o)
+    else
+        table.insert(xyz, "")
     end
+    table.insert(xyz, station_pos.provenance or "")
     local xyz_string = table.concat(xyz, "\t")
     return xyz_string
 end
@@ -454,6 +488,7 @@ function HomeStationMarker.FromStationLocationString(s)
               , world_y     = tonumber(w[2])
               , world_z     = tonumber(w[3])
               , orientation = tonumber(w[4])
+              , provenance  = tonumber(w[5]) or self.LOCATION_FROM.UNKNOWN
               }
     assert(r.world_x and r.world_y and r.world_z)
     return r
@@ -506,6 +541,7 @@ function HomeStationMarker.OnCraftingStationInteract(event, station_id, same_sta
     local house_key     = self.CurrentHouseKey()
     local set_info      = self.CurrentStationSetInfo(station_id)
     local station_pos   = self.CurrentStationLocation()
+    station_pos.provenance = self.LOCATION_FROM.INTERACT
     self.RecordStationLocation(house_key, station_id, set_info, station_pos)
 end
 

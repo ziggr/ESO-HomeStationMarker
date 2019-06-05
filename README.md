@@ -153,7 +153,6 @@ Scene Listener : An event listener that shows/hides all markers when the HUD is 
 
 # To Do
 
-- Stop replacing `/hsm scanlocs` station location records every time you interact.
-  Add a "provenance" field to location records and then honor "scan" before "interact."
 - Event listener to detect and record assistant and mundus stone locations.
 - Slash command support to toggle above assistant and mundus stone locations.
+- Why the z-index weirdness?
