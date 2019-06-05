@@ -47,6 +47,7 @@ HomeStationMarker.STATION_ID = {
 ,   MUNDUS_TOWER        = "tower"
 ,   MUNDUS_WARRIOR      = "warrior"
 }
+
 -- RefCounted API ------------------------------------------------------------
 
 -- Request a marker above a station.
@@ -506,6 +507,8 @@ function HomeStationMarker.OnPlayerActivated(event, initial)
         self.RegisterCraftListener()
         self.RegisterSceneListener()
         self.RegisterClientInteractListener()
+        self.RegisterDyeInteractListener()
+        self.RegisterTransmuteInteractListener()
                         -- Yes, tear down any previous mark controls upon
                         -- entering a house. Otherwise we erroneously leave
                         -- the previous house's mark controls existent after
@@ -517,6 +520,8 @@ function HomeStationMarker.OnPlayerActivated(event, initial)
         self.UnregisterCraftListener()
         self.UnregisterSceneListener()
         self.UnregisterClientInteractListener()
+        self.UnregisterDyeInteractListener()
+        self.UnregisterTransmuteInteractListener()
         self.HideAllMarkControls()
         self.StopPeriodicRotate()
     end
@@ -625,7 +630,7 @@ Fence       EVENT_OPEN_FENCE(true, false)
 
 Outfit Station   USE DYING_STATION!
             EVENT_CLIENT_INTERACT_RESULT(0, "Outfit Station")
-            EVENT_DYING_STATION_INTERACT_START()
+            EVENT_DYEING_STATION_INTERACT_START()
             EVENT_CHATTER_END()
 
 Transmute   USE RETRAIT STATION
@@ -736,6 +741,63 @@ function HomeStationMarker.InteractTargetToKey(target_name)
 Debug(tn)
     return self.interact_target_to_key[tn]
 end
+
+function HomeStationMarker.RegisterDyeInteractListener()
+    local self = HomeStationMarker
+    Debug("RegisterDyeInteractListener")
+    EVENT_MANAGER:RegisterForEvent(self.name
+        , EVENT_DYEING_STATION_INTERACT_START
+        , HomeStationMarker.OnDyeInteractResult
+        )
+end
+
+function HomeStationMarker.UnregisterDyeInteractListener()
+    Debug("UnregisterDyeInteractListener")
+    local self = HomeStationMarker
+    EVENT_MANAGER:UnregisterForEvent(self.name
+        , EVENT_DYEING_STATION_INTERACT_START)
+end
+
+function HomeStationMarker.OnDyeInteractResult()
+    Debug("OnDyeInteractResult")
+    local self = HomeStationMarker
+    local house_key        = self.CurrentHouseKey()
+    local station_pos      = self.CurrentStationLocation()
+    station_pos.provenance = self.LOCATION_FROM.INTERACT
+    self.RecordStationLocation(house_key, self.STATION_ID.OUTFITTER
+                              , { set_id = self.SET_ID_MISC }
+                              , station_pos
+                              )
+end
+
+function HomeStationMarker.RegisterTransmuteInteractListener()
+    local self = HomeStationMarker
+    Debug("RegisterTransmuteInteractListener")
+    EVENT_MANAGER:RegisterForEvent(self.name
+        , EVENT_RETRAIT_STATION_INTERACT_START
+        , HomeStationMarker.OnTransmuteInteractResult
+        )
+end
+
+function HomeStationMarker.UnregisterTransmuteInteractListener()
+    Debug("UnregisterTransmuteInteractListener")
+    local self = HomeStationMarker
+    EVENT_MANAGER:UnregisterForEvent(self.name
+        , EVENT_RETRAIT_STATION_INTERACT_START)
+end
+
+function HomeStationMarker.OnTransmuteInteractResult()
+    Debug("OnTransmuteInteractResult")
+    local self = HomeStationMarker
+    local house_key        = self.CurrentHouseKey()
+    local station_pos      = self.CurrentStationLocation()
+    station_pos.provenance = self.LOCATION_FROM.INTERACT
+    self.RecordStationLocation(house_key, self.STATION_ID.TRANSMUTE
+                              , { set_id = self.SET_ID_MISC }
+                              , station_pos
+                              )
+end
+
 
 -- Scene Listener ------------------------------------------------------------
 --
