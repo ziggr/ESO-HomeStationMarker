@@ -35,8 +35,11 @@
             # Can be omitted. Only useful for Zig while developing.
 
 HomeStationMarker_Define.lua
+
+lang/$(language).lua
+lang/en.lua
+
 HomeStationMarker_Log.lua
 HomeStationMarker_Text.lua
 HomeStationMarker.xml
 HomeStationMarker.lua
-

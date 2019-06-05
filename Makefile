@@ -33,7 +33,8 @@ deg:
 zip:
 	-rm -rf published/HomeStationMarker published/HomeStationMarker\ x.x.x.zip
 	mkdir -p published/HomeStationMarker
-	cp ./HomeStationMarker* published/HomeStationMarker/
+	cp    ./HomeStationMarker* published/HomeStationMarker/
+	cp -r ./lang               published/HomeStationMarker/
 
 	cd published; zip -r HomeStationMarker\ x.x.x.zip HomeStationMarker
 

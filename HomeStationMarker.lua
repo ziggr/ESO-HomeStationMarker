@@ -503,6 +503,7 @@ function HomeStationMarker.OnPlayerActivated(event, initial)
     if house_key then
         self.RegisterCraftListener()
         self.RegisterSceneListener()
+        self.RegisterClientInteractListener()
                         -- Yes, tear down any previous mark controls upon
                         -- entering a house. Otherwise we erroneously leave
                         -- the previous house's mark controls existent after
@@ -513,6 +514,7 @@ function HomeStationMarker.OnPlayerActivated(event, initial)
     else
         self.UnregisterCraftListener()
         self.UnregisterSceneListener()
+        self.UnregisterClientInteractListener()
         self.HideAllMarkControls()
         self.StopPeriodicRotate()
     end
@@ -586,6 +588,149 @@ function HomeStationMarker.CurrentStationSetInfo(station_id)
               }
     HomeStationMarker.AddNames(r)
     return r
+end
+
+-- Interact Listener ---------------------------------------------------------
+--
+-- Unlike the craft listner, where we can use programmatic constants and API
+-- calls to learn the crafting station ID, there does not seem to be any
+-- reliable (aka numeric constants) way to learn the banker, merchant, fence,
+-- or mundus stone. The outfit station has its own event.
+--
+-- So instead we listen for EVENT_CLIENT_INTERACT_RESULT and convert its
+-- target string "Tythis Andromo, the Banker" to a constant. This requires
+-- EN/DE/FR/etc language-dependent string tables. Ugh.
+
+--[[
+
+Banker      EVENT_CLIENT_INTERACT_RESULT(0,"Tythis Andromo, the Banker")
+            EVENT_CHATTER_BEGIN
+Bank        EVENT_OPEN_BANK(2)
+            EVENT_CLOSE_BANK()
+            EVENT_CHATTER_END()
+
+Merchant    EVENT_CLIENT_INTERACT_RESULT(0,"Nuzhimeh the Merchant")
+            EVENT_CHATTER_BEGIN(1)
+Store       EVENT_OPEN_STORE()
+            EVENT_CLOSE_STORE()
+            EVENT_CHATTER_END()
+
+Fence       EVENT_CLIENT_INTERACT_RESULT(0,"Pirharri the Smuggler")
+            EVENT_CHATTER_BEGIN(1)
+Fence       EVENT_OPEN_FENCE(true, false)
+            EVENT_CLOSE_STORE
+            EVENT_CHATTER_END
+
+Outfit Station   USE DYING_STATION!
+            EVENT_CLIENT_INTERACT_RESULT(0, "Outfit Station")
+            EVENT_DYING_STATION_INTERACT_START()
+            EVENT_CHATTER_END()
+
+Transmute   USE RETRAIT STATION
+            EVENT_CLIENT_INTERACT_RESULT(0, "Transmute Station")
+            EVENT_RETRAIT_STATION_INTERACT_START()
+            EVENT_CHATTER_END
+
+Mundus      EVENT_CONFIRM_INTERACT("Mundus Stone"
+                        , "Those under the sign of The Warrior...")
+                        , "Accept Sign"
+                        , "Cancel"
+            EVENT_CLIENT_INTERACT_RESULT(0,"The Warrior")
+
+Tythis Andromo, the Banker
+Pirharri the Smuggler
+Nuzhimeh the Merchant
+                            Hey aren't a new set of banker/merchant/fence
+                            NPCs available in the Elsweyr crown store for
+                            US$50 each? Yeah, I'm not spending US$100 to
+                            learn their names
+The Warrior
+The Tower
+The Thief
+The Steed
+The Shadow
+The Serpent
+The Ritual
+The Mage
+The Lord
+The Lover
+The Lady
+The Atronach
+The Apprentice
+
+]]
+
+function HomeStationMarker.RegisterClientInteractListener()
+    local self = HomeStationMarker
+    Debug("RegisterClientInteractListener")
+    EVENT_MANAGER:RegisterForEvent(self.name
+        , EVENT_CLIENT_INTERACT_RESULT
+        , HomeStationMarker.OnClientInteractResult
+        )
+end
+
+function HomeStationMarker.UnregisterClientInteractListener()
+    Debug("UnregisterClientInteractListener")
+    local self = HomeStationMarker
+    EVENT_MANAGER:UnregisterForEvent(self.name
+        , EVENT_CLIENT_INTERACT_RESULT)
+end
+
+local ast = HomeStationMarker.SET_ID_ASSISTANTS
+local mun = HomeStationMarker.SET_ID_MUNDUS
+local sid = HomeStationMarker.STATION_ID
+
+HomeStationMarker.INTERACT_TARGET_TO_SET_STATION = {
+    ["BANKER"     ] = { set_id = ast, station_id = sid.BANKER             }
+,   ["MERCHANT"   ] = { set_id = ast, station_id = sid.MERCHANT           }
+,   ["FENCE"      ] = { set_id = ast, station_id = sid.FENCE              }
+,   ["APPRENTICE" ] = { set_id = mun, station_id = sid.MUNDUS_APPRENTICE  }
+,   ["ATRONACH"   ] = { set_id = mun, station_id = sid.MUNDUS_ATRONACH    }
+,   ["LADY"       ] = { set_id = mun, station_id = sid.MUNDUS_LADY        }
+,   ["LORD"       ] = { set_id = mun, station_id = sid.MUNDUS_LORD        }
+,   ["LOVER"      ] = { set_id = mun, station_id = sid.MUNDUS_LOVER       }
+,   ["MAGE"       ] = { set_id = mun, station_id = sid.MUNDUS_MAGE        }
+,   ["RITUAL"     ] = { set_id = mun, station_id = sid.MUNDUS_RITUAL      }
+,   ["SERPENT"    ] = { set_id = mun, station_id = sid.MUNDUS_SERPENT     }
+,   ["SHADOW"     ] = { set_id = mun, station_id = sid.MUNDUS_SHADOW      }
+,   ["STEED"      ] = { set_id = mun, station_id = sid.MUNDUS_STEED       }
+,   ["THIEF"      ] = { set_id = mun, station_id = sid.MUNDUS_THIEF       }
+,   ["TOWER"      ] = { set_id = mun, station_id = sid.MUNDUS_TOWER       }
+,   ["WARRIOR"    ] = { set_id = mun, station_id = sid.MUNDUS_WARRIOR     }
+}
+ast = nil
+mun = nil
+sid = nil
+
+function HomeStationMarker.OnClientInteractResult(event, result, target_name)
+    local self = HomeStationMarker
+    local key  = self.InteractTargetToKey(target_name)
+    Debug( "OnClientInteractResult: result:%s target:%s key:%s"
+         , tostring(result)
+         , tostring(target_name)
+         , tostring(key)
+         )
+    if not key then return end
+    local s = self.INTERACT_TARGET_TO_SET_STATION[key]
+    if not s then return end
+    local house_key        = self.CurrentHouseKey()
+    local station_pos      = self.CurrentStationLocation()
+    station_pos.provenance = self.LOCATION_FROM.INTERACT
+    self.RecordStationLocation(house_key, s.station_id, s, station_pos)
+end
+
+function HomeStationMarker.InteractTargetToKey(target_name)
+    local self = HomeStationMarker
+    if not target_name then return nil end
+    if not self.interact_target_to_key then
+        local lang = GetCVar("language.2") or "en"
+        local t    = {}
+        for k,v in pairs(self.LANG[lang]) do
+            t[v] = k
+        end
+        self.interact_target_to_key = t
+    end
+    return self.interact_target_to_key[target_name]
 end
 
 -- Scene Listener ------------------------------------------------------------
@@ -1267,7 +1412,7 @@ function HomeStationMarker.OnAddOnLoaded(event, addonName)
                             , nil
                             , self.default
                             )
-    self.RegisterCraftListener()
+    -- self.RegisterCraftListener()
 end
 
 
