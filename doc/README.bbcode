@@ -157,7 +157,10 @@ This add-on also slows down frames per second while in player housing:
 
 [FONT="Courier New"]zo_callLater[/FONT] : a periodic task updates each marker rotation 8 times per second. Only registered within player housing.
 
-[FONT="Courier New"]EVENT_CRAFTING_STATION_INTERACT[/FONT] : An event listener records station location each time you interact with a crafting station. This listener is only registered within player housing.
+[FONT="Courier New"]EVENT_CRAFTING_STATION_INTERACT[/FONT]
+[FONT="Courier New"]EVENT_CLIENT_INTERACT_RESULT[/FONT]
+[FONT="Courier New"]EVENT_DYEING_STATION_INTERACT_START[/FONT]
+[FONT="Courier New"]EVENT_RETRAIT_STATION_INTERACT_START[/FONT] : Event listeners record station location each time you interact with a crafting station or assistant. This listener is only registered within player housing.
 
 [FONT="Courier New"]EVENT_PLAYER_ACTIVATED[/FONT] : An event listener hides all of a house's markers when you exit player housing, shows that house's previously hidden markers when you enter player housing.
 
@@ -174,9 +177,6 @@ Scene Listener : An event listener that shows/hides all markers when the HUD is 
 [size=6][b]To Do[/b][/size]
 
 [list]
-[*]Stop replacing [FONT="Courier New"]/hsm scanlocs[/FONT] station location records every time you interact.
-Add a "provenance" field to location records and then honor "scan" before "interact."
-[*]Event listener to detect and record assistant and mundus stone locations.
-[*]Slash command support to toggle above assistant and mundus stone locations.
+[*]Why the z-index weirdness?
 [/list]
 
