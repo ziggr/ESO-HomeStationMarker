@@ -1,3 +1,9 @@
+[B]5.0.2 2019-06-XX[/B]
+[LIST]
+[*] Stop replacing perfectly good /hsm scanlocs location data with less good data from a player's location while interacting with a station.
+[*] Gather assistant, transmute station, outfitter/dye station, and mundus stone locations from interacting with them.
+[/LIST]
+
 [B]5.0.1 2019-06-04[/B]
 [LIST]
 [*] Initial release.
