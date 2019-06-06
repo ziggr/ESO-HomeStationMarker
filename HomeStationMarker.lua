@@ -139,6 +139,7 @@ end
 --   set_id + station_id
 --   ShowMarkControl() / HideMarkControl() / never saved_vars
 
+HomeStationMarker.debug_scan = false
 
 local sid = HomeStationMarker.STATION_ID -- for less typing
 -- Textures for the 3D MarkControl
@@ -738,8 +739,16 @@ function HomeStationMarker.InteractTargetToKey(target_name)
         self.interact_target_to_key = t
     end
     local tn = zo_strformat("<<1>>", target_name)
-Debug(tn)
-    return self.interact_target_to_key[tn]
+-- Debug(tn) -- nur zum Debuggen
+    local key = self.interact_target_to_key[tn]
+
+    if key then
+                        -- Convert second-or-later assistants
+                        -- Ezabi "BANKER.2" and Fezez "MERCHANT.2"
+                        -- to their keys "BANKER" or "MERCHANT"
+        key = key:gsub(".%d+","")
+    end
+    return key
 end
 
 function HomeStationMarker.RegisterDyeInteractListener()
@@ -1314,18 +1323,18 @@ function HomeStationMarker.FurnitureToInfo(furniture_id)
     o.category_id = r[1]
     o.subcategory_id = r[2]
 
-    -- if o.category_id == 25
-    --     or string.find(o.item_name, "Provision")
-    --     then -- category_id for crafting stations, mundus stones, assistants, others.
-    --     local row = { tostring(o.item_name)
-    --                 , tostring(o.category_id)
-    --                 , tostring(o.subcategory_id)
-    --                 , tostring(o.link)
-    --                 , tostring(o.texture_name)
-    --                 }
-    --     local line = table.concat(row, "\t")
-    --     Debug(line)
-    -- end
+    if o.category_id == 25 and self.debug_scan
+        -- or string.find(o.item_name, "Provision")
+        then -- category_id for crafting stations, mundus stones, assistants, others.
+        local row = { tostring(o.item_name)
+                    , tostring(o.category_id)
+                    , tostring(o.subcategory_id)
+                    , tostring(o.link)
+                    , tostring(o.texture_name)
+                    }
+        local line = table.concat(row, "\t")
+        Debug(line)
+    end
 
     if not o.texture_name then return nil end
     local tinfo = HomeStationMarker.FURNITURE_TEXTURE_INFO[o.texture_name]
@@ -1361,6 +1370,8 @@ HomeStationMarker.FURNITURE_TEXTURE_INFO = {
     ["/esoui/art/icons/assistant_banker_01.dds"                           ] = { set_id = ast, station_id = sid.BANKER                    }
 ,   ["/esoui/art/icons/assistant_fence_01.dds"                            ] = { set_id = ast, station_id = sid.FENCE                     }
 ,   ["/esoui/art/icons/assistant_vendor_01.dds"                           ] = { set_id = ast, station_id = sid.MERCHANT                  }
+,   ["/esoui/art/icons/assistant_ezabibanker.dds"                         ] = { set_id = ast, station_id = sid.BANKER                    }
+,   ["/esoui/art/icons/assistant_fezezmerchant.dds"                       ] = { set_id = ast, station_id = sid.MERCHANT                  }
 
 ,   ["/esoui/art/icons/housing_cwc_crf_housingretrait001.dds"             ] = { set_id = mis, station_id = sid.TRANSMUTE                 }
 ,   ["/esoui/art/icons/housing_gen_crf_transmogtable001.dds"              ] = { set_id = mis, station_id = sid.OUTFITTER                 }

@@ -156,5 +156,4 @@ Scene Listener : An event listener that shows/hides all markers when the HUD is 
 
 # To Do
 
-- Alfiq banker and merchant
 - Why the z-index weirdness?

@@ -1,7 +1,9 @@
 HomeStationMarker.LANG = HomeStationMarker.LANG or {}
 HomeStationMarker.LANG["fr"] = {
   ["BANKER"     ] = "Tythis Andromo, the Banker"
+, ["BANKER.2"   ] = "Ezabi the Banker"
 , ["MERCHANT"   ] = "Nuzhimeh the Merchant"
+, ["MERCHANT.2" ] = "Fezez the Merchant"
 , ["FENCE"      ] = "Pirharri the Smuggler"
 
 , ["APPRENTICE" ] = "l’Apprenti"
