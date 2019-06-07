@@ -81,12 +81,7 @@ Requires "Decorator" access, which you automatically have in your own houses, an
 
 # Not Supported
 
-Partial support already exists for additional stations:
-- Transmute station
-- Mundus stones
-- Assistants: Banker, Merchant, Fence
-
-### I have no desire to add these ever:
+I have no desire to add these ever:
 
 - custom markers
 - colors
