@@ -1475,6 +1475,7 @@ function HomeStationMarker.DecrementRefCount(set_id, station_id)
 end
 
 function HomeStationMarker.ResetAllRefCounts()
+    local self = HomeStationMarker
     self.saved_vars.requested_mark_refcounts = {}
 end
 
