@@ -1,0 +1,4 @@
+- why some stations not getting marked?
+- Route Info-and-higher to chat window if LibDebugLogger not active
+- LibBinaryEncode save station locations, mail to others.
+- `/hsm reset` to replace `/hsm forgetlocs all` and to also clear out all refcounts, pretty much all saved vars
