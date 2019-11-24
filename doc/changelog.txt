@@ -1,3 +1,8 @@
+[B]5.2.1 2019-11-24[/B]
+[LIST]
+[*] Baertram's DE translations. Thank you!
+[/LIST]
+
 [B]5.0.2 2019-06-06[/B]
 [LIST]
 [*] Stop replacing perfectly good /hsm scanlocs location data with less good data from a player's location while interacting with a station.
