@@ -30,7 +30,7 @@ end
 
 function HomeStationMarker.Debug(...)
     HomeStationMarker.Log("666666",...)
-    HomeStationMarker.Logger():Debug(...)
+    HomeStationMarker.Logger():Info(...)
 end
 
 function HomeStationMarker.Info(...)
@@ -40,11 +40,11 @@ end
 
 function HomeStationMarker.Warn(...)
     HomeStationMarker.Log("FF8800",...)
-    HomeStationMarker.Logger():Warn(...)
+    HomeStationMarker.Logger():Info(...)
 end
 
 function HomeStationMarker.Error(...)
     HomeStationMarker.Log("FF6666",...)
-    HomeStationMarker.Logger():Error(...)
+    HomeStationMarker.Logger():Info(...)
 end
 

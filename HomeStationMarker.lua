@@ -192,16 +192,35 @@ HomeStationMarker.LOCATION_FROM = {
 -- Slash Commands and Command-Line Interface UI ------------------------------
 
 function HomeStationMarker.RegisterSlashCommands()
-    local lsc = LibStub:GetLibrary("LibSlashCommander", true)
+    local self = HomeStationMarker
+    local lsc = LibSlashCommander
+    if not lsc and LibStub then lsc = LibStub:GetLibrary("LibSlashCommander", true) end
     if lsc then
+        local langSlashCommandsEN = self.LANG["en"]["slash_commands"]
+        local langSlashCommands = self.LANG[self.clientlang]["slash_commands"]
+        local setStationCmdText = string.format(langSlashCommands["SC_SET_STATION"], HomeStationMarker.name, langSlashCommands["SC_SET"], langSlashCommands["SC_STATION"])
         local cmd = lsc:Register( "/hsm"
-                                , function(args) HomeStationMarker.SlashCommand(args) end
-                                , "HomeStationMarker <set> <station>")
+            , function(args) HomeStationMarker.SlashCommand(args) end
+            , setStationCmdText)
 
-        local t = { {"forgetlocs"    , "Forget all station locations for current house, also deletes all markers for current house." }
-                  , {"forgetlocs all", "Forget all station locations for all houses, also deletes all markers for all houses." }
-                  , {"scanlocs",       "Scan furnishings to learn station locations." }
-                  }
+        local tEN = {
+              {tostring(langSlashCommandsEN["SC_FORGET_LOCS_CMD"]),     langSlashCommandsEN["SC_FORGET_LOCS"]}
+            , {tostring(langSlashCommandsEN["SC_FORGET_LOCS_ALL_CMD"]), langSlashCommandsEN["SC_FORGET_LOCS_ALL"]}
+            , {tostring(langSlashCommandsEN["SC_SCAN_LOCS_CMD"]),       langSlashCommandsEN["SC_SCAN_LOCS"]}
+        }
+        local t = {
+              {tostring(langSlashCommands["SC_FORGET_LOCS_CMD"]),     langSlashCommands["SC_FORGET_LOCS"]}
+            , {tostring(langSlashCommands["SC_FORGET_LOCS_ALL_CMD"]), langSlashCommands["SC_FORGET_LOCS_ALL"]}
+            , {tostring(langSlashCommands["SC_SCAN_LOCS_CMD"]),       langSlashCommands["SC_SCAN_LOCS"]}
+        }
+        if self.clientlang ~= "en" then
+            for _, v in pairs(tEN) do
+                local sub = cmd:RegisterSubCommand()
+                sub:AddAlias(v[1])
+                sub:SetCallback(function(args) HomeStationMarker.SlashCommand(v[1], args) end)
+                sub:SetDescription(v[2])
+            end
+        end
         for _, v in pairs(t) do
             local sub = cmd:RegisterSubCommand()
             sub:AddAlias(v[1])
@@ -731,9 +750,9 @@ function HomeStationMarker.InteractTargetToKey(target_name)
     local self = HomeStationMarker
     if not target_name then return nil end
     if not self.interact_target_to_key then
-        local lang = GetCVar("language.2") or "en"
         local t    = {}
-        for k,v in pairs(self.LANG[lang] or self.LANG["en"]) do
+        local langInteract = self.LANG[self.clientlang]["interact"]
+        for k,v in pairs(langInteract) do
             t[v] = k
         end
         self.interact_target_to_key = t
@@ -1195,8 +1214,9 @@ function HomeStationMarker.ReleaseMarkControl(set_id, station_id)
 end
 
 function HomeStationMarker.MCPoolFactory(pool)
+    local self = HomeStationMarker
     Debug("MCPoolFactory")
-    return ZO_ObjectPool_CreateControl( "HomeStationMarker_MC"
+    return ZO_ObjectPool_CreateControl( self.name .. "_MC"
                                       , pool
                                       , HomeStationMarker.TopLevelControl()
                                       )
@@ -1475,7 +1495,6 @@ function HomeStationMarker.DecrementRefCount(set_id, station_id)
 end
 
 function HomeStationMarker.ResetAllRefCounts()
-    local self = HomeStationMarker
     self.saved_vars.requested_mark_refcounts = {}
 end
 
@@ -1485,14 +1504,17 @@ function HomeStationMarker.OnAddOnLoaded(event, addonName)
     local self = HomeStationMarker
     if addonName ~= self.name then return end
 
+    self.clientlang = GetCVar("language.2") or "en"
+
     self.inited     = true
     self.saved_vars = ZO_SavedVars:NewAccountWide(
-                              "HomeStationMarkerVars"
+                              self.name .. "Vars"
                             , self.saved_var_version
                             , nil
                             , self.default
                             )
     -- self.RegisterCraftListener()
+    self.RegisterSlashCommands()
 end
 
 
@@ -1505,6 +1527,3 @@ EVENT_MANAGER:RegisterForEvent( HomeStationMarker.name
                               , EVENT_PLAYER_ACTIVATED
                               , HomeStationMarker.OnPlayerActivated
                               )
-
-HomeStationMarker.RegisterSlashCommands()
-
