@@ -1,8 +1,8 @@
 ## Title: HomeStationMarker
 ## Author: ziggr
-## AddOnVersion: 503
-## Version: 503
-## Last Updated: 2019-11-24
+## Contributors: Baetram
+## AddOnVersion: 502
+## Last Updated: 2019-06-06
 ## APIVersion: 100029
 ## DependsOn: Lib3D
 ## OptionalDependsOn: LibSlashCommander LibSets LibDebugLogger
