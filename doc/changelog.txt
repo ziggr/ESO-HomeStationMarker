@@ -1,3 +1,8 @@
+[B]5.3.1 2020-02-28[/B]
+[LIST]
+[*] Fix EN-only bug where `/hsm scanlocs` did not correctly register with LibSlashCommander.
+[/LIST]
+
 [B]5.2.1 2019-11-24[/B]
 [LIST]
 [*] Baertram's DE translations. Thank you!
