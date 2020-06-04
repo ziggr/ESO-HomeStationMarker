@@ -116,6 +116,7 @@ function HomeStationMarker.DeleteAllMarkers()
     end
 end
 
+
 -- Internal ------------------------------------------------------------------
 
 --
@@ -207,11 +208,13 @@ function HomeStationMarker.RegisterSlashCommands()
               {tostring(langSlashCommandsEN["SC_FORGET_LOCS_CMD"]),     langSlashCommandsEN["SC_FORGET_LOCS"]}
             , {tostring(langSlashCommandsEN["SC_FORGET_LOCS_ALL_CMD"]), langSlashCommandsEN["SC_FORGET_LOCS_ALL"]}
             , {tostring(langSlashCommandsEN["SC_SCAN_LOCS_CMD"]),       langSlashCommandsEN["SC_SCAN_LOCS"]}
+            , {tostring(langSlashCommandsEN["SC_CLEAR_MARKS_CMD"]),     langSlashCommandsEN["SC_CLEAR_MARKS"]}
         }
         local t = {
               {tostring(langSlashCommands["SC_FORGET_LOCS_CMD"]),     langSlashCommands["SC_FORGET_LOCS"]}
             , {tostring(langSlashCommands["SC_FORGET_LOCS_ALL_CMD"]), langSlashCommands["SC_FORGET_LOCS_ALL"]}
             , {tostring(langSlashCommands["SC_SCAN_LOCS_CMD"]),       langSlashCommands["SC_SCAN_LOCS"]}
+            , {tostring(langSlashCommands["SC_CLEAR_MARKS_CMD"]),     langSlashCommands["SC_CLEAR_MARKS"]}
         }
         if self.clientlang ~= "en" then
             for _, v in pairs(tEN) do
@@ -253,6 +256,12 @@ function HomeStationMarker.SlashCommand(cmd, args)
     if cmd:lower() == "scanlocs" then
         Info("Scanning current house's station locations...")
         self.ScanStationLocations()
+        return
+    end
+
+    if cmd:lower() == "clear" then
+        Info("Clearing marks...")
+        self.DeleteAllMarkers()
         return
     end
 
@@ -1495,6 +1504,7 @@ function HomeStationMarker.DecrementRefCount(set_id, station_id)
 end
 
 function HomeStationMarker.ResetAllRefCounts()
+    local self = HomeStationMarker
     self.saved_vars.requested_mark_refcounts = {}
 end
 

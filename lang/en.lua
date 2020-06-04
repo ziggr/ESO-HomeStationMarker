@@ -31,5 +31,7 @@ HomeStationMarker.LANG["en"] = {
   , ["SC_FORGET_LOCS_ALL_CMD" ] = "forgetlocs_all"
   , ["SC_SCAN_LOCS"           ] = "Scan furnishings to learn station locations."
   , ["SC_SCAN_LOCS_CMD"       ] = "scanlocs"
+  , ["SC_CLEAR_MARKS"         ] = "Remove all marks."
+  , ["SC_CLEAR_MARKS_CMD"     ] = "clear"
   },
 }
