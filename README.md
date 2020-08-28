@@ -1,3 +1,7 @@
+# HomeStationMarker version 6.0.1 is ziggr's final release.
+
+Ziggr does not play ESO enough to continue support.
+
 # Home Station Marker
 
 An add-on for Elder Scrolls Online that draws 3D markers over crafting stations in a player home.

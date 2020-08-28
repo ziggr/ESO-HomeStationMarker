@@ -1,3 +1,8 @@
+[B]6.0.2 2020-08-28[/B]
+[LIST]
+[*] RU translation by DrakeRulo. Thank you!
+[/LIST]
+
 [B]6.0.1 2020-06-03[/B]
 [LIST]
 [*] `/hsm clear` to clear all markers and refcounts. Retains station locations.
