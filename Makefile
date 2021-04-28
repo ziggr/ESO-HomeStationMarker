@@ -1,4 +1,4 @@
-.PHONY: put getpts get test log clayget deg zip doc
+.PHONY: put getpts get test log clayget deg zip doc com
 
 put:
 	rsync -vrt --delete --exclude=.git \
@@ -44,3 +44,6 @@ zip:
 doc:
 	tool/2bbcode_phpbb  <README.md >/tmp/hsmdoc
 	sed sSdoc/hsm_stations_marked.jpgShttps://cdn-eso.mmoui.com/preview/pvw8154.jpgS /tmp/hsmdoc >doc/README.bbcode
+
+com:
+	lua tool/zz_compress.lua
