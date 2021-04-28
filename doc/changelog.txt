@@ -1,3 +1,9 @@
+[B]7.0.1 2021-04-28[/B]
+[LIST]
+[*] Update 30/ESO 7.0.0/API 100035/Blackwood
+[*] Jewelry station set detection fix from DeadMoroz. Thank you so much!
+[/LIST]
+
 [B]6.0.2 2020-08-28[/B]
 [LIST]
 [*] RU translation by DrakeRulo. Thank you!
