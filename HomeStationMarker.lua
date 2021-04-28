@@ -596,7 +596,7 @@ function HomeStationMarker.CurrentStationSetInfo(station_id)
       [CRAFTING_TYPE_BLACKSMITHING  ] = { 15,1,3,1,1,0 }
     , [CRAFTING_TYPE_CLOTHIER       ] = { 16,1,7,1,1,0 }
     , [CRAFTING_TYPE_WOODWORKING    ] = {  7,1,3,1,1,0 }
-    , [CRAFTING_TYPE_JEWELRYCRAFTING] = {  3,1,2,1,1,0 }
+    , [CRAFTING_TYPE_JEWELRYCRAFTING] = {  3,1,3,1,1,0 }
     }
     local args = ARGS[ctype]
     if not args then
