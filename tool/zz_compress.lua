@@ -90,7 +90,58 @@ function ToLine(set_id, stations)
     return table.concat(out, "")
 end
 
+function ReadSet(set_id, stations)
+    if type(set_id) ~= "number" then return nil end
+    local out = {}
+
+    for _, i in ipairs({1,2,6,7}) do
+        local tabbed = stations[i]
+        local r      = FromStationLocationString(tabbed)
+        out[i] = r
+    end
+    return out
+end
+
+-- READ FILE
+DATA = {}
 for set_id, stations in pairs(ORIGINAL) do
-    local line = ToLine(set_id, stations)
-    if line then print(line) end
+    DATA[set_id] = ReadSet(set_id, stations)
+end
+
+-- SCAN for minimums, accumulate list of set_ids
+SET_ID = {}
+HUGE   = 1000000
+MIN    = { world_x = HUGE
+         , world_y = HUGE
+         , world_z = HUGE
+         }
+for set_id, stations in pairs(DATA) do
+    table.insert(SET_ID, set_id)
+    for i,station in pairs(stations) do
+        MIN.world_x = math.min(MIN.world_x, station.world_x)
+        MIN.world_y = math.min(MIN.world_y, station.world_y)
+        MIN.world_z = math.min(MIN.world_z, station.world_z)
+    end
+end
+table.sort(SET_ID)
+
+-- OUTPUT
+for _,set_id in ipairs(SET_ID) do
+    local cells = {}
+    ta(cells, "%3d", set_id)
+    local stations = DATA[set_id]
+    for _,i in ipairs({1,2,6,7}) do
+        local station = stations[i]
+        local offsets = { world_x     = station.world_x - MIN.world_x
+                        , world_y     = station.world_y - MIN.world_y
+                        , world_z     = station.world_z - MIN.world_z
+                        , orientation = station.orientation
+                        }
+        ta(cells, "%5d", offsets.world_x)
+        ta(cells, "%5d", offsets.world_y)
+        ta(cells, "%5d", offsets.world_z)
+        ta(cells, "%3d", rad2deg(offsets.orientation))
+    end
+    local line = table.concat(cells, "")
+    print(line)
 end
