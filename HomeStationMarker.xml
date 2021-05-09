@@ -92,7 +92,7 @@
             offsetY="0" />
           <Controls>
             <EditBox name="HomeStationMarker_Export_Edit"
-              inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText"
+              inherits="ZO_DefaultEditMultiLineForBackdrop ZO_EditDefaultText"
               textType="ALL"
               maxInputCharacters="10000">
 
