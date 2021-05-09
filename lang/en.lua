@@ -33,5 +33,7 @@ HomeStationMarker.LANG["en"] = {
   , ["SC_SCAN_LOCS_CMD"       ] = "scanlocs"
   , ["SC_CLEAR_MARKS"         ] = "Remove all marks."
   , ["SC_CLEAR_MARKS_CMD"     ] = "clear"
+  , ["SC_EXPORT"              ] = "Show import/export window."
+  , ["SC_EXPORT_CMD"          ] = "export"
   },
 }

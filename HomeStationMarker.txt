@@ -44,5 +44,6 @@ lang/en.lua
 
 HomeStationMarker_Log.lua
 HomeStationMarker_Text.lua
+HomeStationMarker_Export.lua
 HomeStationMarker.xml
 HomeStationMarker.lua

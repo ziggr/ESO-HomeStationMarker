@@ -209,12 +209,14 @@ function HomeStationMarker.RegisterSlashCommands()
             , {tostring(langSlashCommandsEN["SC_FORGET_LOCS_ALL_CMD"]), langSlashCommandsEN["SC_FORGET_LOCS_ALL"]}
             , {tostring(langSlashCommandsEN["SC_SCAN_LOCS_CMD"]),       langSlashCommandsEN["SC_SCAN_LOCS"]}
             , {tostring(langSlashCommandsEN["SC_CLEAR_MARKS_CMD"]),     langSlashCommandsEN["SC_CLEAR_MARKS"]}
+            , {tostring(langSlashCommandsEN["SC_EXPORT_CMD"]),          langSlashCommandsEN["SC_EXPORT"]}
         }
         local t = {
               {tostring(langSlashCommands["SC_FORGET_LOCS_CMD"]),     langSlashCommands["SC_FORGET_LOCS"]}
             , {tostring(langSlashCommands["SC_FORGET_LOCS_ALL_CMD"]), langSlashCommands["SC_FORGET_LOCS_ALL"]}
             , {tostring(langSlashCommands["SC_SCAN_LOCS_CMD"]),       langSlashCommands["SC_SCAN_LOCS"]}
             , {tostring(langSlashCommands["SC_CLEAR_MARKS_CMD"]),     langSlashCommands["SC_CLEAR_MARKS"]}
+            , {tostring(langSlashCommands["SC_EXPORT_CMD"]),          langSlashCommands["SC_EXPORT"]}
         }
         if self.clientlang ~= "en" then
             for _, v in pairs(tEN) do
@@ -262,6 +264,11 @@ function HomeStationMarker.SlashCommand(cmd, args)
     if cmd:lower() == "clear" then
         Info("Clearing marks...")
         self.DeleteAllMarkers()
+        return
+    end
+
+    if (cmd:lower() == "export") or (cmd:lower() == "import") then
+        HomeStationMarker_Export_ToggleUI()
         return
     end
 

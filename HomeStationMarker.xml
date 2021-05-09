@@ -15,5 +15,98 @@
 
     <Texture name = "HomeStationMarker_MC"
       virtual = "true"/>
+
+    <TopLevelControl name="HomeStationMarker_ExportUI"
+      hidden="true"
+      movable="true"
+      mouseEnabled="true"
+      resizeHandleSize="2"
+      allowBringToTop="true"
+      clampedToScreen="false"
+      >
+      <Dimensions              x="1000"      y="550" />
+      <DimensionConstraints minX="1000"   minY="350"
+                            maxX="1805"   maxY="950" />
+
+            <!-- Positive LT/Negative RB offsets allow sliding
+               past edge of screen. Negative LT/Positive RB
+               offsets inset from edge of screen.
+               Neither affect resize. Grr.
+             -->
+      <ClampedToScreenInsets left="-20" top="-20" right="20" bottom="20" />
+
+      <Controls>
+        <Backdrop name="$(parent)BG"
+        inherits="ZO_DefaultBackdrop"
+        />
+
+        <Label  name="$(parent)WindowTitle"
+          text="HomeStationMarker Import/Export"
+          font="ZoFontWindowTitle"
+          color="CFDCBD"
+          wrapMode="ELLIPSIS"
+          verticalAlignment="TOP">
+          <Anchor relativeTo="$(parent)"
+            relativePoint="TOPLEFT"
+            point="TOPLEFT"
+            offsetX="5"
+            offsetY="5" />
+        </Label>
+
+        <Button name="$(parent)Close"
+          alpha="1">
+          <Textures
+            normal="EsoUI/Art/Buttons/closeButton_up.dds"
+            pressed="EsoUI/Art/Buttons/closeButton_down.dds"
+            mouseOver="EsoUI/Art/Buttons/closeButton_mouseOver.dds"
+            disabled="EsoUI/Art/Buttons/closeButton_disabled.dds"
+            />
+          <Anchor relativeTo="$(parent)"
+            relativePoint="TOPRIGHT"
+            point="TOPRIGHT"
+            offsetX="0"
+            offsetY="0" />
+          <Dimensions x="20" y="20" />
+          <TextureCoords
+            left="0"      top="0"
+            right="0.625" bottom="0.625"
+            />
+          <OnClicked>
+            HomeStationMarker_Export_ToggleUI()
+          </OnClicked>
+        </Button>
+
+        <Backdrop
+          tier="HIGH"
+          inherits="ZO_EditBackdrop">
+          <Dimensions x="50"/>
+          <Anchor point="TOPLEFT"
+            relativeTo="$(parent)"
+            relativePoint="TOPLEFT"
+            offsetX="0"
+            offsetY="50" />
+          <Anchor point="BOTTOMRIGHT"
+            relativeTo="$(parent)"
+            relativePoint="BOTTOMRIGHT"
+            offsetX="0"
+            offsetY="0" />
+          <Controls>
+            <EditBox name="HomeStationMarker_Export_Edit"
+              inherits="ZO_DefaultEditForBackdrop ZO_EditDefaultText"
+              textType="ALL"
+              maxInputCharacters="10000">
+
+              <OnInitialized>
+                ZO_EditDefaultText_Initialize(self, "zzhello")
+              </OnInitialized>
+              <OnTextChanged>
+                HomeStationMarker_Export_OnTextChanged(self:GetText())
+              </OnTextChanged>
+            </EditBox>
+          </Controls>
+        </Backdrop>
+
+      </Controls>
+    </TopLevelControl>
   </Controls>
 </GuiXml>
