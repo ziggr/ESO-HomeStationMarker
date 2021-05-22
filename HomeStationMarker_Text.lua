@@ -1,7 +1,8 @@
 HomeStationMarker = HomeStationMarker or {}
 
 -- From http://lua-users.org/wiki/SplitJoin
-function HomeStationMarker.split(str,sep)
+-- 2021-05-22 Does not work on Lua 5.3.3.
+function HomeStationMarker.splitX(str,sep)
     sep = sep or "\t"
     local ret={}
     local n=1
@@ -12,6 +13,29 @@ function HomeStationMarker.split(str,sep)
         end -- step forwards on a blank but not a string
     end
     return ret
+end
+
+-- From http://lua-users.org/wiki/SplitJoin
+-- 2021-05-22 Works on Lua 5.3.3.
+function HomeStationMarker.split(str,sep)
+    sep = sep or "\t"
+    local ret = {}
+
+    if str:len() > 0 then
+        local is_plain = true
+
+        local word_index, word_begin = 1, 1
+        local sep_begin,sep_end = str:find(sep, word_begin, is_plain)
+        while sep_begin do
+            ret[word_index] = str:sub(word_begin, sep_begin-1)
+            word_index = word_index+1
+            word_begin = sep_end+1
+            sep_begin,sep_end = str:find(sep, word_begin, is_plain)
+      end
+      ret[word_index] = str:sub(word_begin)
+   end
+
+   return ret
 end
 
                         -- Why "or 1"? So that this code can run in a test
