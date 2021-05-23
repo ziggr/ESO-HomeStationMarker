@@ -370,6 +370,8 @@ function HomeStationMarker.Import4(line)
 end
 
 function HomeStationMarker.Export1(set_id, station_id, coord)
+    if not (coord.world_x and coord.world_y and coord.world_z) then return "" end
+
     return string.format("%s:%s|%d %d %d"
                         , tostring(set_id)
                         , tostring(station_id)
@@ -437,14 +439,22 @@ function HomeStationMarker.ExportStations(station_location)
     local lines         = {}
     local set_id_list   = sorted_keys(station_location)
     for _, set_id in ipairs(set_id_list) do
-        local station_table = station_location[set_id]
+        local station_ls_table = station_location[set_id]
         if tonumber(set_id) then
+            local station_table = {}
+            for k,v in pairs(station_ls_table) do
+                if k ~= "name" then
+                    local coord = HomeStationMarker.FromStationLocationString(v)
+                    station_table[k] = coord
+                end
+            end
             local line = HomeStationMarker.Export4(set_id, station_table)
             table.insert(lines, line)
         else
-            local station_id_list = sorted_keys(station_table)
+            local station_id_list = sorted_keys(station_ls_table)
             for _, station_id in ipairs(station_id_list) do
-                local coord = station_table[station_id]
+                local ls    = station_ls_table[station_id]
+                local coord = HomeStationMarker.FromStationLocationString(ls)
                 local line  = HomeStationMarker.Export1(set_id, station_id, coord)
                 table.insert(lines, line)
             end
