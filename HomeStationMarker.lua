@@ -465,7 +465,7 @@ function HomeStationMarker.RecordStationLocation( house_key, station_id
     assert(station_pos.world_x and station_pos.world_y and station_pos.world_z )
 
     local set_id = (set_info and set_info.set_id) or self.SET_ID_NONE
-    local xyz_string = self.ToStationLocationString(station_pos)
+    local xyz_string = self.ToStationLocationStringr(station_pos)
 
     self.saved_vars["station_location"] = self.saved_vars["station_location"] or {}
     local sv_loc = self.saved_vars["station_location"]

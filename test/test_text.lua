@@ -190,5 +190,31 @@ function TestText.TestLoop()
 end
 
 
+function TestText.TestExport4()
+
+    local station_table = { [1] = { world_x = 1, world_y = 2, world_z = 11 }
+                          , [2] = { world_x = 2, world_y = 2, world_z = 12 }
+                          , [7] = { world_x = 3, world_y = 2, world_z = 13 }
+                          , [6] = { world_x = 4, world_y = 2, world_z = 14 }
+                          }
+    local expect    = "123|1 2 11|0 0 0|1 0 1|2 0 2|3 0 3"
+    local got_line  = HomeStationMarker.Export4(123, station_table)
+    luaunit.assertEquals(got_line, expect, "123")
+
+    local got_set_id, got_table = HomeStationMarker.Import4(got_line)
+    luaunit.assertEquals(got_set_id, 123, "import 123")
+    luaunit.assertEquals(got_table, station_table, "import 123")
+
+    station_table       = { [1] = { world_x = 1, world_y = 2, world_z = 11 }
+                          , [7] = { world_x = 3, world_y = 2, world_z = 13 }
+                          , [6] = { world_x = 4, world_y = 2, world_z = 14 }
+                          }
+    expect      = "123|1 2 11|0 0 0||2 0 2|3 0 3"
+    got_line    = HomeStationMarker.Export4(123, station_table)
+    luaunit.assertEquals(got_line, expect, "123 no CL")
+
+end
+
+
 
 os.exit( luaunit.LuaUnit.run() )

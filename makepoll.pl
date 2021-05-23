@@ -1,7 +1,7 @@
 #! /usr/bin/perl
 
-#$cmd = "make poll";
-$cmd = "make put";
+$cmd = "make poll";
+# $cmd = "make put";
 
 # Cheesy ls wrapper. Dir MUST end in /.
 sub dirls($)
@@ -25,6 +25,7 @@ push @files, 'HomeStationMarker_Define.lua';
 push @files, 'HomeStationMarker_Export.lua';
 push @files, 'HomeStationMarker_Log.lua';
 push @files, 'HomeStationMarker_Text.lua';
+push @files, 'test/test_text.lua';
 print join("\n", @files) . "\n";
 
 @prev_mtime = ();

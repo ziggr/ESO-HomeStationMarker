@@ -16,7 +16,7 @@ function HomeStationMarker.splitX(str,sep)
 end
 
 -- From http://lua-users.org/wiki/SplitJoin
--- 2021-05-22 Works on Lua 5.3.3.
+-- 2021-05-22 Worksbb on Lua 5.3.3.
 function HomeStationMarker.split(str,sep)
     sep = sep or "\t"
     local ret = {}
@@ -55,13 +55,15 @@ HomeStationMarker.STATION_ALL = {
                         --
                         -- Helps avoid "Clever Alch" erroneously matching
                         -- "Alchemy"
+                        --
+                        -- See also HomeStationMarker.STATION_EQUIPMENT_SEQUENCE
+                        -- defined in HomeStationMarker_Text.lua
 HomeStationMarker.STATION_EQUIPMENT = {
     [CRAFTING_TYPE_BLACKSMITHING   or 1] = HomeStationMarker.STATION_ALL[1]
 ,   [CRAFTING_TYPE_CLOTHIER        or 2] = HomeStationMarker.STATION_ALL[2]
 ,   [CRAFTING_TYPE_JEWELRYCRAFTING or 7] = HomeStationMarker.STATION_ALL[7]
 ,   [CRAFTING_TYPE_WOODWORKING     or 6] = HomeStationMarker.STATION_ALL[6]
 }
-
 
 function HomeStationMarker.AddNames(r)
     local self = HomeStationMarker
@@ -285,3 +287,85 @@ function HomeStationMarker.LibSets()
     end
     return self.lib_sets
 end
+
+                        -- See also HomeStationMarker.STATION_EQUIPMENT
+                        -- defined in HomeStationMarker.lua
+HomeStationMarker.STATION_EQUIPMENT_SEQUENCE = {
+    CRAFTING_TYPE_BLACKSMITHING   or 1
+,   CRAFTING_TYPE_CLOTHIER        or 2
+,   CRAFTING_TYPE_JEWELRYCRAFTING or 7
+,   CRAFTING_TYPE_WOODWORKING     or 6
+}
+
+function HomeStationMarker.XYZToString(coord)
+    return string.format( "%d %d %d"
+                           , coord.world_x
+                           , coord.world_y
+                           , coord.world_z )
+end
+
+function HomeStationMarker.StringToXYZ(s)
+    if not s then return nil end
+    local w = HomeStationMarker.split(s, " ")
+    if 3 ~= #w then return nil end
+    local coord  = { ["world_x"] = tonumber(w[1])
+                   , ["world_y"] = tonumber(w[2])
+                   , ["world_z"] = tonumber(w[3])
+                   }
+    return coord
+end
+
+function HomeStationMarker.Export4(set_id, station_table)
+
+                        -- Offset all 4 station locations from some nearby
+                        -- minimum coord. Then all 4 station locations will
+                        -- later become small positive offsets from the min.
+    local HUGE      = 100000000
+    local min_coord = { world_x = HUGE,  world_y = HUGE,  world_z = HUGE }
+    for _,station_id in ipairs(HomeStationMarker.STATION_EQUIPMENT_SEQUENCE) do
+        local coord = station_table[station_id]
+        if coord then
+            min_coord.world_x = math.min(min_coord.world_x, coord.world_x)
+            min_coord.world_y = math.min(min_coord.world_y, coord.world_y)
+            min_coord.world_z = math.min(min_coord.world_z, coord.world_z)
+        end
+    end
+
+    local t = { tostring(set_id) }
+    table.insert(t,HomeStationMarker.XYZToString(min_coord))
+    for _,station_id in ipairs(HomeStationMarker.STATION_EQUIPMENT_SEQUENCE) do
+        local coord = station_table[station_id]
+        if coord then
+            local offset = { ["world_x"] = coord.world_x - min_coord.world_x
+                           , ["world_y"] = coord.world_y - min_coord.world_y
+                           , ["world_z"] = coord.world_z - min_coord.world_z
+                           }
+            table.insert(t,HomeStationMarker.XYZToString(offset))
+        else
+            table.insert(t,"")
+        end
+    end
+    return table.concat(t, "|")
+end
+
+function HomeStationMarker.Import4(line)
+    local w = HomeStationMarker.split(line, "|")
+    local set_id = tonumber(w[1])
+    local min_coord = HomeStationMarker.StringToXYZ(w[2])
+
+    local station_table = {}
+
+    for i,ct in ipairs(HomeStationMarker.STATION_EQUIPMENT_SEQUENCE) do
+        local offset = HomeStationMarker.StringToXYZ(w[2+i])
+        if offset then
+            local coord  = { ["world_x"] = offset.world_x + min_coord.world_x
+                           , ["world_y"] = offset.world_y + min_coord.world_y
+                           , ["world_z"] = offset.world_z + min_coord.world_z
+                           , }
+            station_table[ct] = coord
+        end
+    end
+
+    return set_id, station_table
+end
+

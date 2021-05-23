@@ -1,4 +1,4 @@
-.PHONY: put getpts get test log clayget deg zip doc com
+.PHONY: put getpts get test log clayget deg zip doc com poll
 
 put:
 	rsync -vrt --delete --exclude=.git \
@@ -19,7 +19,7 @@ get:
 	cp -f /Volumes/Elder\ Scrolls\ Online/live/SavedVariables/HomeStationMarker.lua data/
 	-cp -f /Volumes/Elder\ Scrolls\ Online/live/SavedVariables/LibDebugLogger.lua data/
 
-test:
+poll test:
 	lua test/test_text.lua
 
 log:
