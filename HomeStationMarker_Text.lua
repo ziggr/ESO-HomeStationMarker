@@ -383,5 +383,58 @@ function HomeStationMarker.Import1(line)
     local w = HomeStationMarker.split(line, "|")
     local ww = HomeStationMarker.split(w[1], ":")
     local coord = HomeStationMarker.StringToXYZ(w[2])
-    return ww[1], ww[2], coord
+    local station_id = ww[1]
+    local set_id     = ww[2]
+    return station_id, set_id, coord
+end
+
+function HomeStationMarker.ImportLine(line, output)
+    if line:find(":") then
+        local set_id, station_id, coord = HomeStationMarker.Import1(line)
+        if tonumber(set_id) then set_id = tonumber(set_id) end
+        if tonumber(station_id) then station_id = tonumber(station_id) end
+        output[set_id] = output[set_id] or {}
+        output[set_id][station_id] = output[set_id][station_id] or {}
+
+        output[set_id][station_id]["world_x"] = coord.world_x
+        output[set_id][station_id]["world_y"] = coord.world_y
+        output[set_id][station_id]["world_z"] = coord.world_z
+    else
+        local set_id, station_table = HomeStationMarker.Import4(line)
+        output[set_id] = station_table
+    end
+
+end
+
+local function sorted_keys(t)
+    local r = {}
+    for key,_ in pairs(t) do table.insert(r, key) end
+    local function cmp(a,b)
+        if type(a) ~= type(b) then
+            return cmp(type(a), type(b))
+        end
+        return a < b
+    end
+    table.sort(r, cmp)
+    return r
+end
+
+function HomeStationMarker.ExportHouse(station_location)
+    local lines         = {}
+    local set_id_list   = sorted_keys(station_location)
+    for _, set_id in ipairs(set_id_list) do
+        local station_table = station_location[set_id]
+        if tonumber(set_id) then
+            local line = HomeStationMarker.Export4(set_id, station_table)
+            table.insert(lines, line)
+        else
+            local station_id_list = sorted_keys(station_table)
+            for _, station_id in ipairs(station_id_list) do
+                local coord = station_table[station_id]
+                local line  = HomeStationMarker.Export1(set_id, station_id, coord)
+                table.insert(lines, line)
+            end
+        end
+    end
+    return table.concat(lines, "\n")
 end

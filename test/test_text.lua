@@ -190,7 +190,7 @@ function TestText.TestLoop()
 end
 
 
-function TestText.TestExport4()
+function TestText.TestExport41()
 
     local station_table = { [1] = { world_x = 1, world_y = 2, world_z = 11 }
                           , [2] = { world_x = 2, world_y = 2, world_z = 12 }
@@ -223,6 +223,51 @@ function TestText.TestExport4()
     luaunit.assertEquals(set_id,     "no_set",  "Import 1 set_id")
     luaunit.assertEquals(station_id, "3",       "Import 1 station_id")
     luaunit.assertEquals(got_coord,  coord,     "Import 1 coord")
+
+    local output = {}
+    HomeStationMarker.ImportLine("123|1 2 11|0 0 0|1 0 1|2 0 2|3 0 3", output)
+    luaunit.assertNotNil(output[123])
+    luaunit.assertEquals(output[123][1], { world_x = 1, world_y = 2, world_z = 11 } )
+    luaunit.assertEquals(output[123][2], { world_x = 2, world_y = 2, world_z = 12 } )
+    luaunit.assertEquals(output[123][7], { world_x = 3, world_y = 2, world_z = 13 } )
+    luaunit.assertEquals(output[123][6], { world_x = 4, world_y = 2, world_z = 14 } )
+
+    HomeStationMarker.ImportLine("no_set:3|1 2 11", output)
+    luaunit.assertNotNil(output["no_set"])
+    luaunit.assertEquals(output["no_set"][3], { world_x = 1, world_y = 2, world_z= 11 })
+
+    local station_location = {
+        ["no_set"] = { [3] = { world_x = 1, world_y = 2, world_z = 11 }
+                     , [4] = { world_x = 2, world_y = 2, world_z = 22 }
+                     , [5] = { world_x = 3, world_y = 5, world_z = 33 } }
+    }
+    local expect_text = "no_set:3|1 2 11"
+                   .. "\nno_set:4|2 2 22"
+                   .. "\nno_set:5|3 5 33"
+    local got_text = HomeStationMarker.ExportHouse(station_location)
+    luaunit.assertEquals(got_text, expect_text)
+
+    station_location = {
+        ["no_set"] = { [3] = { world_x = 1, world_y = 2, world_z = 11 }
+                     , [4] = { world_x = 2, world_y = 2, world_z = 22 }
+                     , [5] = { world_x = 3, world_y = 5, world_z = 33 } }
+    ,   ["assistants"] = { ["banker"] = { world_x = 4, world_y = 5, world_z = 66 }
+                     }
+    , [123] =        { [1] = { world_x = 1, world_y = 2, world_z = 11 }
+                     , [2] = { world_x = 2, world_y = 2, world_z = 12 }
+                     , [7] = { world_x = 3, world_y = 2, world_z = 13 }
+                     , [6] = { world_x = 4, world_y = 2, world_z = 14 }
+                     }
+    }
+    local expect_text = ""
+                   .. "123|1 2 11 0 0 0|1 0 1|2 0 2|3 0 3"
+                   .. "\nassistants:banker|4 5 66"
+                   .. "\nno_set:3|1 2 11"
+                   .. "\nno_set:4|2 2 22"
+                   .. "\nno_set:5|3 5 33"
+    got_text = HomeStationMarker.ExportHouse(station_location)
+    luaunit.assertEquals(got_text, expect_text)
+
 end
 
 
