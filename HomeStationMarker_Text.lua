@@ -389,6 +389,12 @@ function HomeStationMarker.Import1(line)
 end
 
 function HomeStationMarker.ImportLine(line, output)
+                        -- Skip comments. # won't occur ANYWHERE
+                        -- in our set_id, station_id, integer character set,
+                        -- so any such line is to be ignored as a comment.
+    if string.find(line, "#") then return end
+
+                        -- set_id:station_id single-station lines
     if line:find(":") then
         local set_id, station_id, coord = HomeStationMarker.Import1(line)
         if tonumber(set_id) then set_id = tonumber(set_id) end
@@ -399,11 +405,13 @@ function HomeStationMarker.ImportLine(line, output)
         output[set_id][station_id]["world_x"] = coord.world_x
         output[set_id][station_id]["world_y"] = coord.world_y
         output[set_id][station_id]["world_z"] = coord.world_z
-    else
-        local set_id, station_table = HomeStationMarker.Import4(line)
+        return
+    end
+                        -- No colon? Must me a 4-station line.
+    local set_id, station_table = HomeStationMarker.Import4(line)
+    if set_id and station_table then
         output[set_id] = station_table
     end
-
 end
 
 local function sorted_keys(t)
@@ -419,7 +427,13 @@ local function sorted_keys(t)
     return r
 end
 
-function HomeStationMarker.ExportHouse(station_location)
+-- Copied from https://stackoverflow.com/questions/19326368/iterate-over-lines-including-blank-lines
+local function lines_in(s)
+    if s:sub(-1)~="\n" then s=s.."\n" end
+    return s:gmatch("(.-)\n")
+end
+
+function HomeStationMarker.ExportStations(station_location)
     local lines         = {}
     local set_id_list   = sorted_keys(station_location)
     for _, set_id in ipairs(set_id_list) do
@@ -437,4 +451,13 @@ function HomeStationMarker.ExportHouse(station_location)
         end
     end
     return table.concat(lines, "\n")
+end
+
+function HomeStationMarker.ImportStations(text)
+    local output = {}
+
+    for line in lines_in(text) do
+        HomeStationMarker.ImportLine(line, output)
+    end
+    return output
 end

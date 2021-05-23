@@ -244,7 +244,7 @@ function TestText.TestExport41()
     local expect_text = "no_set:3|1 2 11"
                    .. "\nno_set:4|2 2 22"
                    .. "\nno_set:5|3 5 33"
-    local got_text = HomeStationMarker.ExportHouse(station_location)
+    local got_text = HomeStationMarker.ExportStations(station_location)
     luaunit.assertEquals(got_text, expect_text)
 
     station_location = {
@@ -260,14 +260,16 @@ function TestText.TestExport41()
                      }
     }
     local expect_text = ""
-                   .. "123|1 2 11 0 0 0|1 0 1|2 0 2|3 0 3"
+                   .. "123|1 2 11|0 0 0|1 0 1|2 0 2|3 0 3"
                    .. "\nassistants:banker|4 5 66"
                    .. "\nno_set:3|1 2 11"
                    .. "\nno_set:4|2 2 22"
                    .. "\nno_set:5|3 5 33"
-    got_text = HomeStationMarker.ExportHouse(station_location)
+    got_text = HomeStationMarker.ExportStations(station_location)
     luaunit.assertEquals(got_text, expect_text)
 
+    local got_station_locations = HomeStationMarker.ImportStations(expect_text)
+    luaunit.assertEquals(got_station_locations, station_location)
 end
 
 
