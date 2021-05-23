@@ -213,6 +213,16 @@ function TestText.TestExport4()
     got_line    = HomeStationMarker.Export4(123, station_table)
     luaunit.assertEquals(got_line, expect, "123 no CL")
 
+
+    local coord =  { world_x = 1, world_y = 2, world_z = 11 }
+    got_line    = HomeStationMarker.Export1("no_set", 3, coord )
+    expect      = "no_set:3|1 2 11"
+    luaunit.assertEquals(got_line, expect, "Export1 3")
+
+    local set_id, station_id, got_coord = HomeStationMarker.Import1(got_line)
+    luaunit.assertEquals(set_id,     "no_set",  "Import 1 set_id")
+    luaunit.assertEquals(station_id, "3",       "Import 1 station_id")
+    luaunit.assertEquals(got_coord,  coord,     "Import 1 coord")
 end
 
 

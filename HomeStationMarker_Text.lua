@@ -369,3 +369,19 @@ function HomeStationMarker.Import4(line)
     return set_id, station_table
 end
 
+function HomeStationMarker.Export1(set_id, station_id, coord)
+    return string.format("%s:%s|%d %d %d"
+                        , tostring(set_id)
+                        , tostring(station_id)
+                        , coord.world_x
+                        , coord.world_y
+                        , coord.world_z
+                        )
+end
+
+function HomeStationMarker.Import1(line)
+    local w = HomeStationMarker.split(line, "|")
+    local ww = HomeStationMarker.split(w[1], ":")
+    local coord = HomeStationMarker.StringToXYZ(w[2])
+    return ww[1], ww[2], coord
+end
