@@ -345,11 +345,11 @@ function HomeStationMarker.Export4(set_id, station_table)
             table.insert(t,"")
         end
     end
-    return table.concat(t, "|")
+    return table.concat(t, "/")
 end
 
 function HomeStationMarker.Import4(line)
-    local w = HomeStationMarker.split(line, "|")
+    local w = HomeStationMarker.split(line, "/")
     local set_id = tonumber(w[1])
     local min_coord = HomeStationMarker.StringToXYZ(w[2])
 
@@ -372,7 +372,7 @@ end
 function HomeStationMarker.Export1(set_id, station_id, coord)
     if not (coord.world_x and coord.world_y and coord.world_z) then return "" end
 
-    return string.format("%s:%s|%d %d %d"
+    return string.format("%s:%s/%d %d %d"
                         , tostring(set_id)
                         , tostring(station_id)
                         , coord.world_x
@@ -382,7 +382,7 @@ function HomeStationMarker.Export1(set_id, station_id, coord)
 end
 
 function HomeStationMarker.Import1(line)
-    local w = HomeStationMarker.split(line, "|")
+    local w = HomeStationMarker.split(line, "/")
     local ww = HomeStationMarker.split(w[1], ":")
     local coord = HomeStationMarker.StringToXYZ(w[2])
     local station_id = ww[1]

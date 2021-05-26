@@ -122,66 +122,6 @@
           <Dimensions x="200" y="20" />
         </Label>
 
-<!--         <Label name="$(parent)Instructions"
-          font="ZoFontGame"
-          color="CFDCBD"
-          text="Instructions (move to textfile itself)
-To export:
-  1. Select All text in edit field.
-  2. Copy to clipboard.
-  2. Paste into a text file using Notepad or some other text editor.
-  3. Send textfile to other players via Discord or Gmail or some other non-ESO communication tool. HomeStationMarker data is too large for ESO in-game mail.
-
-To import:
-  1. Receive a textfile via Discord or Gmail or whatever.
-  2. Open textfile with Notepad or some other text editor.
-  3. Select All text from textfile.
-  4. Copy to clipboard.
-  5. Paste into large field, replacing any previous text.
-  ">
-          <Anchor relativeTo="$(parent)"
-            relativePoint="TOPRIGHT"
-            point="TOPRIGHT"
-            offsetX="-5"
-            offsetY="100" />
-          <Anchor relativeTo="$(parent)"
-            relativePoint="BOTTOMRIGHT"
-            point="BOTTOMRIGHT"
-            offsetX="-5"
-            offsetY="-5" />
-          <Dimensions x="350" y="100" />
-        </Label>
- -->
-        <Backdrop
-          tier="HIGH"
-          inherits="ZO_EditBackdrop">
-          <Dimensions x="60"/>
-          <Anchor point="TOPLEFT"
-            relativeTo="$(parent)"
-            relativePoint="TOPLEFT"
-            offsetX="-5"
-            offsetY="100" />
-          <Anchor point="BOTTOMRIGHT"
-            relativeTo="$(parent)"
-            relativePoint="BOTTOMRIGHT"
-            offsetX="-5"
-            offsetY="0" />
-          <Controls>
-            <EditBox name="HomeStationMarker_Export_Edit"
-              inherits="ZO_DefaultEditMultiLineForBackdrop ZO_EditDefaultText"
-              textType="ALL"
-              maxInputCharacters="28000">
-
-              <OnInitialized>
-                ZO_EditDefaultText_Initialize(self, "")
-              </OnInitialized>
-              <OnTextChanged>
-                HomeStationMarker_Export_OnTextChanged(self:GetText())
-              </OnTextChanged>
-            </EditBox>
-          </Controls>
-        </Backdrop>
-
       </Controls>
     </TopLevelControl>
   </Controls>
