@@ -1516,6 +1516,42 @@ function HomeStationMarker.ResetAllRefCounts()
     self.saved_vars.requested_mark_refcounts = {}
 end
 
+-- Saved Variables -----------------------------------------------------------
+
+-- HomeStationMarker used to store all locations in a single account-wide
+-- table. That's not going to work if the same user has the same house on
+-- two different servers (NA + EU). Need to track station_location and
+-- refcounts separately for each server.
+--
+-- This is a one-time migrator that moves saved table entries from the
+-- account-wide no-server-knowledge table to a per-server table. In the
+-- rare case that this isn't what you want, uh, /hsm forgetlocs_all.
+--
+function HomeStationMarker.MigrateSavedVariables()
+    self = HomeStationMarker
+    local old_saved_vars = ZO_SavedVars:NewAccountWide(
+                              self.name .. "Vars"
+                            , self.saved_var_version
+                            , nil
+                            , self.default
+                            )
+    if not old_saved_vars.station_location then return end
+
+    local kk = { "requested_mark"
+               , "requested_mark_refcounts"
+               , "station_location"
+               }
+    for _,k in ipairs(kk) do
+        if not self.saved_vars[k] then
+            self.saved_vars[k] = old_saved_vars[k]
+            old_saved_vars[k] = nil
+            -- self.Debug("HomeStationMarker: migrated saved variable %s", tostring(k))
+        end
+    end
+
+    self.Info("HomeStationMarker: migrated saved variables.")
+end
+
 -- Init ----------------------------------------------------------------------
 
 function HomeStationMarker.OnAddOnLoaded(event, addonName)
@@ -1523,14 +1559,21 @@ function HomeStationMarker.OnAddOnLoaded(event, addonName)
     if addonName ~= self.name then return end
 
     self.clientlang = GetCVar("language.2") or "en"
+    self.server_name = "NA"
+    local plat = GetCVar("LastPlatform") -- ""
+    if (plat == "Live-EU") then
+        self.server_name = "EU"
+    end
 
     self.inited     = true
     self.saved_vars = ZO_SavedVars:NewAccountWide(
                               self.name .. "Vars"
                             , self.saved_var_version
-                            , nil
+                            , self.server_name
                             , self.default
                             )
+    self.MigrateSavedVariables()
+
     -- self.RegisterCraftListener()
     self.RegisterSlashCommands()
 end
