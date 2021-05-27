@@ -185,9 +185,11 @@ sid = nil
 -- FromStationMarker() assumes these values are numbers.
 --
 HomeStationMarker.LOCATION_FROM = {
-    ["HOUSE_SCAN"] = 1
-,   ["INTERACT"  ] = 2
-,   ["UNKNOWN"   ] = 9
+    ["HOUSE_SCAN"    ] = 1
+,   ["INTERACT_OLD"  ] = 2
+,   ["IMPORT"        ] = 3
+,   ["INTERACT"      ] = 5
+,   ["UNKNOWN"       ] = 9
 }
 
 -- Slash Commands and Command-Line Interface UI ------------------------------
@@ -531,6 +533,13 @@ function HomeStationMarker.FromStationLocationString(s)
               , provenance  = tonumber(w[5]) or self.LOCATION_FROM.UNKNOWN
               }
     assert(r.world_x and r.world_y and r.world_z)
+
+                        -- Migrate old location provenance values to make
+                        -- room for IMPORT=3 to sort before INTERACT=5.
+    if r.provenance == HomeStationMarker.LOCATION_FROM.INTERACT_OLD then
+        r.provenance = HomeStationMarker.LOCATION_FROM.INTERACT
+    end
+
     return r
 end
 
