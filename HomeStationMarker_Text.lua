@@ -390,11 +390,26 @@ function HomeStationMarker.Import1(line)
     return station_id, set_id, coord
 end
 
+local function FieldExtract(line, field_name, output)
+    local b,e = string.find(line, "^"..field_name..":")
+    if b then
+        local s = string.sub(line, e+1)
+        output[field_name] = s
+        return s
+    end
+    return nil
+end
+
 function HomeStationMarker.ImportLine(line, output)
                         -- Skip comments. # won't occur ANYWHERE
                         -- in our set_id, station_id, integer character set,
                         -- so any such line is to be ignored as a comment.
     if string.find(line, "#") then return end
+
+                        -- Special fields
+    if FieldExtract(line, "server",   output) then return end
+    if FieldExtract(line, "owner",    output) then return end
+    if FieldExtract(line, "house_id", output) then return end
 
                         -- set_id:station_id single-station lines
     if line:find(":") then

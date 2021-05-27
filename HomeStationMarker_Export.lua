@@ -73,11 +73,22 @@ function HomeStationMarker.Export.ToText()
         return "# No station location for this house."
     end
 
+    local h = { "server:"   .. self.ServerName()
+              , "owner:"    .. GetCurrentHouseOwner()
+              , "house_id:" .. tostring(GetCurrentZoneHouseId())
+              }
+    local house_text = table.concat(h, "\n") .. "\n"
+
     local station_location  = sv_l[house_key]
     local station_text      = HomeStationMarker.ExportStations(station_location)
-    local preamble          = "# (a few lines of premble, instructions, house ID)\n\n"
-    local postamble         = "\n# (end)\n"
-    local text              = preamble .. station_text .. postamble
+
+    local preamble          = "# (a few lines of premble, instructions, house ID)"
+    local postamble         = "# (end)"
+    local text              = preamble
+                            .. "\n\n" .. house_text
+                            .. "\n"   .. station_text
+                            .. "\n"   .. postamble
+                            .. "\n"
 
     HomeStationMarker.ZZ = text
     HomeStationMarker.Debug("char count:%d", #text)

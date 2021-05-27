@@ -1561,24 +1561,30 @@ function HomeStationMarker.MigrateSavedVariables()
     self.Info("HomeStationMarker: migrated saved variables.")
 end
 
+function HomeStationMarker.ServerName()
+    local self = HomeStationMarker
+    if not self.server_name then
+        self.clientlang = GetCVar("language.2") or "en"
+        self.server_name = "NA"
+        local plat = GetCVar("LastPlatform") -- ""
+        if (plat == "Live-EU") then
+            self.server_name = "EU"
+        end
+    end
+    return self.server_name
+end
+
 -- Init ----------------------------------------------------------------------
 
 function HomeStationMarker.OnAddOnLoaded(event, addonName)
     local self = HomeStationMarker
     if addonName ~= self.name then return end
 
-    self.clientlang = GetCVar("language.2") or "en"
-    self.server_name = "NA"
-    local plat = GetCVar("LastPlatform") -- ""
-    if (plat == "Live-EU") then
-        self.server_name = "EU"
-    end
-
     self.inited     = true
     self.saved_vars = ZO_SavedVars:NewAccountWide(
                               self.name .. "Vars"
                             , self.saved_var_version
-                            , self.server_name
+                            , self.ServerName()
                             , self.default
                             )
     self.MigrateSavedVariables()
