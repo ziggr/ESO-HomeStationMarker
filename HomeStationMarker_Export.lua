@@ -91,6 +91,11 @@ function HomeStationMarker.Export.CreateEditBoxImport()
 
     editbox:SetMaxInputChars(20000)
 
+    editbox:SetHandler( "OnTextChanged"
+                      , function(self)
+                            HomeStationMarker_Import_OnTextChanged(self:GetText())
+                        end
+                      )
 
     local lang = self.LANG[self.clientlang]["export"] or self.LANG["en"]["export"]
     local text = lang.IMPORT_TEXT_DEFAULT

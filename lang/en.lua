@@ -57,7 +57,7 @@ HomeStationMarker.LANG["en"] = {
   , ["POSTAMBLE"   ]            = "# (end)"
   , ["ERR_NOT_IN_HOUSE"        ] = "Only works in player housing."
   , ["ERR_NO_STATION_LOCATIONS"] = "No station location for this house. Try `/hsm scanlocs`."
-  , ["IMPORT_TEXT_DEFAULT"     ] = "Paste text here with CTRL+V"
+  , ["IMPORT_TEXT_DEFAULT"     ] = "# Paste text here with CTRL+V"
   }
 
 }
