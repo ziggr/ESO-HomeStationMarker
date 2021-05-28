@@ -76,52 +76,6 @@
           </OnClicked>
         </Button>
 
-        <Label name="$(parent)HomeLabel"
-          font="ZoFontGame"
-          color="CFDCBD"
-          text="Home:">
-          <Anchor relativeTo="$(parent)"
-            relativePoint="TOPLEFT"
-            point="TOPLEFT"
-            offsetX="5"
-            offsetY="50" />
-          <Dimensions x="50" y="20" />
-        </Label>
-        <Label name="$(parent)HomeValue"
-          font="ZoFontGame"
-          color="CFDCBD"
-          text=".zz.">
-          <Anchor relativeTo="$(parent)HomeLabel"
-            relativePoint="TOPRIGHT"
-            point="TOPLEFT"
-            offsetX="5"
-            offsetY="0" />
-          <Dimensions x="200" y="20" />
-        </Label>
-
-        <Label name="$(parent)OwnerLabel"
-          font="ZoFontGame"
-          color="CFDCBD"
-          text="Owner:">
-          <Anchor relativeTo="$(parent)HomeLabel"
-            relativePoint="BOTTOMLEFT"
-            point="TOPLEFT"
-            offsetX="0"
-            offsetY="5" />
-          <Dimensions x="50" y="20" />
-        </Label>
-        <Label name="$(parent)OwnerValue"
-          font="ZoFontGame"
-          color="CFDCBD"
-          text=".ss.">
-          <Anchor relativeTo="$(parent)OwnerLabel"
-            relativePoint="TOPRIGHT"
-            point="TOPLEFT"
-            offsetX="5"
-            offsetY="0" />
-          <Dimensions x="200" y="20" />
-        </Label>
-
       </Controls>
     </TopLevelControl>
   </Controls>

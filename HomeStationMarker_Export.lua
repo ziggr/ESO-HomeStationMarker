@@ -7,6 +7,10 @@ function HomeStationMarker_Export_ToggleUI()
 
     if not HomeStationMarker.Export.editbox then
         HomeStationMarker.Export.editbox = HomeStationMarker.Export.CreateEditBox()
+
+        local lang = self.LANG[self.clientlang]["export"] or self.LANG["en"]["export"]
+
+        HomeStationMarker_ExportUIWindowTitle:SetText(lang.WINDOW_TITLE)
     end
 
     if h then
@@ -63,14 +67,16 @@ end
 
 function HomeStationMarker.Export.ToText()
     local self = HomeStationMarker
+    local lang = self.LANG[self.clientlang]["export"] or self.LANG["en"]["export"]
+
     local house_key = self.CurrentHouseKey()
     if not house_key then
-        return "# Only works in player housing."
+        return "# " .. lang.ERR_NOT_IN_HOUSE
     end
 
     local sv_l = self.saved_vars.station_location
     if not sv_l[house_key] then
-        return "# No station location for this house."
+        return "# ".. lang.ERR_NO_STATION_LOCATION
     end
 
     local h = { "server:"   .. self.ServerName()
@@ -82,8 +88,8 @@ function HomeStationMarker.Export.ToText()
     local station_location  = sv_l[house_key]
     local station_text      = HomeStationMarker.ExportStations(station_location)
 
-    local preamble          = "# (a few lines of premble, instructions, house ID)"
-    local postamble         = "# (end)"
+    local preamble          = lang.PREAMBLE
+    local postamble         = lang.POSTAMBLE
     local text              = preamble
                             .. "\n\n" .. house_text
                             .. "\n"   .. station_text

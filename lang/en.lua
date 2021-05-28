@@ -36,4 +36,24 @@ HomeStationMarker.LANG["en"] = {
   , ["SC_EXPORT"              ] = "Show import/export window."
   , ["SC_EXPORT_CMD"          ] = "export"
   },
+
+  ["export"] = {
+    ["WINDOW_TITLE"]  = "HomeStationMarker Export"
+  , ["PREAMBLE"    ]  =           "# To share your home's station locations with other players,"
+                      .. "\n" ..  "# 1. Copy this entire text with CTRL+A then CTRL+C."
+                      .. "\n" ..  "# 2. Send to other players via Discord or some other way."
+                      .. "\n" ..  "#    (ESO mail is limited to 700 characters, too small for"
+                      .. "\n" ..  "#     HomeStationMarker locations.)"
+                      .. "\n" ..  "#"
+                      .. "\n" ..  "# To import station locations:"
+                      .. "\n" ..  "# 1. Copy the entire text that was sent via Discord or elsewhere."
+                      .. "\n" ..  "# 1. Type `/hsm import` into the chat window."
+                      .. "\n" ..  "#    This opens the HomeStationMarker Import window."
+                      .. "\n" ..  "# 2. Paste with CTRL+V."
+                      .. "\n" ..  "#"
+  , ["POSTAMBLE"   ]            = "# (end)"
+  , ["ERR_NOT_IN_HOUSE"        ] = "Only works in player housing."
+  , ["ERR_NO_STATION_LOCATIONS"] = "No station location for this house. Try `/hsm scanlocs`."
+  }
+
 }
