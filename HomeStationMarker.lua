@@ -212,6 +212,7 @@ function HomeStationMarker.RegisterSlashCommands()
             , {tostring(langSlashCommandsEN["SC_SCAN_LOCS_CMD"]),       langSlashCommandsEN["SC_SCAN_LOCS"]}
             , {tostring(langSlashCommandsEN["SC_CLEAR_MARKS_CMD"]),     langSlashCommandsEN["SC_CLEAR_MARKS"]}
             , {tostring(langSlashCommandsEN["SC_EXPORT_CMD"]),          langSlashCommandsEN["SC_EXPORT"]}
+            , {tostring(langSlashCommandsEN["SC_IMPORT_CMD"]),          langSlashCommandsEN["SC_IMPORT"]}
         }
         local t = {
               {tostring(langSlashCommands["SC_FORGET_LOCS_CMD"]),     langSlashCommands["SC_FORGET_LOCS"]}
@@ -219,6 +220,7 @@ function HomeStationMarker.RegisterSlashCommands()
             , {tostring(langSlashCommands["SC_SCAN_LOCS_CMD"]),       langSlashCommands["SC_SCAN_LOCS"]}
             , {tostring(langSlashCommands["SC_CLEAR_MARKS_CMD"]),     langSlashCommands["SC_CLEAR_MARKS"]}
             , {tostring(langSlashCommands["SC_EXPORT_CMD"]),          langSlashCommands["SC_EXPORT"]}
+            , {tostring(langSlashCommands["SC_IMPORT_CMD"]),          langSlashCommands["SC_IMPORT"]}
         }
         if self.clientlang ~= "en" then
             for _, v in pairs(tEN) do
@@ -269,8 +271,13 @@ function HomeStationMarker.SlashCommand(cmd, args)
         return
     end
 
-    if (cmd:lower() == "export") or (cmd:lower() == "import") then
+    if (cmd:lower() == "export") then
         HomeStationMarker_Export_ToggleUI()
+        return
+    end
+
+    if (cmd:lower() == "import") then
+        HomeStationMarker_Import_ToggleUI()
         return
     end
 

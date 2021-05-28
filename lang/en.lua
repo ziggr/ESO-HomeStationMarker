@@ -33,12 +33,15 @@ HomeStationMarker.LANG["en"] = {
   , ["SC_SCAN_LOCS_CMD"       ] = "scanlocs"
   , ["SC_CLEAR_MARKS"         ] = "Remove all marks."
   , ["SC_CLEAR_MARKS_CMD"     ] = "clear"
-  , ["SC_EXPORT"              ] = "Show import/export window."
+  , ["SC_EXPORT"              ] = "Show export window."
   , ["SC_EXPORT_CMD"          ] = "export"
+  , ["SC_IMPORT"              ] = "Show import window."
+  , ["SC_IMPORT_CMD"          ] = "import"
   },
 
   ["export"] = {
-    ["WINDOW_TITLE"]  = "HomeStationMarker Export"
+    ["WINDOW_TITLE"       ]  = "HomeStationMarker Export"
+  , ["WINDOW_TITLE_IMPORT"]  = "HomeStationMarker Import"
   , ["PREAMBLE"    ]  =           "# To share your home's station locations with other players,"
                       .. "\n" ..  "# 1. Copy this entire text with CTRL+A then CTRL+C."
                       .. "\n" ..  "# 2. Send to other players via Discord or some other way."
@@ -54,6 +57,7 @@ HomeStationMarker.LANG["en"] = {
   , ["POSTAMBLE"   ]            = "# (end)"
   , ["ERR_NOT_IN_HOUSE"        ] = "Only works in player housing."
   , ["ERR_NO_STATION_LOCATIONS"] = "No station location for this house. Try `/hsm scanlocs`."
+  , ["IMPORT_TEXT_DEFAULT"     ] = "Paste text here with CTRL+V"
   }
 
 }

@@ -20,6 +20,20 @@ function HomeStationMarker_Export_ToggleUI()
     HomeStationMarker_ExportUI:SetHidden(not h)
 end
 
+function HomeStationMarker_Import_ToggleUI()
+    local h = HomeStationMarker_ImportUI:IsHidden()
+
+    if not HomeStationMarker.Export.editbox_import then
+        HomeStationMarker.Export.editbox_import = HomeStationMarker.Export.CreateEditBoxImport()
+
+        local lang = self.LANG[self.clientlang]["export"] or self.LANG["en"]["export"]
+
+        HomeStationMarker_ImportUIWindowTitle:SetText(lang.WINDOW_TITLE_IMPORT)
+    end
+
+    HomeStationMarker_ImportUI:SetHidden(not h)
+end
+
 -- Zig ran into problems with the edit box not displaying more than 2818
 -- characters. Rather than deeply debug and understand what went wrong, it's
 -- easier for Zig to just bypass XML and create the UI element(s)
@@ -59,7 +73,34 @@ function HomeStationMarker.Export.CreateEditBox()
     return editbox
 end
 
-function HomeStationMarker_Export_OnTextChanged(new_text)
+function HomeStationMarker.Export.CreateEditBoxImport()
+    local container = HomeStationMarker_ImportUI
+
+    local backdrop = WINDOW_MANAGER:CreateControlFromVirtual( nil
+                                                            , container
+                                                            , "ZO_EditBackdrop"
+                                                            )
+    backdrop:SetAnchor(TOPLEFT,     container, TOPLEFT,      5,   50)
+    backdrop:SetAnchor(BOTTOMRIGHT, container, BOTTOMRIGHT, -5, -100)
+
+    local editbox = WINDOW_MANAGER:CreateControlFromVirtual(
+          nil
+        , backdrop
+        , "ZO_DefaultEditMultiLineForBackdrop"
+        )
+
+    editbox:SetMaxInputChars(20000)
+
+
+    local lang = self.LANG[self.clientlang]["export"] or self.LANG["en"]["export"]
+    local text = lang.IMPORT_TEXT_DEFAULT
+    editbox:SetText(text)
+
+    return editbox
+end
+
+function HomeStationMarker_Import_OnTextChanged(new_text)
+    HomeStationMarker.Debug("hi")
 end
 
 function HomeStationMarker.Export:RefreshSoon()
