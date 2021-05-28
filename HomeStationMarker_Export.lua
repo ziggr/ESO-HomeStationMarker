@@ -52,6 +52,10 @@ function HomeStationMarker.Export.CreateEditBox()
     local text = HomeStationMarker.Export.ToText()
     editbox:SetText(text)
 
+                        -- Scroll to top. Doesn't work immediately, but
+                        -- there's nothing that a SLEEP 10 can't fix!
+    zo_callLater(function() editbox:SetCursorPosition(0) end, 10)
+
     return editbox
 end
 
