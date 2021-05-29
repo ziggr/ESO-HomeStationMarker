@@ -139,6 +139,43 @@
           </OnClicked>
         </Button>
 
+        <Button name="$(parent)ImportButton"
+              inherits="ZO_DefaultButton"
+              text="Import"
+              >
+            <!-- <Dimensions x="200" y="20" /> -->
+            <Anchor relativeTo="$(parent)"
+              relativePoint="BOTTOMRIGHT"
+              point="TOPLEFT"
+              offsetX="-205"
+              offsetY="-95" />
+            <Anchor relativeTo="$(parent)"
+              relativePoint="BOTTOMRIGHT"
+              point="BOTTOMRIGHT"
+              offsetX="-5"
+              offsetY="-70" />
+            <OnClicked>
+              HomeStationMarker_Import_OnClicked()
+            </OnClicked>
+        </Button>
+        <Label name="$(parent)Status"
+            font="ZoFontChat"
+            wrapMode="ELLIPSIS"
+            color="CFDCBD"
+            text="one\ntwo\nthree"
+            >
+            <Anchor relativeTo="$(parent)"
+              relativePoint="BOTTOMLEFT"
+              point="BOTTOMLEFT"
+              offsetX="5"
+              offsetY="-5" />
+            <Anchor relativeTo="$(parent)ImportButton"
+              relativePoint="TOPLEFT"
+              point="TOPRIGHT"
+              offsetX="-5"
+              offsetY="0" />
+        </Label>
+
       </Controls>
     </TopLevelControl>
 
