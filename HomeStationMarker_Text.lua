@@ -422,6 +422,8 @@ function HomeStationMarker.ImportLine(line, output)
         output[set_id][station_id]["world_x"] = coord.world_x
         output[set_id][station_id]["world_y"] = coord.world_y
         output[set_id][station_id]["world_z"] = coord.world_z
+        output[set_id][station_id]["provenance"] = HomeStationMarker.LOCATION_FROM.IMPORT
+
         return
     end
                         -- No colon? Must me a 4-station line.

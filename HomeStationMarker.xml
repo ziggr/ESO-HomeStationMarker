@@ -152,7 +152,7 @@
             relativePoint="BOTTOMRIGHT"
             point="BOTTOMRIGHT"
             offsetX="-5"
-            offsetY="-100" />
+            offsetY="-130" />
           <Controls>
             <EditBox name="HomeStationMarker_ImportUIEditBox"
                 maxInputCharacters="20000"
@@ -167,7 +167,7 @@
           </Controls>
         </Backdrop>
 
-        <Button name="$(parent)ImportButton"
+        <Button name="HomeStationMarker_ImportUIImportButton"
               inherits="ZO_DefaultButton"
               text="Import"
               >

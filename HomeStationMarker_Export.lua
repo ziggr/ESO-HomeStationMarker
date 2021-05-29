@@ -26,9 +26,17 @@ function HomeStationMarker_Import_ToggleUI()
     if not HomeStationMarker.Export.editbox_import then
         HomeStationMarker.Export.editbox_import = HomeStationMarker_ImportUIEditBox
 
-        local lang = self.LANG[self.clientlang]["export"] or self.LANG["en"]["export"]
+                        -- Leave "Import" button disabled until we have
+                        -- text worthy of import.
+        HomeStationMarker_ImportUIImportButton:SetEnabled(false)
 
+                        -- Put the keyboard focus in the edit box so
+                        -- we're immediately ready to accep the paste.
+        zo_callLater(function() HomeStationMarker.Export.editbox_import:TakeFocus() end, 10)
+
+        local lang = self.LANG[self.clientlang]["export"] or self.LANG["en"]["export"]
         HomeStationMarker_ImportUIWindowTitle:SetText(lang.WINDOW_TITLE_IMPORT)
+        HomeStationMarker_ImportUIImportButton:SetText(lang.IMPORT_BUTTON)
     end
 
     HomeStationMarker_ImportUI:SetHidden(not h)
@@ -80,26 +88,62 @@ function HomeStationMarker_Import_OnTextChanged(new_text)
 end
 
 function HomeStationMarker.Export.RefreshImportNow()
+    local self = HomeStationMarker
     HomeStationMarker.Debug("importing...")
 
                         -- Parse text into station location table.
     local text = HomeStationMarker_ImportUIEditBox:GetText()
     local sl = HomeStationMarker.ImportStations(text)
 
-                        -- Update status text.
-    local t = {}
+                        -- Examine parse results.
     local house_name = ""
     if sl.house_id and tonumber(sl.house_id) then
         local cid = GetCollectibleIdForHouse(tonumber(sl.house_id))
         house_name = GetCollectibleName(cid)
     end
-    table.insert(t, string.format("server: %s", sl.server or "(missing)"))
-    table.insert(t, string.format("house_id: %s %s", sl.house_id or "(missing)", house_name))
-    table.insert(t, string.format("owner: %s", sl.owner or "(missing)"))
+    local station_ct = 0
+    for set_id, v in pairs(sl) do
+        if type(v) == "table" then
+            for station_id, coord in ipairs(v) do
+                if      coord.world_x
+                    and coord.world_y
+                    and coord.world_z
+                    then
+                        station_ct = station_ct + 1
+                end
+            end
+        end
+    end
 
+                        -- Report parse results to player.
+    local lang = self.LANG[self.clientlang]["export"] or self.LANG["en"]["export"]
+    local function apnd(t, label, value)
+        local s = ""
+        if value then
+            s = string.format("%s : %s", label, tostring(value))
+        else
+            s = string.format("|cFF3333%s : %s|r", label, lang.IMPORT_VALUE_MISSING)
+        end
+        table.insert(t, s)
+    end
+
+    local t = {}
+    apnd(t, lang.IMPORT_LABEL_SERVER,           sl.server)
+    apnd(t, lang.IMPORT_LABEL_HOUSE,            house_name)
+    apnd(t, lang.IMPORT_LABEL_OWNER,            sl.owner)
+    if 0 < station_ct then
+        apnd(t, lang.IMPORT_LABEL_STATION_COUNT,    tostring(station_ct))
+    else
+        apnd(t, lang.IMPORT_LABEL_STATION_COUNT,    nil)
+    end
     local summary_text = table.concat(t, "\n")
     HomeStationMarker_ImportUIStatus:SetText(summary_text)
 
+    local can_import = sl.server
+                     and sl.house_id
+                     and sl.owner
+                     and (0 < station_ct)
+    HomeStationMarker_ImportUIImportButton:SetEnabled(can_import)
 end
 
 function HomeStationMarker_Import_OnClicked()
