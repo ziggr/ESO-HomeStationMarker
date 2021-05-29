@@ -24,7 +24,7 @@ function HomeStationMarker_Import_ToggleUI()
     local h = HomeStationMarker_ImportUI:IsHidden()
 
     if not HomeStationMarker.Export.editbox_import then
-        HomeStationMarker.Export.editbox_import = HomeStationMarker.Export.CreateEditBoxImport()
+        HomeStationMarker.Export.editbox_import = HomeStationMarker_ImportUIEditBox
 
         local lang = self.LANG[self.clientlang]["export"] or self.LANG["en"]["export"]
 
@@ -73,39 +73,13 @@ function HomeStationMarker.Export.CreateEditBox()
     return editbox
 end
 
-function HomeStationMarker.Export.CreateEditBoxImport()
-    local container = HomeStationMarker_ImportUI
-
-    local backdrop = WINDOW_MANAGER:CreateControlFromVirtual( nil
-                                                            , container
-                                                            , "ZO_EditBackdrop"
-                                                            )
-    backdrop:SetAnchor(TOPLEFT,     container, TOPLEFT,      5,   50)
-    backdrop:SetAnchor(BOTTOMRIGHT, container, BOTTOMRIGHT, -5, -100)
-
-    local editbox = WINDOW_MANAGER:CreateControlFromVirtual(
-          nil
-        , backdrop
-        , "ZO_DefaultEditMultiLineForBackdrop"
-        )
-
-    editbox:SetMaxInputChars(20000)
-
-    editbox:SetHandler( "OnTextChanged"
-                      , function(self)
-                            HomeStationMarker_Import_OnTextChanged(self:GetText())
-                        end
-                      )
-
-    local lang = self.LANG[self.clientlang]["export"] or self.LANG["en"]["export"]
-    local text = lang.IMPORT_TEXT_DEFAULT
-    editbox:SetText(text)
-
-    return editbox
-end
-
 function HomeStationMarker_Import_OnTextChanged(new_text)
     HomeStationMarker.Debug("hi")
+    ZO_EditDefaultText_OnTextChanged(HomeStationMarker_ImportUIEditBox)
+end
+
+function HomeStationMarker_Import_OnClicked()
+    HomeStationMarker.Debug("click.")
 end
 
 function HomeStationMarker.Export:RefreshSoon()

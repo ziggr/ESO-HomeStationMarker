@@ -139,11 +139,38 @@
           </OnClicked>
         </Button>
 
+
+        <Backdrop
+          inherits="ZO_EditBackdrop"
+          >
+          <Anchor relativeTo="$(parent)"
+            relativePoint="TOPLEFT"
+            point="TOPLEFT"
+            offsetX="5"
+            offsetY="50" />
+          <Anchor relativeTo="$(parent)"
+            relativePoint="BOTTOMRIGHT"
+            point="BOTTOMRIGHT"
+            offsetX="-5"
+            offsetY="-100" />
+          <Controls>
+            <EditBox name="HomeStationMarker_ImportUIEditBox"
+                maxInputCharacters="20000"
+                inherits="ZO_DefaultEditMultiLineForBackdrop ZO_EditDefaultText">
+                <OnInitialized>
+                  ZO_EditDefaultText_Initialize(self, "howdy")
+                </OnInitialized>
+                <OnTextChanged>
+                  HomeStationMarker_Import_OnTextChanged(self:GetText())
+                </OnTextChanged>
+            </EditBox>
+          </Controls>
+        </Backdrop>
+
         <Button name="$(parent)ImportButton"
               inherits="ZO_DefaultButton"
               text="Import"
               >
-            <!-- <Dimensions x="200" y="20" /> -->
             <Anchor relativeTo="$(parent)"
               relativePoint="BOTTOMRIGHT"
               point="TOPLEFT"
