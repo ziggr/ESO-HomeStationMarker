@@ -186,7 +186,7 @@
             </OnClicked>
         </Button>
 
-        <Label name="$(parent)Status"
+        <Label name="HomeStationMarker_ImportUIStatus"
             font="ZoFontChat"
             wrapMode="ELLIPSIS"
             color="CFDCBD"

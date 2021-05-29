@@ -81,6 +81,25 @@ end
 
 function HomeStationMarker.Export.RefreshImportNow()
     HomeStationMarker.Debug("importing...")
+
+                        -- Parse text into station location table.
+    local text = HomeStationMarker_ImportUIEditBox:GetText()
+    local sl = HomeStationMarker.ImportStations(text)
+
+                        -- Update status text.
+    local t = {}
+    local house_name = ""
+    if sl.house_id and tonumber(sl.house_id) then
+        local cid = GetCollectibleIdForHouse(tonumber(sl.house_id))
+        house_name = GetCollectibleName(cid)
+    end
+    table.insert(t, string.format("server: %s", sl.server or "(missing)"))
+    table.insert(t, string.format("house_id: %s %s", sl.house_id or "(missing)", house_name))
+    table.insert(t, string.format("owner: %s", sl.owner or "(missing)"))
+
+    local summary_text = table.concat(t, "\n")
+    HomeStationMarker_ImportUIStatus:SetText(summary_text)
+
 end
 
 function HomeStationMarker_Import_OnClicked()
