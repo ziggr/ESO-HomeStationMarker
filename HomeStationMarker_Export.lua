@@ -76,6 +76,11 @@ end
 function HomeStationMarker_Import_OnTextChanged(new_text)
     HomeStationMarker.Debug("hi")
     ZO_EditDefaultText_OnTextChanged(HomeStationMarker_ImportUIEditBox)
+    HomeStationMarker.Export.CallSoon("import_text_change_ms", HomeStationMarker.Export.RefreshImportNow)
+end
+
+function HomeStationMarker.Export.RefreshImportNow()
+    HomeStationMarker.Debug("importing...")
 end
 
 function HomeStationMarker_Import_OnClicked()
@@ -136,3 +141,40 @@ end
 --     end
 --     return table.concat(lines,"")
 -- end
+
+
+-- Delayed refresh -----------------------------------------------------------
+--
+-- Don't hammer the CPU refreshing UI over and over while the user types
+-- into a filter field. Delays call to refres (or `func` here) until after
+-- 400ms or so have passed between keystrokes (or calls to `CallSoon()` here).
+--
+-- Copied from WritWorthy
+--
+function HomeStationMarker.Export.CallSoon(key, func)
+    HomeStationMarker.Debug("CallSoon     k:%s %d", key, HomeStationMarker[key] or -1)
+    if not HomeStationMarker[key] then
+        zo_callLater( function()
+                        HomeStationMarker.Export.CallSoonPoll(key, func)
+                      end
+                    , 250 )
+    end
+    HomeStationMarker[key] = GetFrameTimeMilliseconds() + 400
+end
+
+
+function HomeStationMarker.Export.CallSoonPoll(key, func)
+    HomeStationMarker.Debug("CallSoonPoll k:%s %d", key, HomeStationMarker[key] or -1)
+    if not HomeStationMarker[key] then return end
+    local now = GetFrameTimeMilliseconds() or 0
+    if now <= HomeStationMarker[key] then
+        HomeStationMarker.Debug("CallSoonPoll k:%s fire", key)
+        HomeStationMarker[key] = nil
+        func()
+    else
+        zo_callLater( function()
+                        HomeStationMarker.Export.CallSoonPoll(key, func)
+                      end
+                    , 250 )
+    end
+end
