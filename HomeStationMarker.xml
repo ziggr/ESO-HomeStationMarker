@@ -139,8 +139,8 @@
           </OnClicked>
         </Button>
 
-
         <Backdrop
+          name="HomeStationMarker_ImportUIEditBoxBG"
           inherits="ZO_EditBackdrop"
           >
           <Anchor relativeTo="$(parent)"
@@ -171,31 +171,32 @@
               inherits="ZO_DefaultButton"
               text="Import"
               >
-            <Anchor relativeTo="$(parent)"
+            <Anchor relativeTo="HomeStationMarker_ImportUIEditBoxBG"
               relativePoint="BOTTOMRIGHT"
               point="TOPLEFT"
-              offsetX="-205"
-              offsetY="-95" />
-            <Anchor relativeTo="$(parent)"
+              offsetX="-200"
+              offsetY="5" />
+            <Anchor relativeTo="HomeStationMarker_ImportUIEditBoxBG"
               relativePoint="BOTTOMRIGHT"
               point="BOTTOMRIGHT"
-              offsetX="-5"
-              offsetY="-70" />
+              offsetX="0"
+              offsetY="30" />
             <OnClicked>
               HomeStationMarker_Import_OnClicked()
             </OnClicked>
         </Button>
+
         <Label name="$(parent)Status"
             font="ZoFontChat"
             wrapMode="ELLIPSIS"
             color="CFDCBD"
             text="one\ntwo\nthree"
             >
-            <Anchor relativeTo="$(parent)"
+            <Anchor relativeTo="HomeStationMarker_ImportUIEditBoxBG"
               relativePoint="BOTTOMLEFT"
-              point="BOTTOMLEFT"
-              offsetX="5"
-              offsetY="-5" />
+              point="TOPLEFT"
+              offsetX="0"
+              offsetY="5" />
             <Anchor relativeTo="$(parent)ImportButton"
               relativePoint="TOPLEFT"
               point="TOPRIGHT"
