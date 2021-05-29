@@ -96,7 +96,7 @@ function HomeStationMarker.Export.RefreshImportNow()
     local sl = HomeStationMarker.ImportStations(text)
 
                         -- Examine parse results.
-    local house_name = ""
+    local house_name = nil
     if sl.house_id and tonumber(sl.house_id) then
         local cid = GetCollectibleIdForHouse(tonumber(sl.house_id))
         house_name = GetCollectibleName(cid)
@@ -104,7 +104,7 @@ function HomeStationMarker.Export.RefreshImportNow()
     local station_ct = 0
     for set_id, v in pairs(sl) do
         if type(v) == "table" then
-            for station_id, coord in ipairs(v) do
+            for station_id, coord in pairs(v) do
                 if      coord.world_x
                     and coord.world_y
                     and coord.world_z
@@ -144,6 +144,8 @@ function HomeStationMarker.Export.RefreshImportNow()
                      and sl.owner
                      and (0 < station_ct)
     HomeStationMarker_ImportUIImportButton:SetEnabled(can_import)
+
+    HomeStationMarker.import_results = sl
 end
 
 function HomeStationMarker_Import_OnClicked()

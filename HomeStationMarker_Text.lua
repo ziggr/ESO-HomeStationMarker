@@ -430,6 +430,9 @@ function HomeStationMarker.ImportLine(line, output)
     local set_id, station_table = HomeStationMarker.Import4(line)
     if set_id and station_table then
         output[set_id] = station_table
+        for _,coord in pairs(station_table) do
+            coord.provenance = HomeStationMarker.LOCATION_FROM.IMPORT
+        end
     end
 end
 
