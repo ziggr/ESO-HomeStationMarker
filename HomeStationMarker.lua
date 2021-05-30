@@ -48,6 +48,10 @@ HomeStationMarker.STATION_ID = {
 ,   MUNDUS_WARRIOR      = "warrior"
 }
 
+-- Tell WritWorthy that this version of HomeStationMarker forgets its
+-- refcounts after every /reloadui.
+HomeStationMarker.is_ref_counts_forgotten = true
+
 -- RefCounted API ------------------------------------------------------------
 
 -- Request a marker above a station.
@@ -108,7 +112,7 @@ end
 function HomeStationMarker.DeleteAllMarkers()
     local self = HomeStationMarker
     Debug("DeleteAllMarkers")
-    self.saved_vars.requested_mark = {}
+    self.requested_mark = {}
     self.ResetAllRefCounts()
     local house_key = self.CurrentHouseKey()
     if house_key then
@@ -130,8 +134,8 @@ end
 -- * Requested Mark
 --   Stations that we should draw beacons over, when possible.
 --   Just a list of set_id+station_id tuples.
---   AddRequestedMark() / DeleteRequestedMark() / saved_vars.requested_mark
---   Increment/Decrement/ClearRefCount()        / saved_vars.requested_mark_refcounts
+--   AddRequestedMark() / DeleteRequestedMark() / no longer saved_vars
+--   Increment/Decrement/ClearRefCount()        / no longer saved_vars
 --
 -- * MarkControl
 --   3D Controls that are the beacons that appear in 3D space.
@@ -1037,7 +1041,7 @@ end
 
 -- Requested Marks -----------------------------------------------------------
 --
--- saved_vars.requested_mark is a list of stations that we'd like to mark if
+-- .requested_mark is a list of stations that we'd like to mark if
 -- we can.
 --
 -- Just a collection of <set_id + station_id> 2-tuples.
@@ -1062,7 +1066,7 @@ function HomeStationMarker.RequestMark(args)
             , tostring(args.station_id)
             )
     local mark_val = self.RequestedMarkValue(args)
-    table.insert(self.saved_vars.requested_mark, mark_val)
+    table.insert(self.requested_mark, mark_val)
     return true
 end
 
@@ -1081,15 +1085,15 @@ function HomeStationMarker.UnrequestMark(args)
             , tostring(args.station_id)
             , tostring(found_i)
             )
-    table.remove(self.saved_vars.requested_mark, found_i)
+    table.remove(self.requested_mark, found_i)
     return true
 end
 
 function HomeStationMarker.FindRequestedMarkIndex(args)
     local self = HomeStationMarker
     local mark_val     = HomeStationMarker.RequestedMarkValue(args)
-    self.saved_vars.requested_mark = self.saved_vars.requested_mark or {}
-    for i,sk in ipairs(self.saved_vars.requested_mark) do
+    self.requested_mark = self.requested_mark or {}
+    for i,sk in ipairs(self.requested_mark) do
         if sk == mark_val then
             return i
         end
@@ -1097,7 +1101,7 @@ function HomeStationMarker.FindRequestedMarkIndex(args)
     return nil
 end
 
--- A value in saved_vars.requested_mark
+-- A value in requested_mark
 function HomeStationMarker.RequestedMarkValue(args)
     local function tostr(x)
         if not x then return "" else return tostring(x) end
@@ -1127,9 +1131,9 @@ function HomeStationMarker.ShowAllMarkControls()
     Debug("ShowAllMarkControls")
     local self      = HomeStationMarker
     HomeStationMarker_TopLevel:SetHidden(false)
-    self.saved_vars.requested_mark = self.saved_vars.requested_mark or {}
+    self.requested_mark = self.requested_mark or {}
     self.curr_rotate_orientation = nil -- Reset cached rotation for periodic.
-    for _,v in ipairs(self.saved_vars.requested_mark) do
+    for _,v in ipairs(self.requested_mark) do
         local r = self.FromRequestedMarkValue(v)
         self.ShowMarkControl(r.set_id, r.station_id)
     end
@@ -1211,7 +1215,7 @@ end
 -- A unique-for-this-marker key used to identify a control in a ZO_ObjectPool.
 function HomeStationMarker.MCKey(set_id, station_id)
                         -- We already have a key-like string generator
-                        -- used for saved_vars.requested_mark values.
+                        -- used for requested_mark values.
     return HomeStationMarker.RequestedMarkValue({ set_id     = set_id
                                        , station_id = station_id
                                        })
@@ -1513,9 +1517,9 @@ end
 function HomeStationMarker.IncrementRefCount(set_id, station_id)
     local self = HomeStationMarker
     local key  = self.MCKey(set_id, station_id)
-    self.saved_vars.requested_mark_refcounts
-        = self.saved_vars.requested_mark_refcounts or {}
-    local rc = self.saved_vars.requested_mark_refcounts -- for less typing
+    self.requested_mark_refcounts
+        = self.requested_mark_refcounts or {}
+    local rc = self.requested_mark_refcounts -- for less typing
     rc[key] = (rc[key] or 0) + 1
     return rc[key]
 end
@@ -1523,16 +1527,16 @@ end
 function HomeStationMarker.DecrementRefCount(set_id, station_id)
     local self = HomeStationMarker
     local key  = self.MCKey(set_id, station_id)
-    self.saved_vars.requested_mark_refcounts
-        = self.saved_vars.requested_mark_refcounts or {}
-    local rc = self.saved_vars.requested_mark_refcounts -- for less typing
+    self.requested_mark_refcounts
+        = self.requested_mark_refcounts or {}
+    local rc = self.requested_mark_refcounts -- for less typing
     rc[key] = math.max(1, rc[key] or 1) - 1
     return rc[key]
 end
 
 function HomeStationMarker.ResetAllRefCounts()
     local self = HomeStationMarker
-    self.saved_vars.requested_mark_refcounts = {}
+    self.requested_mark_refcounts = {}
 end
 
 -- Saved Variables -----------------------------------------------------------
@@ -1556,9 +1560,7 @@ function HomeStationMarker.MigrateSavedVariables()
                             )
     if not old_saved_vars.station_location then return end
 
-    local kk = { "requested_mark"
-               , "requested_mark_refcounts"
-               , "station_location"
+    local kk = { "station_location"
                }
     for _,k in ipairs(kk) do
         if not self.saved_vars[k] then
@@ -1566,6 +1568,15 @@ function HomeStationMarker.MigrateSavedVariables()
             old_saved_vars[k] = nil
             -- self.Debug("HomeStationMarker: migrated saved variable %s", tostring(k))
         end
+    end
+
+                        -- We no longer track refcounts in saved_vars.
+                        -- Remove the unworthy.
+    local kk = { "requested_mark_refcounts"
+               , "requested_mark"
+               }
+    for _,k in ipairs(kk) do
+        old_saved_vars[k] = nil
     end
 
     self.Info("HomeStationMarker: migrated saved variables.")
