@@ -1,3 +1,10 @@
+[B]7.0.2 2021-05-30[/B]
+[LIST]
+[*] No longer store refcounts in saved variables. Add-ons that use HomeStationMarker must be updated to restore markers after every load (WritWorthy 7.0.3 2021-05-30 has already been updated).
+[*] /hsm export shows new exporter window with current house's station location list suitable for copying and sending to other players.
+[*] /hsm import shows new importer window where other players can paste and import text copied from the above exporter window.
+[/LIST]
+
 [B]7.0.1 2021-04-28[/B]
 [LIST]
 [*] Update 30/ESO 7.0.0/API 100035/Blackwood

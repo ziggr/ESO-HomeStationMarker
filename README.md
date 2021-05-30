@@ -1,7 +1,3 @@
-# HomeStationMarker version 6.0.1 is ziggr's final release.
-
-Ziggr does not play ESO enough to continue support.
-
 # Home Station Marker
 
 An add-on for Elder Scrolls Online that draws 3D markers over crafting stations in a player home.
@@ -13,6 +9,30 @@ Adapted from [Shinni's HarvestMap](https://www.esoui.com/downloads/info57-Harves
 Originally written to help visitors find stations when crafting master writs with [WritWorthy](https://www.esoui.com/downloads/info1605-WritWorthy.html).
 
 Follow development on [GitHub](https://github.com/ziggr/ESO-HomeStationMarker)
+
+# Export/Import: Finding stations in guild halls
+
+Have a huge guild hall with hundreds of stations? You can now save a copy of your guild hall's station location list to Discord (or anywhere, it's just a text file). Then other players can import that location list to make it easier to find stations.
+
+### Guild Masters: /hsm export
+
+1. Visit your guild hall and type `/hsm export` to get a dump of all the stations in your house.
+2. Copy this text to a text file and store it on your guild's Discord server or pastebin or wherever.
+
+![/hsm export](doc/img/export.jpg)
+
+### Guild Members: /hsm import
+
+To import a list of station locations, type `/hsm import`. This opens a window where you can paste the huge list of stations that you downloaded from your guild's discord server or wherever.
+
+1. Download a list of stations from your guild. This is a text file on your guild's discord server or pastebin or somewhere. Ask your guild master for it. Point them to this page if they've never heard of HomeStationMarker.
+2. Open the above text file and copy its contents to the clipboard.
+3. In ESO, type `/hsm import` to make the HomeStationMarker Import window appear.
+4. Paste text into the importer window
+5. Click "Import" to add the results to your saved variables.
+
+![/hsm export](doc/img/import.jpg)
+
 
 # Libraries
 
@@ -150,9 +170,4 @@ Scene Listener : An event listener that shows/hides all markers when the HUD is 
 # SavedVariables
 
 - **station locations:** for each player house: each known crafting station's location
-- **requested markers:** list of set and station ids for each requested marker
-- **reference counts:** keep track of how many times a marker has been requested via API.
 
-# To Do
-
-- Why the z-index weirdness?

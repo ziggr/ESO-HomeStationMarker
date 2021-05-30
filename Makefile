@@ -43,7 +43,11 @@ zip:
 
 doc:
 	tool/2bbcode_phpbb  <README.md >/tmp/hsmdoc
-	sed sSdoc/hsm_stations_marked.jpgShttps://cdn-eso.mmoui.com/preview/pvw8154.jpgS /tmp/hsmdoc >doc/README.bbcode
+
+	sed sSdoc/hsm_stations_marked.jpgShttps://cdn-eso.mmoui.com/preview/pvw8154.jpgS /tmp/hsmdoc >doc/README.bbcode ; cp doc/README.bbcode /tmp/hsmdoc
+	sed sSdoc/img/export.jpgShttps://cdn-eso.mmoui.com/preview/pvw10352.jpgS /tmp/hsmdoc >doc/README.bbcode ; cp doc/README.bbcode /tmp/hsmdoc
+	sed sSdoc/img/import.jpgShttps://cdn-eso.mmoui.com/preview/pvw10353.jpgS /tmp/hsmdoc >doc/README.bbcode ; cp doc/README.bbcode /tmp/hsmdoc
 
 com:
 	lua tool/zz_compress.lua
+
