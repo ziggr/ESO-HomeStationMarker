@@ -438,7 +438,10 @@ end
 function HomeStationMarker.CurrentHouseKey()
     local house_owner  = GetCurrentHouseOwner()
     local house_id     = GetCurrentZoneHouseId()
+    return HomeStationMarker.ToHouseKey(house_id, house_owner)
+end
 
+function HomeStationMarker.ToHouseKey(house_id, house_owner)
     if house_owner and (house_owner ~= "")
         and house_id and (0 < house_id) then
         return string.format("%d\t%s", house_id, house_owner)

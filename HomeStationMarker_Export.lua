@@ -89,7 +89,7 @@ end
 
 function HomeStationMarker.Export.RefreshImportNow()
     local self = HomeStationMarker
-    HomeStationMarker.Debug("importing...")
+    HomeStationMarker.Debug("parsing for status refresh...")
 
                         -- Parse text into station location table.
     local text = HomeStationMarker_ImportUIEditBox:GetText()
@@ -117,10 +117,14 @@ function HomeStationMarker.Export.RefreshImportNow()
 
                         -- Report parse results to player.
     local lang = self.LANG[self.clientlang]["export"] or self.LANG["en"]["export"]
-    local function apnd(t, label, value)
+    local function apnd(t, label, value, force_error_msg)
         local s = ""
         if value then
-            s = string.format("%s : %s", label, tostring(value))
+            if force_error_msg then
+                s = string.format("%s : |cFF3333%s %s|r", label, tostring(value), force_error_msg)
+            else
+                s = string.format("%s : %s", label, tostring(value))
+            end
         else
             s = string.format("|cFF3333%s : %s|r", label, lang.IMPORT_VALUE_MISSING)
         end
@@ -128,28 +132,62 @@ function HomeStationMarker.Export.RefreshImportNow()
     end
 
     local t = {}
-    apnd(t, lang.IMPORT_LABEL_SERVER,           sl.server)
-    apnd(t, lang.IMPORT_LABEL_HOUSE,            house_name)
-    apnd(t, lang.IMPORT_LABEL_OWNER,            sl.owner)
+    local err_server = nil
+    if sl.server and sl.server ~= self.ServerName() then
+        err_server = lang.IMPORT_ERROR_SERVER_MISMATCH
+    end
+    apnd(t, lang.IMPORT_LABEL_SERVER, sl.server , err_server)
+    apnd(t, lang.IMPORT_LABEL_HOUSE,  house_name)
+    apnd(t, lang.IMPORT_LABEL_OWNER,  sl.owner  )
     if 0 < station_ct then
-        apnd(t, lang.IMPORT_LABEL_STATION_COUNT,    tostring(station_ct))
+        apnd(t, lang.IMPORT_LABEL_STATION_COUNT, tostring(station_ct))
     else
-        apnd(t, lang.IMPORT_LABEL_STATION_COUNT,    nil)
+        apnd(t, lang.IMPORT_LABEL_STATION_COUNT, nil)
     end
     local summary_text = table.concat(t, "\n")
     HomeStationMarker_ImportUIStatus:SetText(summary_text)
 
     local can_import = sl.server
+                     and sl.server == self.ServerName()
                      and sl.house_id
                      and sl.owner
                      and (0 < station_ct)
     HomeStationMarker_ImportUIImportButton:SetEnabled(can_import)
 
-    HomeStationMarker.import_results = sl
+    HomeStationMarker.import_parse_results = sl
 end
 
 function HomeStationMarker_Import_OnClicked()
-    HomeStationMarker.Debug("click.")
+    HomeStationMarker.Export.ImportFromParsedOutput(HomeStationMarker.import_parse_results)
+end
+
+function HomeStationMarker.Export.ImportFromParsedOutput(parsed)
+    local self = HomeStationMarker
+                        -- Intentionally NOT raising shields here against any
+                        -- error that RefreshImportNow() already rejects.
+
+    HomeStationMarker.Info("Importing.")
+    local house_id = tonumber(parsed.house_id)
+    local owner    = parsed.owner
+    local house_key = self.ToHouseKey(house_id, owner)
+    for set_id, station_table in pairs(parsed) do
+        local set_info = { ["set_id"] = set_id }
+        if tonumber(set_id) then
+            set_info.set_id = tonumber(set_id)
+            if self.LibSets() then
+                set_info.set_name = self.LibSets().GetSetName(set_info.set_id)
+            end
+        end
+        if type(station_table) == "table" then
+            for station_id, coord in pairs(station_table) do
+                self.RecordStationLocation( house_key
+                                          , station_id
+                                          , set_info
+                                          , coord
+                                          )
+            end
+        end
+    end
 end
 
 function HomeStationMarker.Export:RefreshSoon()
