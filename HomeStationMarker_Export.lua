@@ -3,6 +3,7 @@ HomeStationMarker.Export = {}
 
 
 function HomeStationMarker_Export_ToggleUI()
+    local self = HomeStationMarker
     local h = HomeStationMarker_ExportUI:IsHidden()
 
     if not HomeStationMarker.Export.editbox then
@@ -21,6 +22,7 @@ function HomeStationMarker_Export_ToggleUI()
 end
 
 function HomeStationMarker_Import_ToggleUI()
+    local self = HomeStationMarker
     local h = HomeStationMarker_ImportUI:IsHidden()
 
     if not HomeStationMarker.Export.editbox_import then

@@ -1551,7 +1551,7 @@ end
 -- rare case that this isn't what you want, uh, /hsm forgetlocs_all.
 --
 function HomeStationMarker.MigrateSavedVariables()
-    self = HomeStationMarker
+    local self = HomeStationMarker
     local old_saved_vars = ZO_SavedVars:NewAccountWide(
                               self.name .. "Vars"
                             , self.saved_var_version
@@ -1569,9 +1569,7 @@ function HomeStationMarker.MigrateSavedVariables()
             -- self.Debug("HomeStationMarker: migrated saved variable %s", tostring(k))
         end
     end
-
                         -- We no longer track refcounts in saved_vars.
-                        -- Remove the unworthy.
     local kk = { "requested_mark_refcounts"
                , "requested_mark"
                }

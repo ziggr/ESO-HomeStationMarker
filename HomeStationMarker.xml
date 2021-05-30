@@ -190,7 +190,7 @@
             font="ZoFontChat"
             wrapMode="ELLIPSIS"
             color="CFDCBD"
-            text="one\ntwo\nthree"
+            text=""
             >
             <Anchor relativeTo="HomeStationMarker_ImportUIEditBoxBG"
               relativePoint="BOTTOMLEFT"
