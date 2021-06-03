@@ -1476,6 +1476,9 @@ HomeStationMarker.FURNITURE_TEXTURE_INFO = {
 ,   ["/esoui/art/icons/housing_gen_exc_mundusstonetower001.dds"           ] = { set_id = mun, station_id = sid.MUNDUS_TOWER              }
 ,   ["/esoui/art/icons/housing_gen_exc_mundusstonewarrior001.dds"         ] = { set_id = mun, station_id = sid.MUNDUS_WARRIOR            }
 
+    -- Elsweyr Grill
+,   ["/esoui/art/icons/housing_els_fur_tablegrill001.dds"                 ] = { set_id = nos, station_id = CRAFTING_TYPE_PROVISIONING    }
+
     -- Other furniture that appear in category 25 "Services" but which
     -- HomeStationMarker does not touch.
 
