@@ -486,6 +486,9 @@ end
 function HomeStationMarker.ImportStations(text)
     local output = {}
 
+                        -- CR strip for our never-ending DOS legacy.
+                        -- Thank you pesakm for the find and fix!
+    text = text:gsub("\r", "")
     for line in lines_in(text) do
         HomeStationMarker.ImportLine(line, output)
     end
