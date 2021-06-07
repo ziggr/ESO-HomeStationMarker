@@ -1,3 +1,10 @@
+[B]7.0.3 2021-06-07[/B]
+[LIST]
+[*] Elsweyr Grill now shows up as a provisioning station
+[*] Strip CR carriage return characters during import
+[*] /kowtow to pesakm for the wave of fixes
+[/LIST]
+
 [B]7.0.2 2021-05-30[/B]
 [LIST]
 [*] No longer store refcounts in saved variables. Add-ons that use HomeStationMarker must be updated to restore markers after every load (WritWorthy 7.0.3 2021-05-30 has already been updated).
