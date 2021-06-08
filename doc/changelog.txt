@@ -1,3 +1,8 @@
+[B]7.0.4 2021-06-08[/B]
+[LIST]
+[*] DE FR RU placeholder strings
+[/LIST]
+
 [B]7.0.3 2021-06-07[/B]
 [LIST]
 [*] Elsweyr Grill now shows up as a provisioning station
