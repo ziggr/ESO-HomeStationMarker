@@ -9,6 +9,7 @@
 ## SavedVariables: HomeStationMarkerVars
 
 # RU translation by DrakeRulo 2020-08-28
+# FR translation by @jakez31  2021-06-05
 
             # Lib3D-v3
             # by Shinni
