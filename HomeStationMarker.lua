@@ -1432,6 +1432,10 @@ HomeStationMarker.FURNITURE_TEXTURE_INFO = {
 ,   ["/esoui/art/icons/assistant_vendor_01.dds"                           ] = { set_id = ast, station_id = sid.MERCHANT                  }
 ,   ["/esoui/art/icons/assistant_ezabibanker.dds"                         ] = { set_id = ast, station_id = sid.BANKER                    }
 ,   ["/esoui/art/icons/assistant_fezezmerchant.dds"                       ] = { set_id = ast, station_id = sid.MERCHANT                  }
+,   ["/esoui/art/icons/assistant_factotumbanker.dds"                      ] = { set_id = ast, station_id = sid.BANKER                    }
+,   ["/esoui/art/icons/assistant_factotummerchant.dds"                    ] = { set_id = ast, station_id = sid.MERCHANT                  }
+,   ["/esoui/art/icons/assistant_crowbanker.dds"                          ] = { set_id = ast, station_id = sid.BANKER                    }
+,   ["/esoui/art/icons/assistant_crowmerchant.dds"                        ] = { set_id = ast, station_id = sid.MERCHANT                  }
 
 ,   ["/esoui/art/icons/housing_cwc_crf_housingretrait001.dds"             ] = { set_id = mis, station_id = sid.TRANSMUTE                 }
 ,   ["/esoui/art/icons/housing_gen_crf_transmogtable001.dds"              ] = { set_id = mis, station_id = sid.OUTFITTER                 }
@@ -1459,8 +1463,14 @@ HomeStationMarker.FURNITURE_TEXTURE_INFO = {
     -- new life/winter fest cook fire
 ,   ["/esoui/art/icons/housing_uni_inc_holidayhearthlogs001.dds"          ] = { set_id = nos, station_id = CRAFTING_TYPE_PROVISIONING    }
 
-    -- witchest fest alchemy station
+    -- witches fest alchemy station
 ,   ["/esoui/art/icons/housing_uni_exc_reachhealingtotem001.dds"          ] = { set_id = nos, station_id = CRAFTING_TYPE_ALCHEMY         }
+
+    -- Daedric Enchanting Station
+,   ["/esoui/art/icons/housing_bad_inc_dedenchantingtable001.dds"         ] = { set_id = nos, station_id = CRAFTING_TYPE_ENCHANTING      }
+
+    -- Provisioning Station, Solitude Grill
+,   ["/esoui/art/icons/housing_skr_inc_firepit002.dds"                    ] = { set_id = nos, station_id = CRAFTING_TYPE_PROVISIONING    }
 
 ,   ["/esoui/art/icons/housing_gen_exc_mundusstoneapprentice001.dds"      ] = { set_id = mun, station_id = sid.MUNDUS_APPRENTICE         }
 ,   ["/esoui/art/icons/housing_gen_exc_mundusstoneatronach001.dds"        ] = { set_id = mun, station_id = sid.MUNDUS_ATRONACH           }
