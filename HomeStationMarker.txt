@@ -1,7 +1,7 @@
-## Title: HomeStationMarker 7.0.4
-## AddOnVersion: 704
-## Last Updated: 2021-06-08
-## APIVersion: 100035
+## Title: HomeStationMarker 7.2.1
+## AddOnVersion: 070201
+## Last Updated: 2022-01-06
+## APIVersion: 101032
 ## Author: ziggr
 ## Contributors: Baetram DrakeRulo
 ## DependsOn: Lib3D
